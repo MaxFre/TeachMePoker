@@ -1,4 +1,4 @@
-package teachMePoker;
+package deck;
 
 import javax.swing.Icon;
 /**

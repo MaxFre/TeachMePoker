@@ -5,13 +5,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-public class Card {
+public class CardRikard {
   private String suit;
   private int value;
   private ImageIcon icon;
   private ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
-  public Card(String suit, int value) {
+  public CardRikard(String suit, int value) {
     this.suit = suit;
     this.value = value;
 
