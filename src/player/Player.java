@@ -18,4 +18,14 @@ public class Player {
     
   }
 
+public void bet(int i) {
+	// TODO Auto-generated method stub
+	
+}
+
+public String getDecision() {
+	String decision = "fold";
+	return decision;
+}
+
 }
