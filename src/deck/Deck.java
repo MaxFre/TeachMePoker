@@ -3,43 +3,54 @@ package deck;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 public class Deck {
-	private ArrayList<Card> cards = new ArrayList<Card>();
-	private String suit;
+	private ArrayList<Card> deck = new ArrayList<Card>();
 	private ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
 	public Deck() {
-		for (int suitNo = 0; suitNo < 4; suitNo++) {
-			if (suitNo == 0) {
-				suit = "Hearts";
-			} else if (suitNo == 1) {
-				suit = "Diamonds";
-			} else if (suitNo == 2) {
-				suit = "Clubs";
-			} else if (suitNo == 3) {
-				suit = "Spades";
-			}
-			try {
-				for (int value = 2; value <= 14; value++) {
-					cards.add(new Card(suit, value, new ImageIcon(ImageIO
-							.read(classLoader.getResourceAsStream("images/" + value + suit.charAt(0) + ".png")))));
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-		}
+		createDeck();
 	}
 
 	public void shuffle() {
-		Collections.shuffle(cards);
+		Collections.shuffle(deck);
 	}
 
 	public Card getCard() {
-		return cards.remove(0);
+		return deck.get(0);
+	}
+
+	public Card removeCard() {
+		return deck.remove(0);
+	}
+
+	public int getNumberOfCardsInDeck(){
+		return deck.size();
+	}
+
+	public void createDeck(){
+		deck = new ArrayList<Card>();
+
+		for (Suit suit: Suit.values()) {
+			try {
+				for (CardValue card: CardValue.values()) {
+					deck.add(new Card(suit, card,
+							new ImageIcon(ImageIO.read(classLoader.getResourceAsStream("images/" + card.getCardValue() + suit.getSuitLetter() + ".png")))));
+				}
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void main(String [] args){
+		Deck deck = new Deck ();
+		for(int i = 0 ; i < 52; i++){
+			System.out.println(deck.getCard().getCardValue() + " of " + deck.getCard().getCardSuit());
+			deck.removeCard();
+		}
 	}
 }
