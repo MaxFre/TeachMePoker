@@ -111,6 +111,7 @@ public class Ai {
 	public void setStartingHand(Card card1, Card card2) {
 		aiCards.add("card1");
 		aiCards.add("card2");
+		System.out.println("starting hand set for ai player");
 		// TODO Auto-generated method stub
 
 	}
@@ -118,12 +119,14 @@ public class Ai {
 	// Make decision for the starting hand
 	public void makeDecision(int playTurn, int currentPot) {
 		// TODO Auto-generated method stub
+		System.out.println("Decision was made for ai using StartingHand");
 		setDecision();
 
 	}
 
 	// Make decision for starting hand + flop
 	public void makeDecision(int playTurn, int currentPotSize, Card[] flop) {
+		System.out.println("Decision was made for ai using StartingHand+flop");
 		// placeholder
 		for (Card card : flop) {
 			aiCards.add("card");
@@ -135,6 +138,7 @@ public class Ai {
 	// Make decision for starting hand + flop + turn && starting hand + flop +
 	// turn + river
 	public void makeDecision(int playTurn, int currentPotSize, Card turn) {
+		System.out.println("Decision was made for ai using StartingHand+flop+turn or Startinghand+flop+turn+river");
 		// placeholder
 		aiCards.add("card");
 		if (aiCards.size() < 7) {

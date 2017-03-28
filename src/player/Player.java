@@ -9,6 +9,7 @@ public class Player {
   }
 
   public void makeDecision() {
+	  System.out.println("decision was made for player");
     // TODO Auto-generated method stub
     
   }
