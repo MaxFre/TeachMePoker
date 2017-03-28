@@ -39,17 +39,7 @@ public class SPController {
 		deck.shuffle();
 		if (playTurn == 0) {
 			setBlinds(noOfPlayers);
-			if (smallBlind == noOfPlayers) {
-				player.bet(5);
-				// show animation?
-			} else if (bigBlind == noOfPlayers) {
-				player.bet(10);
-				// show animation?
-			} else {
-				aiPlayers.get(smallBlind).bet(5);
-				aiPlayers.get(bigBlind).bet(10);
-				// show animation?
-			}
+
 			card1 = deck.getCard();
 			card2 = deck.getCard();
 			player.setStartingHand(card1, card2);
@@ -66,7 +56,8 @@ public class SPController {
 					if (currentPlayer == noOfPlayers - 1) {
 						player.makeDecision();
 					} else {
-						aiPlayers.get(currentPlayer).makeDecision(playTurn, currentPotSize);
+						askForAiDecision();
+						
 					}
 					currentPlayer = (currentPlayer + 1) % noOfPlayers;
 				} while (!allCallorFold());
@@ -80,6 +71,18 @@ public class SPController {
 		}
 	}
 
+	private void askForAiDecision() {
+		if(playTurn == 0) {
+		aiPlayers.get(currentPlayer).makeDecision(playTurn, currentPotSize);
+		} else if(playTurn == 1) {
+			aiPlayers.get(currentPlayer).makeDecision(playTurn, currentPotSize, flop);
+		} else if(playTurn == 2) {
+			aiPlayers.get(currentPlayer).makeDecision(playTurn, currentPotSize, turn);
+		} else if(playTurn == 3) {
+			aiPlayers.get(currentPlayer).makeDecision(playTurn, currentPotSize, river);
+		}
+	}
+
 	private void setBlinds(int noOfPlayers) {
 		if (noOfPlayers == 2) {
 			currentPlayer = dealer;
@@ -90,15 +93,27 @@ public class SPController {
 			smallBlind = (dealer + 1) % noOfPlayers;
 			bigBlind = (dealer + 2) % noOfPlayers;
 		}
+
+		if (smallBlind == noOfPlayers) {
+			player.bet(5);
+			// show animation?
+		} else if (bigBlind == noOfPlayers) {
+			player.bet(10);
+			// show animation?
+		} else {
+			aiPlayers.get(smallBlind).bet(5);
+			aiPlayers.get(bigBlind).bet(10);
+			// show animation?
+		}
 	}
 
 	public boolean allCallorFold() {
-		//This method is not done.
-		//this will not work
+		// This method is not done.
+		// this will not work
 		for (Ai ai : aiPlayers) {
-			if (!ai.getDecision().equals("fold") || !ai.getDecision().equals("call"))
-				;
-			return false;
+			if (!ai.getDecision().equals("fold") || !ai.getDecision().equals("call")) {
+				return false;
+			}
 		}
 		if (player.getDecision().equals("fold") || player.getDecision().equals("call")) {
 			return true;
