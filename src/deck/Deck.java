@@ -26,7 +26,7 @@ public class Deck {
 			try {
 				for (int value = 2; value <= 14; value++) {
 					cards.add(new Card(suit, value, new ImageIcon(ImageIO
-							.read(classLoader.getResourceAsStream("/resources/images/" + value + suit + ".png")))));
+							.read(classLoader.getResourceAsStream("images/" + value + suit.charAt(0) + ".png")))));
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -42,5 +42,4 @@ public class Deck {
 	public Card getCard() {
 		return cards.remove(0);
 	}
-
 }
