@@ -23,9 +23,19 @@ public class SPController {
 	private int noOfPlayers = noOfAi + 1;
 
 	public SPController() {
-		new GUI();
 		deck = new Deck();
+		new GUI();
 	}
+	
+	//testcode
+//	public SPController(String trolol) {
+//		deck = new Deck();
+//		deck.shuffle();
+//		while(deck.hasNext()) {
+//			Card test = deck.getCard();
+//			System.out.println(test.getCardSuit() + ", " + test.getCardValue() + ", " + test.getCardIcon());
+//		}
+//	}
 
 	public void startGame(int noOfAi, int potSize) {
 		this.noOfAi = noOfAi;
