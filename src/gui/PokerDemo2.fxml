@@ -14,7 +14,7 @@
 	minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
 	prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"
 	fx:controller="javaFxTotarial.Controller">
-	<children>
+	<children> 
 		<BorderPane layoutX="14.0" layoutY="14.0" prefHeight="572.0"
 			prefWidth="772.0">
 			<bottom>
@@ -45,7 +45,7 @@
 								<ImageView id="back1.png" fitHeight="98.0" fitWidth="536.0"
 									layoutX="0.0" layoutY="0.0">
 									<image>
-										<Image url="@../../../../Documents/Poker76/back1.png"
+										<Image url="@images/back1.png"
 											preserveRatio="true" smooth="true" />
 									</image>
 								</ImageView>
@@ -122,7 +122,7 @@
 						<ImageView id="ovalpokertable.png" fitHeight="277.0"
 							fitWidth="597.0" layoutX="23.0" layoutY="85.0" visible="false">
 							<image>
-								<Image url="@../../../../Documents/Poker76/ovalpokertable.png"
+								<Image url="@images/ovalpokertable.png"
 									preserveRatio="true" smooth="true" />
 							</image>
 						</ImageView>
@@ -163,14 +163,14 @@
 								<ImageView id="ace_of_spades.png" fitHeight="75.0"
 									fitWidth="51.0" layoutX="9.0" layoutY="0.0">
 									<image>
-										<Image url="@../../../../Documents/Poker76/ace_of_spades.png"
+										<Image url="@images/ace_of_spades.png"
 											preserveRatio="true" smooth="true" />
 									</image>
 								</ImageView>
 								<ImageView id="Jack_of_Spades.png" fitHeight="75.0"
 									fitWidth="51.0" layoutX="69.0" layoutY="0.0">
 									<image>
-										<Image url="@../../../../Documents/Poker76/Jack_of_Spades.png"
+										<Image url="@images/Jack_of_Spades.png"
 											preserveRatio="true" smooth="true" />
 									</image>
 								</ImageView>
