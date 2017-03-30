@@ -3,7 +3,7 @@ package aiClass;
 import java.util.ArrayList;
 
 /**
- * Interface som de olika AIturns anv�nder sig av.
+ * Interface som de olika AIturns använder sig av.
  * @author Max Frennessen
  * 24-03-17
  */
@@ -12,8 +12,8 @@ public interface AICalculations {
 
 	/**
 	 * 
-	 * @param aiCards - ArrayList som best�r av korten som �r
-	 *  aktiva f�r AIn f�r att r�kna ut ett beslut.
+	 * @param aiCards - ArrayList som består av korten som är
+	 *  aktiva får AIn för att räkna ut ett beslut.
 	 */
 	void getCardValues(ArrayList<String> aiCards);
 	
@@ -21,7 +21,7 @@ public interface AICalculations {
 	/**
 	 * 
 	 * @return -returns true or false beroende om korten
-	 * har ett h�gt v�rde tillsammans.
+	 * har ett högt värde tillsammans.
 	 */
 	boolean checkHighCards();
 	
@@ -29,7 +29,7 @@ public interface AICalculations {
 	/**
 	 * 
 	 * @return - returns true or false beroende om korten
-	 * har samma f�rg.
+	 * har samma färg.
 	 */
 	boolean checkSuit();
 	
@@ -43,9 +43,15 @@ public interface AICalculations {
 	
 	/**
 	 * 
-	 * @return returns true or false beroende om korten 
-	 * har en chans att bli en stege.
+	 * @return returns antal kort som håller på att bygga en stege.
 	 */	
-	boolean checkStraight();
+	int checkStraight();
+	
+	
+	/**
+	 * 
+	 * @return returns ny int på AI pot.
+	 */
+	 int updateAiPot();
 	
 }

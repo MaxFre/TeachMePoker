@@ -19,7 +19,8 @@ public class Deck {
 	}
 
 	public Card getCard() {
-		return deck.get(0);
+		return deck.remove(0);
+		//return deck.get(0);
 	}
 
 	public Card removeCard() {

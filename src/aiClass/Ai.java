@@ -4,15 +4,18 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import deck.Card;
+import deck.Deck;
 
 /**
  * 
- * @author Max Frennessen Huvudklass f�r AI-spelaren som beroende p� turn
- *         startar en AI utr�kning och skickar svar till controller p� vad AI:n
- *         kommer g�ra p� dess tur. 24-03-17
+ * @author Max Frennessen
+ * Huvudklass för AI-spelaren som beroende på turn 
+ * startar en AI uträkning och skickar svar till controller på
+ * vad AI:n kommer göra på dess tur.
+ *	24-03-17
  */
 public class Ai {
-
+	private Card card;
 	private TurnOne turnOne;
 	private TurnTwo turnTwo;
 	private TurnThree turnThree;
@@ -21,150 +24,179 @@ public class Ai {
 	private String[] fromCards = new String[10];
 	private String whatToDo;
 	private int testAI = 0;
-	private ArrayList<String> aiCards = new ArrayList<String>(); // Lista som
-																	// l�gger
-																	// till alla
-																	// kort
-																	// som
-																	// kommer in
-																	// och som
-																	// skickas
-																	// till
-																	// turns.
-	private int aiPot; // AIPOT - KOMMER IN VIA CONTROLLER.
-
-	public Ai(int aiPot) { // F�R IN V�RDE H�R FR�N CONTROLLER, VET INTE HUR �N.
+	private ArrayList<String> aiCards = new ArrayList<String>();    //Lista som lägger till alla kort som kommer in och som skickas till turns.
+	private int aiPot;   //AIPOT - KOMMER IN VIA CONTROLLER.
+	private int toBet;  //HUR MKT SOM AI MÅSTE BETA FÖR ATT VA MED.
+	
+	public Ai(int aiPot){  
 		this.aiPot = aiPot;
-
-		getCards(); // S�L�NGE JAG INTE F�R IN VIA AI-CONSTRUKTOR
-
+		
+//		Random rand =  new Random();
+//		aiPot = rand.nextInt(1000)+400;
+//		toBet = rand.nextInt(600);
+//		
+//		aiPot = 700;
+//		toBet = 20;
+		
+		getCards();   //SÅLÄNGE JAG INTE FÅR IN VIA AI-CONSTRUKTOR
+		aiCards.clear();
+		
 		testAI = 0;
-
-		// for(int x = 0; x<2; x++){
-
-		if (testAI == 0) {
-			for (int i = 0; i < 2; i++) { // L�gger till kort till ArrayList som
-											// skickas till constructor.
-				aiCards.add(fromCards[i]);
+		
+	  for(int x = 0; x<5; x++){
+	   
+	   if(testAI==0){
+		  for(int i = 0; i<2; i++){			//Lägger till kort till ArrayList som skickas till constructor.
+			aiCards.add(fromCards[i]);
 			}
 		}
-
-		if (testAI == 1) {
-			for (int i = 0; i < 5; i++) { // I = 2!!!
+		
+		if(testAI==1){
+			for(int i = 2; i<5; i++){			// I = 2!!!
 				aiCards.add(fromCards[i]);
-			}
+				}
 		}
+		
+		if(testAI==2){
+												
+				aiCards.add(fromCards[6]);
+				}
+		
+		
+		if(testAI==3){
 
-		if (testAI == 2) {
-			for (int i = 0; i < 6; i++) { // I = 3!!!
-				aiCards.add(fromCards[i]);
-			}
+				aiCards.add(fromCards[7]);
+				}
+		
+		
+		if(testAI==0){
+			turnOne =  new TurnOne(aiCards,aiPot, toBet);
+			whatToDo = turnOne.decision();   //TurnONe respond.
+			aiPot = turnOne.updateAiPot();
+		
 		}
-
-		if (testAI == 3) {
-			for (int i = 0; i < 7; i++) { // I = 4!!!
-				aiCards.add(fromCards[i]);
-			}
+		
+		if(testAI==1){
+			turnTwo =  new TurnTwo(aiCards,aiPot, toBet);
+			whatToDo = turnTwo.decision();   //FlOP respond.
+			aiPot = turnTwo.updateAiPot();
+			
 		}
-
-		if (testAI == 0) {
-			turnOne = new TurnOne(aiCards);
-			whatToDo = turnOne.decision(); // TurnONe respond.
+		
+		if(testAI==2){
+			turnThree =  new TurnThree(aiCards,aiPot, toBet);
+			whatToDo = turnThree.decision();   //TURN respond.
+			aiPot = turnThree.updateAiPot();
+			
 		}
-
-		if (testAI == 1) {
-			turnTwo = new TurnTwo(aiCards);
-			whatToDo = turnTwo.decision(); // FlOP respond.
+		
+		if(testAI==3){
+			turnFour =  new TurnFour(aiCards,aiPot, toBet);
+			whatToDo = turnFour.decision();   //RIVER respond.
+			aiPot = turnFour.updateAiPot();
+			
 		}
-
-		if (testAI == 2) {
-			turnThree = new TurnThree(aiCards);
-			whatToDo = turnThree.decision(); // TURN respond.
-		}
-
-		if (testAI == 3) {
-			turnFour = new TurnFour(aiCards);
-			whatToDo = turnFour.decision(); // RIVER respond.
-		}
-
-		// testAI++;
-
+		
+	
 		System.out.println("AI - " + whatToDo);
+		System.out.println("AI pot - " + aiPot);
+		if(!(whatToDo.equals("fold"))){
+			testAI++;
+		}
+		else x = 50;
 		System.out.println("");
 		System.out.println("");
+		}
 	}
-	// }
-
-	public void getCards() {
-		cards = new Cards();
-		fromCards = cards.getCards();
-
+	
+	
+	public void getCards(){
+	cards = new Cards();
+	fromCards = cards.getCards();
+	
 	}
-
-	public static void main(String[] args) {
-		Ai run = new Ai(500);
-	}
-
+	
 	// Rikards metoder
 	
-	//set starting hand
-	public void setStartingHand(Card card1, Card card2) {
-		aiCards.add("card1");
-		aiCards.add("card2");
-		System.out.println("starting hand set for ai player");
-		// TODO Auto-generated method stub
+		//set starting hand
+		public void setStartingHand(Card card1, Card card2) {
+			aiCards.clear(); //nollställer arraylist.
+			
+			String firstCard = card1.getCardValue() +card1.getCardSuit();
+			String secondCard = card2.getCardValue() +card2.getCardSuit();
+			aiCards.add(firstCard);
+			aiCards.add(secondCard);
+			System.out.println("starting hand set for ai player");
+			// TODO Auto-generated method stub
 
-	}
-
-	// Make decision for the starting hand
-	public void makeDecision(int playTurn, int currentPot) {
-		// TODO Auto-generated method stub
-		System.out.println("Decision was made for ai using StartingHand");
-		setDecision();
-
-	}
-
-	// Make decision for starting hand + flop
-	public void makeDecision(int playTurn, int currentPotSize, Card[] flop) {
-		System.out.println("Decision was made for ai using StartingHand+flop");
-		// placeholder
-		for (Card card : flop) {
-			aiCards.add("card");
 		}
-		// TODO Auto-generated method stub
 
-	}
-
-	// Make decision for starting hand + flop + turn && starting hand + flop +
-	// turn + river
-	public void makeDecision(int playTurn, int currentPotSize, Card turn) {
-		System.out.println("Decision was made for ai using StartingHand+flop+turn or Startinghand+flop+turn+river");
-		// placeholder
-		aiCards.add("card");
-		if (aiCards.size() < 7) {
-			// do Turn decision
-		} else if (aiCards.size() == 7) {
-			// do River decision
+		// Make decision for the starting hand
+		public void makeDecision(int currentBet) {
+			turnOne =  new TurnOne(aiCards,aiPot, currentBet);
+			whatToDo = turnOne.decision();   //TurnONe respond.
+			aiPot = turnOne.updateAiPot();
 		}
-		// TODO Auto-generated method stub
-	}
 
-	private void setDecision() {
-		String decision = "fold";
-		// TODO Auto-generated method stub
+		// Make decision for starting hand + flop
+		public void makeDecision(int currentBet, Card[] flop) {
+		
+			for (Card card : flop) {				
+				aiCards.add(card.getCardValue()+card.getCardSuit());
+			}
+			
+			turnTwo =  new TurnTwo(aiCards,aiPot, currentBet);
+			whatToDo = turnTwo.decision();   //TurnONe respond.
+			aiPot = turnTwo.updateAiPot();
 
-	}
+		}
+
+		// Make decision for starting hand + flop + turn && starting hand + flop +
+		// turn + river
+		public void makeDecision(int currentBet, Card turn) {					
+			aiCards.add(turn.getCardValue()+turn.getCardSuit());
+			
+			if (aiCards.size() < 7) {
+				turnThree =  new TurnThree(aiCards,aiPot, currentBet);
+				whatToDo = turnThree.decision();  
+				aiPot = turnThree.updateAiPot();
+				
+			} else if (aiCards.size() == 7) {
+				turnFour =  new TurnFour(aiCards,aiPot, currentBet);
+				whatToDo = turnFour.decision();  
+				aiPot = turnFour.updateAiPot();
+			}
+			
+		}
+
+		public void setDecision(String reset) {
+			whatToDo = reset;
+
+		}
+
+		public String getDecision() {
+			return whatToDo;
+		}
 
 	
-
-	public void bet(int i) {
-		// TODO Auto-generated method stub
-
+	
+	
+	
+	
+	
+	
+	
+	public void updateWinner(int aiPot){
+		this.aiPot = aiPot;
+	}
+	
+	public static void main(String[] args){
+		Ai run = new Ai(1000);
 	}
 
-	public String getDecision() {
-		String decision = "fold";
-		return decision;
-	}
 
+  public void setBlind(int i) {
+    // TODO Auto-generated method stub
+    
+  }
 }
