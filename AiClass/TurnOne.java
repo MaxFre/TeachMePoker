@@ -5,15 +5,16 @@ import java.util.Random;
 /**
  * 
  * @author Max Frennessen'
- * R�knar du vad AI b�r g�ra n�r den har 2 kort.
+ * Räknar du vad AI bör göra när den har 2 kort.
  * 24-03-17
  */
 public class TurnOne implements AICalculations {
 	
+	private Ai ai;
 	private ArrayList<Integer> cardNbr = new ArrayList<Integer>();
 	private ArrayList<String> cardClr = new ArrayList<String>();
 	private boolean colorChance;
-	private boolean straightChance;
+	private int straightChance;
 	private int pairs = 0;
 	private int likelyhood = 10;
 	private boolean highCards;
@@ -46,7 +47,7 @@ public class TurnOne implements AICalculations {
 
 	public void decide(){
 		
-		if(straightChance){
+		if(straightChance>0){
 			likelyhood+=20;
 		}
 		
@@ -62,7 +63,7 @@ public class TurnOne implements AICalculations {
 		}
 		
 		if(pairs>0){
-			likelyhood+=80;			
+			likelyhood+=100;			
 		}
 		
 		
@@ -71,43 +72,48 @@ public class TurnOne implements AICalculations {
 		int roll = rand.nextInt(90);
 		System.out.println("likelyhood - " + likelyhood);
 		System.out.println("roll - " + roll);
-//		int diff = aiPot-300;
-//		roll = roll - (int)(diff*0.025);
+
+		if(toBet==0){
+			toDO="Check";
+		}
 		
-		
+		else{
 		int aipotChance = (int)(aiPot*0.025);
-		int toBetChance = (int)(877*0.025*2);
+		int toBetChance = (int)(toBet*0.030*2);
 		
 		int diff = aipotChance-toBetChance;
-		System.out.println("test ->  pot - " + aipotChance  + "    bet - "  + toBetChance  + "    dif- " + diff);
+
 		likelyhood = likelyhood+diff;
 		System.out.println("likelyhood efter toBet - " + likelyhood);
 		System.out.println("toBet - " + toBet);
 		System.out.println("aiPot - " + aiPot);
 		
-//		roll = (toBet/5) + roll;
+
 		if(roll<=likelyhood){
-			toDO = "bid";
+			toDO = "bid," +toBet;
+			aiPot-=toBet;
 		}
 				
 		
-		if((likelyhood-45)>roll){			//FIXA HUR MKT RAISE
+		if((likelyhood-45)>roll){			
 
-		  int raiseAmount = (int)(1.10*toBet);	
+		  int raiseAmount = (int)(1.10*toBet);	//FIXA HUR MKT RAISE
 		  toDO = "Raise,"+ raiseAmount;
-		  
+		  aiPot-=raiseAmount;
 		  if(likelyhood-55>roll){
 			raiseAmount = (int)(1.17*toBet);	
 			toDO = "Raise,"+ raiseAmount;
+			aiPot-=raiseAmount;
 		  }
 		
 		  if(likelyhood-65>roll){
 			  raiseAmount = (int)(1.25*toBet);	
 			  toDO = "Raise,"+ raiseAmount;
+			  aiPot-=raiseAmount;
 		  }
 		
-		}
-		//fixa olika pot nivåer.
+		}}
+		
 	}
 	
 	public void getCardValues(ArrayList<String> aiCards){
@@ -142,7 +148,7 @@ public class TurnOne implements AICalculations {
 			high=true;
 		}
 		
-		if(card1>=11 && card2>=11){
+		if(card1>=10 && card2>=10){
 		 rlyhighCards=true;
 		}
 		return high;
@@ -198,24 +204,31 @@ public class TurnOne implements AICalculations {
 
 
 
-	@Override
-	public boolean checkStraight() {
-		boolean stege = false;
+
+	public int checkStraight() {
+		int stege = 0;
 		
 		int card1 = cardNbr.get(0);
 		int card2 = cardNbr.get(1);
 		
+		if(!(card1==card2)){
 		if(card1>card2){
 			int temp =  card2;
 			card2 = card1;
 			card1 = temp;
 		}
-		
-		if(card1+1 == card2 || card1+2==card2|| card1+3==card2|| card1+4==card2|| card1+5==card2){
-			stege = true;
+		int check = card1+4;
+		if(card2<=check)
+		stege++;
 		}
-		
 		return stege;
+	}
+
+
+
+
+	public int updateAiPot() {
+		return aiPot;
 	}
 	
 }
