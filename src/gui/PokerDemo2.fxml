@@ -13,8 +13,13 @@
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity"
 	minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
 	prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"
+<<<<<<< HEAD
 	fx:controller="gui.Controller">
 	<children>
+=======
+	fx:controller="javaFxTotarial.Controller">
+	<children> 
+>>>>>>> 9a43ba73166b936b25ad8d507ee7e570c345ef39
 		<BorderPane layoutX="14.0" layoutY="14.0" prefHeight="572.0"
 			prefWidth="772.0">
 			<bottom>
@@ -26,7 +31,11 @@
 							<children>
 								<ImageView id="back2.png" layoutX="0.0" layoutY="0.0">
 									<image>
+<<<<<<< HEAD
 										<Image url="@images/back2.png"
+=======
+										<Image url="@../../../../Documents/Poker76/back2.png"
+>>>>>>> 9a43ba73166b936b25ad8d507ee7e570c345ef39
 											preserveRatio="true" smooth="true" />
 									</image>
 								</ImageView>

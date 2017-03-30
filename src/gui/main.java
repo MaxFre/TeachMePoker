@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 package gui;
+=======
+package javaFxTotarial;
+>>>>>>> 9a43ba73166b936b25ad8d507ee7e570c345ef39
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
