@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * 
  * @author Max Frennessen
- * Producerar korten som används för programmet
+ * Producerar korten som anvÃ¤nds fÃ¶r programmet
  *
  */
 public class Cards {
