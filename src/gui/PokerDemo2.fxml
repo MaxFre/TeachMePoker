@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+	prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"
+	fx:controller="javaFxTotarial.Controller">
+	<children>
+		<BorderPane layoutX="14.0" layoutY="14.0" prefHeight="572.0"
+			prefWidth="772.0">
+			<bottom>
+				<SplitPane dividerPositions="0.3" focusTraversable="true"
+					prefHeight="100.0" prefWidth="772.0">
+					<items>
+						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="98.0"
+							prefWidth="100.0">
+							<children>
+								<ImageView id="back2.png" layoutX="0.0" layoutY="0.0">
+									<image>
+										<Image url="@../../../../Documents/Poker76/back2.png"
+											preserveRatio="true" smooth="true" />
+									</image>
+								</ImageView>
+								<TextArea layoutX="37.0" layoutY="34.0" prefHeight="49.0"
+									prefWidth="179.0" promptText="Movement:" wrapText="true">
+									<effect>
+										<SepiaTone level="0.6037735849056604" />
+									</effect>
+								</TextArea>
+								<Label layoutX="36.0" layoutY="6.0" text="Tips:" textFill="WHITE" />
+							</children>
+						</AnchorPane>
+						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="98.0"
+							prefWidth="492.0" snapToPixel="true">
+							<children>
+								<ImageView id="back1.png" fitHeight="98.0" fitWidth="536.0"
+									layoutX="0.0" layoutY="0.0">
+									<image>
+										<Image url="@../../../../Documents/Poker76/back1.png"
+											preserveRatio="true" smooth="true" />
+									</image>
+								</ImageView>
+								<GridPane layoutX="58.0" layoutY="0.0" prefHeight="101.0"
+									prefWidth="446.0">
+									<children>
+										<Button mnemonicParsing="false" onAction="#playerCheck"
+											prefWidth="106.0" text="Check" GridPane.columnIndex="0"
+											GridPane.rowIndex="0">
+											<effect>
+												<SepiaTone />
+											</effect>
+										</Button>
+										<Button contentDisplay="CENTER" mnemonicParsing="false"
+											onAction="#playerFold" prefWidth="106.0" text="Fold"
+											GridPane.columnIndex="1" GridPane.rowIndex="0">
+											<effect>
+												<SepiaTone />
+											</effect>
+										</Button>
+										<Button mnemonicParsing="false" onAction="#playerRaise"
+											prefWidth="106.0" text="Raise" GridPane.columnIndex="0"
+											GridPane.rowIndex="1">
+											<effect>
+												<SepiaTone />
+											</effect>
+										</Button>
+										<Slider majorTickUnit="50.0" max="1000.0"
+											GridPane.columnIndex="1" GridPane.rowIndex="1">
+											<effect>
+												<SepiaTone />
+											</effect>
+										</Slider>
+										<Button contentDisplay="CENTER" mnemonicParsing="false"
+											onAction="#PlayerBet" prefWidth="103.0" text="Bet"
+											GridPane.columnIndex="2" GridPane.rowIndex="0">
+											<effect>
+												<SepiaTone />
+											</effect>
+										</Button>
+									</children>
+									<columnConstraints>
+										<ColumnConstraints hgrow="SOMETIMES"
+											minWidth="10.0" prefWidth="100.0" />
+										<ColumnConstraints hgrow="SOMETIMES"
+											minWidth="10.0" prefWidth="100.0" />
+										<ColumnConstraints hgrow="SOMETIMES"
+											minWidth="10.0" prefWidth="100.0" />
+									</columnConstraints>
+									<rowConstraints>
+										<RowConstraints maxHeight="53.0" minHeight="10.0"
+											prefHeight="53.0" vgrow="SOMETIMES" />
+										<RowConstraints maxHeight="50.0" minHeight="10.0"
+											prefHeight="48.0" vgrow="SOMETIMES" />
+									</rowConstraints>
+								</GridPane>
+							</children>
+						</AnchorPane>
+					</items>
+				</SplitPane>
+			</bottom>
+			<center>
+				<AnchorPane prefHeight="436.0" prefWidth="772.0">
+					<children>
+						<ImageView
+							id="poker-tables-blue-folding-poker-table-labatt-blue-poker-table-508x305.png"
+							fitHeight="437.0" fitWidth="772.0" layoutX="0.0" layoutY="0.0">
+							<image>
+								<Image
+									url="@images/poker-tables-blue-folding-poker-table-labatt-blue-poker-table-508x305.png"
+									preserveRatio="true" smooth="true" />
+							</image>
+						</ImageView>
+						<ImageView id="ovalpokertable.png" fitHeight="277.0"
+							fitWidth="597.0" layoutX="23.0" layoutY="85.0" visible="false">
+							<image>
+								<Image url="@../../../../Documents/Poker76/ovalpokertable.png"
+									preserveRatio="true" smooth="true" />
+							</image>
+						</ImageView>
+						<Label layoutX="305.0" layoutY="202.0" text="TeachMePoker"
+							textFill="#3385ff">
+							<font>
+								<Font size="25.0" />
+							</font>
+						</Label>
+						<ComboBox editable="false" layoutX="627.0" layoutY="14.0"
+							mouseTransparent="false" prefWidth="138.0" promptText="Account">
+							<effect>
+								<SepiaTone>
+									<input>
+										<InnerShadow color="#0066ff" />
+									</input>
+								</SepiaTone>
+							</effect>
+							<items>
+								<FXCollections fx:factory="observableArrayList">
+									<String fx:value="Item 1" />
+									<String fx:value="Item 2" />
+									<String fx:value="Item 3" />
+								</FXCollections>
+							</items>
+						</ComboBox>
+						<RadioButton layoutX="156.0" layoutY="299.0"
+							mnemonicParsing="false" text="You" textFill="WHITE" />
+						<RadioButton layoutX="553.0" layoutY="109.0"
+							mnemonicParsing="false" text="Op2" textFill="WHITE" />
+						<RadioButton layoutX="553.0" layoutY="299.0"
+							mnemonicParsing="false" text="Op3" textFill="WHITE" />
+						<RadioButton layoutX="155.0" layoutY="109.0"
+							mnemonicParsing="false" text="Op1" textFill="WHITE" />
+						<AnchorPane layoutX="18.0" layoutY="299.0" minHeight="75.0"
+							prefHeight="75.0" prefWidth="120.0">
+							<children>
+								<ImageView id="ace_of_spades.png" fitHeight="75.0"
+									fitWidth="51.0" layoutX="9.0" layoutY="0.0">
+									<image>
+										<Image url="@../../../../Documents/Poker76/ace_of_spades.png"
+											preserveRatio="true" smooth="true" />
+									</image>
+								</ImageView>
+								<ImageView id="Jack_of_Spades.png" fitHeight="75.0"
+									fitWidth="51.0" layoutX="69.0" layoutY="0.0">
+									<image>
+										<Image url="@../../../../Documents/Poker76/Jack_of_Spades.png"
+											preserveRatio="true" smooth="true" />
+									</image>
+								</ImageView>
+							</children>
+						</AnchorPane>
+					</children>
+				</AnchorPane>
+			</center>
+			<top>
+				<MenuBar>
+					<effect>
+						<SepiaTone />
+					</effect>
+					<menus>
+						<Menu mnemonicParsing="false" text="Game">
+							<items>
+								<MenuItem mnemonicParsing="false" text="New game" />
+								<MenuItem mnemonicParsing="false" onAction="#exitGame"
+									text="Close" />
+							</items>
+						</Menu>
+						<Menu mnemonicParsing="false" text="Setting">
+							<items>
+								<MenuItem mnemonicParsing="false" text="Level..." />
+							</items>
+						</Menu>
+						<Menu mnemonicParsing="false" text="Help">
+							<items>
+								<MenuItem mnemonicParsing="false" text="About Poker" />
+							</items>
+						</Menu>
+					</menus>
+				</MenuBar>
+			</top>
+		</BorderPane>
+	</children>
+</AnchorPane>
