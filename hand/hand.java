@@ -1,6 +1,7 @@
 package hand;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import deck.Card;
 import deck.Deck;
@@ -61,8 +62,21 @@ public class hand {
 	
 	
 	public void getCards() {
-
-		for (int i = 0; i < 2; i++) {
+		int[] test = new int[4];
+		ArrayList<Integer> testar = new ArrayList<Integer>();
+		
+		testar.add(2);
+		testar.add(5);
+		testar.add(6);
+		testar.add(7);
+		
+	
+		
+		Random rand = new Random();
+		int kolla = rand.nextInt(3);
+		int checking = testar.get(kolla);
+		
+		for (int i = 0; i < checking; i++) {
 			Cards.add(deck.getCard());
 
 		}

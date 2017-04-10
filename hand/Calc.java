@@ -248,9 +248,9 @@ public class Calc {
 	
 	public int checkStraight(){
 		
-		int[] test = new int[2];
+		int[] test = new int[aiCards.size()];
 		int testar = 0;
-		for(int i = 0; i< 2; i++){
+		for(int i = 0; i< aiCards.size(); i++){
 			test[i] = cardNbr.get(i);
 		}
 		
@@ -337,16 +337,48 @@ public class Calc {
 			
 		}
 		
+		//2 cards..
+//		if(aiCards.size()<3){
+//		
+//			if(straightChance==2){
+//			    straightText = "You have a chance for a straight, you have 2/5.\n";
+//				advice += straightText;
+//			}
+//			
+//			if(pairsNmore==2){			
+//				pairsNmoreHelper = "You have a pair of " + yourCardInt;
+//			}
+//			
+//			if(colorChance==2){
+//				advice += "You have a chance for a flush in " + theColor + ", you have 2/5 for it.\n";
+//				
+//			}
+//			
+//			if(highCards){
+//				if(advice.length()<2){
+//				advice = "You only have high cards. \nYou can try and see but only if its cheap\n";
+//			}
+//				else{
+//					advice += "You have high cards.\n";
+//				}
+//			}
+//		}
+		
+		
+		
+		//5+ cards.
+	  if(aiCards.size()<6){
 		if(straightChance==3){
-		    straightText = "You have a chance for a straight, you have 3/5.\n";
-			advice += straightText;
-		}
-		
+			advice += "You have a chance for a straight, you have 3/5.\n";
+		}		
+	  }
+	  
+	  if(aiCards.size()<7){
 		if(straightChance==4){
-			straightText = "You have a chance for a straight, you have 4/5.\n";
-			advice += straightText;
+			advice += "You have a chance for a straight, you have 4/5.\n";
 		}
-		
+	  }
+	  
 		if(straightChance==5){		
 			straighHelper = "You have a straight!! you have 5/5.\n";
 			advice += "A straight is a really good hand! Go for it!\n";
@@ -434,15 +466,17 @@ public class Calc {
 			}
 		}
 		
-		
+		if(aiCards.size()<6){
 			if(colorChance==3){
 				advice += "You have a chance for a flush in " + theColor + ", you have 3/5 for it.\n";
 				
 			}
-			
+		}
+		if(aiCards.size()<7){
 			if(colorChance==4){
 				advice += "You have a chance for a flush in " + theColor + ", you have 4/5 for it.\n";
 			}
+		}
 			if(colorChance==5){
 				colorChanceHelper = "You have a flush in " + theColor + ", you have 5/5!!\n";
 				advice += "You have a flush!! Go for it, your hand is hard to beat!\n";
@@ -459,8 +493,9 @@ public class Calc {
 			helper = "You have nothing, sorry.";
 		}
 		
-//		System.out.println(" asd - "+ nbrForStraight1);
+		
 		return helper + "\n\nAdvice\n" + advice;
+		
 	}
 	
 	
