@@ -74,7 +74,7 @@ public class TurnOne implements AICalculations {
 		System.out.println("roll - " + roll);
 
 		if(toBet==0){
-			toDO="Check";
+			toDO="check";
 		}
 		
 		else{
@@ -90,7 +90,7 @@ public class TurnOne implements AICalculations {
 		
 
 		if(roll<=likelyhood){
-			toDO = "bid," +toBet;
+			toDO = "call," +toBet;
 			aiPot-=toBet;
 		}
 				
@@ -98,17 +98,17 @@ public class TurnOne implements AICalculations {
 		if((likelyhood-45)>roll){			
 
 		  int raiseAmount = (int)(1.10*toBet);	//FIXA HUR MKT RAISE
-		  toDO = "Raise,"+ raiseAmount;
+		  toDO = "raise,"+ raiseAmount;
 		  aiPot-=raiseAmount;
 		  if(likelyhood-55>roll){
 			raiseAmount = (int)(1.17*toBet);	
-			toDO = "Raise,"+ raiseAmount;
+			toDO = "raise,"+ raiseAmount;
 			aiPot-=raiseAmount;
 		  }
 		
 		  if(likelyhood-65>roll){
 			  raiseAmount = (int)(1.25*toBet);	
-			  toDO = "Raise,"+ raiseAmount;
+			  toDO = "raise,"+ raiseAmount;
 			  aiPot-=raiseAmount;
 		  }
 		

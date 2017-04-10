@@ -92,7 +92,7 @@ public class TurnTwo implements AICalculations{
 		}
 		
 		if(toBet==0){
-			toDO="Check";
+			toDO="check";
 		}
 		
 		else{
@@ -112,7 +112,7 @@ public class TurnTwo implements AICalculations{
 		
 		
 		if(likelyhood>roll && likelyhood-35<roll && !(toBet==0)){
-			toDO = "bid,"+toBet;
+			toDO = "call,"+toBet;
 			aiPot-=toBet;
 		}
 		
@@ -122,20 +122,20 @@ public class TurnTwo implements AICalculations{
 			  if(raiseAmount<(toBet+5)){  //så man inte höjer med bara 1..
 				  raiseAmount=(toBet+10);			  
 			  }			
-			 toDO = "Raise,"+ raiseAmount;
+			 toDO = "raise,"+ raiseAmount;
 			 
 			  if((likelyhood-55)>roll){
 				raiseAmount = (int)(1.17*toBet);	
-				toDO = "Raise,";
+				toDO = "raise,";
 			  }
 			
 			  if((likelyhood)-65>roll){
 				  raiseAmount = (int)(1.25*toBet);	
-				  toDO = "Raise,";
+				  toDO = "raise,";
 			  }
 			
 			if (raiseAmount > aiPot){
-				toDO = "All-in," + String.valueOf(aiPot);
+				toDO = "all-in," + String.valueOf(aiPot);
 				aiPot -= aiPot;
 			}
 			
