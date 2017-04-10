@@ -338,31 +338,31 @@ public class Calc {
 		}
 		
 		//2 cards..
-//		if(aiCards.size()<3){
-//		
-//			if(straightChance==2){
-//			    straightText = "You have a chance for a straight, you have 2/5.\n";
-//				advice += straightText;
-//			}
-//			
-//			if(pairsNmore==2){			
-//				pairsNmoreHelper = "You have a pair of " + yourCardInt;
-//			}
-//			
-//			if(colorChance==2){
-//				advice += "You have a chance for a flush in " + theColor + ", you have 2/5 for it.\n";
-//				
-//			}
-//			
-//			if(highCards){
-//				if(advice.length()<2){
-//				advice = "You only have high cards. \nYou can try and see but only if its cheap\n";
-//			}
-//				else{
-//					advice += "You have high cards.\n";
-//				}
-//			}
-//		}
+		if(aiCards.size()<3){
+		
+			if(straightChance==2){
+			    straightText = "You have a chance for a straight, you have 2/5.\n";
+				advice += straightText;
+			}
+			
+			if(pairsNmore==2){			
+				pairsNmoreHelper = "You have a pair of " + yourCardInt;
+			}
+			
+			if(colorChance==2){
+				advice += "You have a chance for a flush in " + theColor + ", you have 2/5 for it.\n";
+				
+			}
+			
+			if(highCards){
+				if(advice.length()<2){
+				advice = "You only have high cards. \nYou can try and see but only if its cheap\n";
+			}
+				else{
+					advice += "You have high cards.\n";
+				}
+			}
+		}
 		
 		
 		
