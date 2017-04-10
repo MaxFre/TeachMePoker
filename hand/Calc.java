@@ -64,7 +64,7 @@ public class Calc {
 		int nbrOftemp1 = 0;
 		int nbrOftemp2 = 0;
 		int size = aiCards.size();
-		int[] cards = new int[size];
+		int[] cards = new int[size+1];
 		
 		
 		for(int i = 0; i< size; i++){
@@ -103,7 +103,7 @@ public class Calc {
 				if(cards[i] + temp2 <=10){
 					lowCards=true;
 				}
-				if(cards[i] + temp2 > 217){
+				if(cards[i] + temp2 > 17){
 					highCards=true;
 				}
 
