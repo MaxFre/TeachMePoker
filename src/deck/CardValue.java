@@ -1,6 +1,10 @@
 package deck;
 
-public enum CardValue{
+/**
+ * Enums for the allowed card values
+ * @author Vedrana Zeba
+ */
+public enum CardValue {
 	TWO(2),
 	THREE(3),
 	FOUR(4),
@@ -17,11 +21,21 @@ public enum CardValue{
 
 	private int cardValue;
 
-	private CardValue (int value){
+
+	/**
+	 * Creates the card values
+	 * @param value an int between 2-14
+	 */
+	private CardValue(int value) {
 		this.cardValue = value;
 	}
 
-	public int getCardValue(){
+
+	/**
+	 * Returns the card value
+	 * @return the card value
+	 */
+	public int getCardValue() {
 		return cardValue;
 	}
 }
