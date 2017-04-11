@@ -1,4 +1,4 @@
-package AiClass;
+package aiClass;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -30,20 +30,32 @@ public class Ai {
 	
 	public Ai(int aiPot){  
 		this.aiPot = aiPot;
-		
+//	}
 //		Random rand =  new Random();
 //		aiPot = rand.nextInt(1000)+400;
 //		toBet = rand.nextInt(600);
 //		
-//		aiPot = 700;
-//		toBet = 20;
 		
-		getCards();   //SÅLÄNGE JAG INTE FÅR IN VIA AI-CONSTRUKTOR
+		fromCards[0] = "2,H";
+		fromCards[1] = "2,D";
+		fromCards[2] = "4,D";
+		fromCards[3] = "5,D";
+		fromCards[4] = "6,D";
+//		fromCards[5] = "3,S";
+		
+		
+		testAI = 1;
+		
+		
+		aiPot = 160;
+		toBet = 10;
+		
+
 		aiCards.clear();
 		
-		testAI = 0;
 		
-	  for(int x = 0; x<5; x++){
+		
+//	  for(int x = 0; x<5; x++){
 	   
 	   if(testAI==0){
 		  for(int i = 0; i<2; i++){			//Lägger till kort till ArrayList som skickas till constructor.
@@ -52,20 +64,24 @@ public class Ai {
 		}
 		
 		if(testAI==1){
-			for(int i = 2; i<5; i++){			// I = 2!!!
+			for(int i = 0; i<5; i++){			// I = 2!!!
 				aiCards.add(fromCards[i]);
 				}
 		}
 		
 		if(testAI==2){
-												
-				aiCards.add(fromCards[6]);
+			for(int i = 0; i<6; i++){			// I = 2!!!
+				aiCards.add(fromCards[i]);
+				}						
+//				aiCards.add(fromCards[6]);
 				}
 		
 		
 		if(testAI==3){
-
-				aiCards.add(fromCards[7]);
+			for(int i = 0; i<7; i++){			// I = 2!!!
+				aiCards.add(fromCards[i]);
+				}
+//				aiCards.add(fromCards[7]);
 				}
 		
 		
@@ -103,10 +119,10 @@ public class Ai {
 		if(!(whatToDo.equals("fold"))){
 			testAI++;
 		}
-		else x = 50;
+//		else x = 50;
 		System.out.println("");
 		System.out.println("");
-		}
+//		}
 	}
 	
 	
@@ -116,81 +132,81 @@ public class Ai {
 	
 	}
 	
-	// Rikards metoder
+
 	
 		//set starting hand
-		public void setStartingHand(Card card1, Card card2) {
-			aiCards.clear(); //nollställer arraylist.
-			
-			String firstCard = card1.getCardValue() +card1.getCardSuit();
-			String secondCard = card2.getCardValue() +card2.getCardSuit();
-			aiCards.add(firstCard);
-			aiCards.add(secondCard);
-			System.out.println("starting hand set for ai player");
-			// TODO Auto-generated method stub
-
-		}
-
-		// Make decision for the starting hand
-		public void makeDecision(int currentBet) {
-			turnOne =  new TurnOne(aiCards,aiPot, currentBet);
-			whatToDo = turnOne.decision();   //TurnONe respond.
-			aiPot = turnOne.updateAiPot();
-		}
-
-		// Make decision for starting hand + flop
-		public void makeDecision(int playTurn, int currentBet, Card[] flop) {
-		
-			for (Card card : flop) {				
-				aiCards.add(card.getCardValue()+card.getCardSuit());
-			}
-			
-			turnTwo =  new TurnTwo(aiCards,aiPot, currentBet);
-			whatToDo = turnTwo.decision();   //TurnONe respond.
-			aiPot = turnTwo.updateAiPot();
-
-		}
-
-		// Make decision for starting hand + flop + turn && starting hand + flop +
-		// turn + river
-		public void makeDecision(int playTurn, int currentBet, Card turn) {					
-			aiCards.add(turn.getCardValue()+turn.getCardSuit());
-			
-			if (aiCards.size() < 7) {
-				turnThree =  new TurnThree(aiCards,aiPot, currentBet);
-				whatToDo = turnThree.decision();  
-				aiPot = turnThree.updateAiPot();
-				
-			} else if (aiCards.size() == 7) {
-				turnFour =  new TurnFour(aiCards,aiPot, currentBet);
-				whatToDo = turnFour.decision();  
-				aiPot = turnFour.updateAiPot();
-			}
-			
-		}
-
-		private void setDecision(String reset) {
-			whatToDo = reset;
-
-		}
-
-		public String getDecision() {
-			return whatToDo;
-		}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	public void updateWinner(int aiPot){
-		this.aiPot = aiPot;
-	}
+//		public void setStartingHand(Card card1, Card card2) {
+//			aiCards.clear(); //nollställer arraylist.
+//			char A = card1.getCardSuit().charAt(0);
+//			char B = card1.getCardSuit().charAt(0);
+//			String firstCard =  card1.getCardValue()+","+String.valueOf(A);
+//			String secondCard =  card2.getCardValue()+","+String.valueOf(B);
+//			aiCards.add(firstCard);
+//			aiCards.add(secondCard);
+//			System.out.println("starting hand set for ai player");
+//			// TODO Auto-generated method stub
+//
+//		}
+//
+//		// Make decision for the starting hand
+//		public void makeDecision(int currentBet) {
+//			turnOne =  new TurnOne(aiCards,aiPot, currentBet);
+//			whatToDo = turnOne.decision();   //TurnONe respond.
+//			aiPot = turnOne.updateAiPot();
+//		}
+//
+//		// Make decision for starting hand + flop
+//		public void makeDecision(int currentBet, Card[] flop) {
+//		
+//			for (Card card : flop) {	
+//				char A = card.getCardSuit().charAt(0);
+//				aiCards.add(  card.getCardValue()+","+ String.valueOf(A));
+//			}
+//			
+//			turnTwo =  new TurnTwo(aiCards,aiPot, currentBet);
+//			whatToDo = turnTwo.decision();   //TurnONe respond.
+//			aiPot = turnTwo.updateAiPot();
+//
+//		}
+//
+//		// Make decision for starting hand + flop + turn && starting hand + flop +
+//		// turn + river
+//		public void makeDecision(int currentBet, Card turn) {					
+//			aiCards.add(turn.getCardValue()+turn.getCardSuit());
+//			
+//			if (aiCards.size() < 7) {
+//				turnThree =  new TurnThree(aiCards,aiPot, currentBet);
+//				whatToDo = turnThree.decision();  
+//				aiPot = turnThree.updateAiPot();
+//				
+//			} else if (aiCards.size() == 7) {
+//				turnFour =  new TurnFour(aiCards,aiPot, currentBet);
+//				whatToDo = turnFour.decision();  
+//				aiPot = turnFour.updateAiPot();
+//			}
+//			
+//		}
+//
+//		public void setDecision(String reset) {
+//			whatToDo = reset;
+//
+//		}
+//
+//		public String getDecision() {
+//			return whatToDo;
+//		}
+//
+//		public int aiPot(){
+//			return aiPot;
+//		}
+//	
+//	public void updateWinner(int aiPot){
+//		this.aiPot = aiPot;
+//	}
 	
 	public static void main(String[] args){
 		Ai run = new Ai(1000);
 	}
 }
+
+

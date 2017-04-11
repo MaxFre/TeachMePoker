@@ -1,4 +1,4 @@
-package AiClass;
+package aiClass;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -157,10 +157,10 @@ public class TurnFour implements AICalculations{
 		int nbrOftemp = 0;
 		int nbrOftemp1 = 0;
 		int nbrOftemp2 = 0;
-		int[] cards = new int[5];
+		int[] cards = new int[7];
 		
 		
-		for(int i = 0; i< 5; i++){
+		for(int i = 0; i< 7; i++){
 			cards[i] = cardNbr.get(i);
 		}
 		
@@ -236,16 +236,16 @@ public class TurnFour implements AICalculations{
 		int H = 0; int D = 0;
 		boolean Color = false;
 		for(String x : cardClr){
-			if(x.equals("s")){
+			if(x.equals("S")){
 				S++;
 			}
-			if(x.equals("c")){
+			if(x.equals("C")){
 				C++;
 			}
-			if(x.equals("d")){
+			if(x.equals("D")){
 				D++;
 			}
-			if(x.equals("h")){
+			if(x.equals("H")){
 				H++;
 			}
 		}

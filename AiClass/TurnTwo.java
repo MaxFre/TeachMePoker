@@ -1,4 +1,4 @@
-package AiClass;
+package aiClass;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -351,16 +351,16 @@ public class TurnTwo implements AICalculations{
 		int H = 0; int D = 0;
 		boolean Color = false;
 		for(String x : cardClr){
-			if(x.equals("s")){
+			if(x.equals("S")){
 				S++;
 			}
-			if(x.equals("c")){
+			if(x.equals("C")){
 				C++;
 			}
-			if(x.equals("d")){
+			if(x.equals("D")){
 				D++;
 			}
-			if(x.equals("h")){
+			if(x.equals("H")){
 				H++;
 			}
 		}
@@ -449,7 +449,6 @@ public class TurnTwo implements AICalculations{
 	}
 
 
-	@Override
 	public int updateAiPot() {
 		return aiPot;
 	}

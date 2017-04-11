@@ -1,4 +1,4 @@
-package AiClass;
+package aiClass;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -10,7 +10,6 @@ import java.util.Random;
  */
 public class TurnOne implements AICalculations {
 	
-	private Ai ai;
 	private ArrayList<Integer> cardNbr = new ArrayList<Integer>();
 	private ArrayList<String> cardClr = new ArrayList<String>();
 	private boolean colorChance;
@@ -75,6 +74,11 @@ public class TurnOne implements AICalculations {
 
 		if(toBet==0){
 			toDO="Check";
+			
+			if(likelyhood-35>roll){
+				toDO="Raise,"+aiPot*0.07;
+				
+			}
 		}
 		
 		else{
@@ -189,7 +193,7 @@ public class TurnOne implements AICalculations {
 			}
 		}
 		
-		if(S>=2 || C>=2 || D>=2 || H>=2){
+		if(S==2 || C==2 || D==2 || H==2){
 			Color=true;
 		}
 	 return Color;		
@@ -212,11 +216,11 @@ public class TurnOne implements AICalculations {
 		int card2 = cardNbr.get(1);
 		
 		if(!(card1==card2)){
-		if(card1>card2){
+		  if(card1>card2){
 			int temp =  card2;
 			card2 = card1;
 			card1 = temp;
-		}
+		  }
 		int check = card1+4;
 		if(card2<=check)
 		stege++;

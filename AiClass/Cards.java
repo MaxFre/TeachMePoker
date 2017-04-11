@@ -1,4 +1,4 @@
-package AiClass;
+package aiClass;
 
 import java.util.ArrayList;
 import java.util.Random;
