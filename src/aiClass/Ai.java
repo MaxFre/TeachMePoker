@@ -20,7 +20,7 @@ public class Ai {
 	private TurnFour turnFour;
 	private Cards cards;
 	private String[] fromCards = new String[10];
-	private String whatToDo;
+	private String whatToDo = "";
 	private int testAI = 0;
 	private String name;
 	private ArrayList<String> aiCards = new ArrayList<String>(); // Lista som
