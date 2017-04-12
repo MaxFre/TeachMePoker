@@ -19,13 +19,13 @@ public class Deck {
 	 * Creates a deck of cards
 	 */
 	public Deck() {
-		createDeck();
-	}
+    createDeck();
+  }
 
 
-	/**
-	 * Shuffles the deck
-	 */
+  /**
+   * Shuffles the deck
+   */
 	public void shuffle() {
 		Collections.shuffle(deck);
 	}
