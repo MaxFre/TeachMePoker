@@ -55,16 +55,16 @@ public class HandCalculation {
 		
 		for(int i = 0; i<aiCards.size(); i++){			//CardNumber
 			 String temp = aiCards.get(i);
-			 String[] test = temp.split(",");
-			 int tempInt = Integer.parseInt(test[0]);
+			 String[] splitter = temp.split(",");
+			 int tempInt = Integer.parseInt(splitter[0]);
 			 cardNbr.add(tempInt);
 		}
 
 		
 		for(int i = 0; i<aiCards.size(); i++){			//CardColor		
 			 String temp = aiCards.get(i);
-			 String[] test = temp.split(",");
-			 String tempString = test[1];
+			 String[] splitter = temp.split(",");
+			 String tempString = splitter[1];
 			 cardClr.add(tempString);
 		}
 	}
@@ -272,24 +272,24 @@ public class HandCalculation {
 	 */
 	public int checkStraight(){
 		
-		int[] test = new int[aiCards.size()];
-		int testar = 0;
+		int[] tempArray = new int[aiCards.size()];
+		int threshold = 0;
 		for(int i = 0; i< aiCards.size(); i++){
-			test[i] = cardNbr.get(i);
+			tempArray[i] = cardNbr.get(i);
 		}
 		
-		Arrays.sort(test);
+		Arrays.sort(tempArray);
 		int inStraight = 0;	
 		int check = 4;
 		
-	for(int x = 0; x<test.length; x++){	
-		int temp = test[x]+check;
+	for(int x = 0; x<tempArray.length; x++){	
+		int temp = tempArray[x]+check;
 		inStraight = 0;
 		check--;
 		nbrForStraight.clear();
-		for(int i = 0; i<test.length; i++){
+		for(int i = 0; i<tempArray.length; i++){
 			
-			if(test[i]<=temp && !(test[i]<temp-4)){
+			if(tempArray[i]<=temp && !(tempArray[i]<temp-4)){
 					
 				if(i==0){							//kollar om 0 är samma som 1.
 //					if(!(test[i]==test[i+1])){
@@ -299,7 +299,7 @@ public class HandCalculation {
 				}
 				
 				if(i>=1){							
-					if(!(test[i]==test[i-1])){		//kollar om 1-4 är samma som nån annan.
+					if(!(tempArray[i]==tempArray[i-1])){		//kollar om 1-4 är samma som nån annan.
 						inStraight++;
 						nbrForStraight.add(aiCards.get(i));
 					}
@@ -308,11 +308,11 @@ public class HandCalculation {
 			}
 		}
 	
-		if(inStraight>testar){
+		if(inStraight>threshold){
 			nbrForStraight1.clear();
 			nbrForStraight1 = nbrForStraight;
 			
-			testar = inStraight;
+			threshold = inStraight;
 	
 
 		}
@@ -321,7 +321,7 @@ public class HandCalculation {
 	}
 	
 			
-		return testar;
+		return threshold;
 	}
 	
 	/**
@@ -333,32 +333,32 @@ public class HandCalculation {
 		String parisNmoreText = "";
 		String advice = "";
 		String helper="";
-		String[] test = yourCard.split(",");
+		String[] splitter = yourCard.split(",");
 		String straightText = "";
-		int testa = Integer.parseInt(test[0]);
+		int cardNbr = Integer.parseInt(splitter[0]);
 		String straighHelper = "";
 		String pairsNmoreHelper = "";
 		String colorChanceHelper ="";
 		String yourCardInt="";
 		
 	
-		if(testa<11){
-			yourCardInt = String.valueOf(testa)+"s ";
+		if(cardNbr<11){
+			yourCardInt = String.valueOf(cardNbr)+"s ";
 			
 		}
 		
-		if(testa>10){
-			if(testa==11){
+		if(cardNbr>10){
+			if(cardNbr==11){
 				yourCardInt = "Jacks";
 			}
-			if(testa==12){
+			if(cardNbr==12){
 				yourCardInt = "Queens";
 			}
 			
-			if(testa==13){
+			if(cardNbr==13){
 				yourCardInt = "Kings";
 			}
-			if(testa==14){
+			if(cardNbr==14){
 				yourCardInt = "Aces";
 			}
 			
@@ -430,7 +430,7 @@ public class HandCalculation {
 			for(int i = 0; i<aiCards.size(); i++){			
 				String[] seeIfSame = aiCards.get(i).split(",");
 				int temp = Integer.parseInt(seeIfSame[0]);
-				if(testa==temp){
+				if(cardNbr==temp){
 					toHighlight.add(aiCards.get(i));
 				}
 			}
@@ -443,7 +443,7 @@ public class HandCalculation {
 			for(int i = 0; i<aiCards.size(); i++){			
 				String[] seeIfSame = aiCards.get(i).split(",");
 				int temp = Integer.parseInt(seeIfSame[0]);
-				if(testa==temp){
+				if(cardNbr==temp){
 					toHighlight.add(aiCards.get(i));
 				}
 			}
@@ -456,7 +456,7 @@ public class HandCalculation {
 			for(int i = 0; i<aiCards.size(); i++){			
 				String[] seeIfSame = aiCards.get(i).split(",");
 				int temp = Integer.parseInt(seeIfSame[0]);
-				if(testa==temp){
+				if(cardNbr==temp){
 					toHighlight.add(aiCards.get(i));
 				}
 			}
@@ -464,7 +464,7 @@ public class HandCalculation {
 		
 		if(pairsNmore==22){			//2-par
 			String temps[] = yourCard2.split(",");
-			pairsNmoreHelper = "You have two pairs of  " + yourCardInt + " and " + temps[0]+"s";
+			pairsNmoreHelper = "You have two pairs of  " + yourCardInt + " and " + otherCard+"s"; //buggad!
 			parisNmoreText = "Two pairs is a good hand. Go for it.\n";
 			advice += parisNmoreText;
 			toHighlight.clear();
@@ -472,7 +472,7 @@ public class HandCalculation {
 			for(int i = 0; i<aiCards.size(); i++){			
 				String[] seeIfSame = aiCards.get(i).split(",");
 				int temp = Integer.parseInt(seeIfSame[0]);			
-				if(testa==temp || Integer.parseInt(temps[0]) == temp){
+				if(cardNbr==temp || Integer.parseInt(temps[0]) == temp){
 					toHighlight.add(aiCards.get(i));
 				}
 			}
@@ -480,14 +480,14 @@ public class HandCalculation {
 		
 		if(pairsNmore == 23 || pairsNmore==32){		//kåk
 			String temps[] = yourCard2.split(",");
-			pairsNmoreHelper = "You have a full house with " + yourCardInt + " and " + temps[0]+"s";
+			pairsNmoreHelper = "You have a full house with " + yourCardInt + " and " + otherCard+"s";   //Buggad!!
 			parisNmoreText = "There isnt much that can beat this hand. Raise is prefered.\n";
 			advice += parisNmoreText;
 			
 			for(int i = 0; i<aiCards.size(); i++){			
 				String[] seeIfSame = aiCards.get(i).split(",");
 				int temp = Integer.parseInt(seeIfSame[0]);			
-				if(testa==temp || Integer.parseInt(temps[0]) == temp){
+				if(cardNbr==temp || Integer.parseInt(temps[0]) == temp){
 					toHighlight.add(aiCards.get(i));
 				}
 			}

@@ -29,6 +29,7 @@ public class Hand {
 		String helper = calc.Help();
 		toHighlight = calc.toHiglight();
 
+		System.out.println(" -NEW HAND- ");
 		System.out.println(aiCards);
 		System.out.println("Helper - " + helper);
 		System.out.println("");

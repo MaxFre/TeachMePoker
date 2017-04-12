@@ -36,15 +36,15 @@ public class AiCalculation {
 	public void getCardValues() {
 		for (int i = 0; i < aiCards.size(); i++) { // CardNumber
 			String temp = aiCards.get(i);
-			String[] test = temp.split(",");
-			int tempInt = Integer.parseInt(test[0]);
+			String[] splitter = temp.split(",");
+			int tempInt = Integer.parseInt(splitter[0]);
 			cardNbr.add(tempInt);
 		}
 
 		for (int i = 0; i < aiCards.size(); i++) { // CardColor
 			String temp = aiCards.get(i);
-			String[] test = temp.split(",");
-			String tempString = test[1];
+			String[] splitter = temp.split(",");
+			String tempString = splitter[1];
 			cardClr.add(tempString);
 		}
 	}
@@ -190,32 +190,32 @@ public class AiCalculation {
 	 */
 	public int checkStraight() {
 
-		int[] test = new int[aiCards.size()];
-		int testar = 0;
+		int[] tempArray = new int[aiCards.size()];
+		int treshold = 0;
 		for (int i = 0; i < aiCards.size(); i++) {
-			test[i] = cardNbr.get(i);
+			tempArray[i] = cardNbr.get(i);
 		}
 
-		Arrays.sort(test);
+		Arrays.sort(tempArray);
 		int inStraight = 0;
 		int check = 4;
 
-		for (int x = 0; x < test.length; x++) {
-			int temp = test[x] + check;
+		for (int x = 0; x < tempArray.length; x++) {
+			int temp = tempArray[x] + check;
 			inStraight = 0;
 			check--;
-			for (int i = 0; i < test.length; i++) {
-				if (test[i] <= temp && !(test[i] < temp - 4)) {
+			for (int i = 0; i < tempArray.length; i++) {
+				if (tempArray[i] <= temp && !(tempArray[i] < temp - 4)) {
 
 					// problem med dubbletter i början, ex 3-3.
 
 					if (i == 0) { 			// kollar om 0 är samma som 1.
-						if (!(test[i] == test[i + 1])) {
+						if (!(tempArray[i] == tempArray[i + 1])) {
 							inStraight++;
 						}
 					}
 					if (i >= 1) {
-						if (!(test[i] == test[i - 1])) { // kollar om 1-4 är samma som nån annan.
+						if (!(tempArray[i] == tempArray[i - 1])) { // kollar om 1-4 är samma som nån annan.
 							inStraight++;
 						}
 					}
@@ -223,13 +223,13 @@ public class AiCalculation {
 				}
 			}
 
-			if (inStraight > testar) {
-				testar = inStraight;
+			if (inStraight > treshold) {
+				treshold = inStraight;
 			}
 
 		}
 
-		return testar;
+		return treshold;
 	}
 
 }
