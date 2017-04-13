@@ -137,50 +137,75 @@ public class Ai {
     this.aiPot = aiPot;
   }
 
+	/**
+	 * 
+	 * @return returns the name of the AI
+	 */
+	public String getName() {
+		return name;
+	}
 
-  public String getName() {
-    return name;
-  }
+	/**
+	 * 
+	 * @param bigBlind the amount the big blind needs to pay.          
+	 * @param b  if the ai is or isnt the big blind.
+	 *          
+	 */
+	public void setBigBlind(int bigBlind, boolean b) {
+		if (bigBlind > 0) {
+			System.out.println("AI " + name + " paid the big Blind (" + bigBlind + ")");
+		}
+		isBigBlind = true;
+		aiPot -= bigBlind;
+		this.paidThisTurn += bigBlind;
+	}
 
+	/**
+	 * 
+	 * @param smallBlind the amount the small blind needs to pay.           
+	 * @param bif the ai is or isnt the small blind.
+	 *            
+	 */
+	public void setSmallBlind(int smallBlind, boolean b) {
+		if (smallBlind > 0) {
+			System.out.println("AI " + name + " paid the small Blind (" + smallBlind + ")");
+		}
+		isSmallBlind = true;
+		aiPot -= smallBlind;
+		this.paidThisTurn += smallBlind;
+	}
 
-  public void setBigBlind(int bigBlind, boolean b) {
-    if (bigBlind > 0) {
-      System.out.println("AI " + name + " paid the big Blind (" + bigBlind + ")");
-    }
-    isBigBlind = true;
-    aiPot -= bigBlind;
-    this.paidThisTurn += bigBlind;
-  }
+	/**
+	 * 
+	 * @return returns if the ai is or isnt the small blind
+	 */
+	public boolean isSmallBlind() {
+		return isSmallBlind;
+	}
 
+	/**
+	 * 
+	 * @return returns if the ai is or isnt the big blind
+	 */
+	public boolean isBigBlind() {
+		return isBigBlind;
+	}
 
-  public void setSmallBlind(int smallBlind, boolean b) {
-    if (smallBlind > 0) {
-      System.out.println("AI " + name + " paid the small Blind (" + smallBlind + ")");
-    }
-    isSmallBlind = true;
-    aiPot -= smallBlind;
-    this.paidThisTurn += smallBlind;
-  }
+	/**
+	 * 
+	 * @return returns the amount the ai paid this turn
+	 */
+	public int getPaidThisTurn() {
+		return paidThisTurn;
+	}
 
-
-  public boolean isSmallBlind() {
-    return isSmallBlind;
-  }
-
-
-  public boolean isBigBlind() {
-    return isBigBlind;
-  }
-
-
-  public int getPaidThisTurn() {
-    return paidThisTurn;
-  }
-
-  public void setPaidThisTurn(int paidThisTurn) {
-    this.paidThisTurn = paidThisTurn;
-  }
-
+	/**
+	 * 
+	 * @param sets how much the ai paid this turn.
+	 */
+	public void setPaidThisTurn(int paidThisTurn) {
+		this.paidThisTurn = paidThisTurn;
+	}
 
 }
 

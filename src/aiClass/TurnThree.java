@@ -164,7 +164,10 @@ public class TurnThree {
   }
 
 
-
+  /**
+   * 
+   * @return returns the ais pot after a turn.
+   */
   public int updateAiPot() {
     return aiPot;
   }

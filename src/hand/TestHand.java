@@ -19,7 +19,7 @@ public class TestHand {
 
   public TestHand() {
 
-    for (int testAlot = 0; testAlot < 15; testAlot++) {
+    for (int testAlot = 0; testAlot < 15; testAlot++) { // runs 15 random hands that are being tested.
       cards.clear();
       deck = new Deck();
       deck.shuffle();

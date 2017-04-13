@@ -147,7 +147,10 @@ public class TurnFour {
   public String decision() {
     return toDO;
   }
-
+/**
+ * 
+ * @return returns the ais pot after a turn.
+ */
   public int updateAiPot() {
     return aiPot;
   }
