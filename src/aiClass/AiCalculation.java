@@ -65,7 +65,7 @@ public class AiCalculation {
 			high = true;
 		}
 
-//		if (card1 >= 10 && card2 >= 10) {
+//		if (card1 >= 10 && card2 >= 10) {		//not implemented
 //			rlyhighCards = true;
 //		}
 		return high;

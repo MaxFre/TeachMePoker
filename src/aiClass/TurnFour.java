@@ -110,7 +110,7 @@ public class TurnFour {
         aiPot -= toBet;
       }
 
-      if (likelyhood - 45 > roll) {
+      if (likelyhood - 45 > roll && likelyhood-55<roll) {
         raiseAmount = (int) (1.10 * toBet);
         if (raiseAmount < (toBet + 5)) { // så man inte höjer med bara 1..
 
@@ -118,7 +118,7 @@ public class TurnFour {
         }
         toDO = "raise," + raiseAmount;
 
-        if ((likelyhood - 55) > roll) {
+        if ((likelyhood - 55) > roll && likelyhood-65<roll) {
           raiseAmount = (int) (1.17 * toBet);
           toDO = "raise,";
         }

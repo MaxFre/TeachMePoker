@@ -9,6 +9,7 @@ import deck.Card;
  *         returns a respond to controller. 17-04-12
  * @version 1.5
  */
+
 public class Ai {
 
   private boolean isSmallBlind = false;
@@ -110,7 +111,6 @@ public class Ai {
    */
   public void setDecision(String reset) {
     whatToDo = reset;
-
   }
 
 

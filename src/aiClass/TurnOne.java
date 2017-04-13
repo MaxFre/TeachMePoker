@@ -20,7 +20,7 @@ public class TurnOne {
   private String toDO = "fold";
   private int aiPot;
   private int toBet;
-
+  private int raiseAmount;
   /**
    * Gets value from Ai and calls on all the methods to evaluate a respond.
    * 
@@ -78,14 +78,14 @@ public class TurnOne {
     System.out.println("likelyhood - " + likelyhood);
     System.out.println("roll - " + roll);
 
-    if (toBet == 0) {
-      toDO = "check";
-
-      if (likelyhood - 35 > roll) {
-        toDO = "raise," + aiPot * 0.07;
-
-      }
-    } else {
+//    if (toBet == 0) {
+//      toDO = "check";
+//
+//      if (likelyhood - 35 > roll) {
+//        toDO = "raise," + aiPot * 0.07;
+//
+//      }
+//    } else {
       int aipotChance = (int) (aiPot * 0.025);
       int toBetChance = (int) (toBet * 0.030 * 2);
 
@@ -96,32 +96,33 @@ public class TurnOne {
       System.out.println("toBet - " + toBet);
       System.out.println("aiPot - " + aiPot);
 
-      if (roll <= likelyhood) {
+      if (roll <= likelyhood && likelyhood-45<roll) {
         toDO = "call," + toBet;
         aiPot -= toBet;
       }
 
-      if ((likelyhood - 45) > roll) {
+      if ((likelyhood - 45) > roll && likelyhood-55<roll) {
 
-        int raiseAmount = (int) (1.10 * toBet); // FIXA HUR MKT RAISE
+        raiseAmount = (int) (1.10 * toBet); 
         toDO = "raise," + raiseAmount;
         aiPot -= raiseAmount;
-        if (likelyhood - 55 > roll) {
+      }
+    
+      if (likelyhood - 55 > roll && likelyhood-65< roll){
           raiseAmount = (int) (1.17 * toBet);
           toDO = "raise," + raiseAmount;
           aiPot -= raiseAmount;
         }
 
-        if (likelyhood - 65 > roll) {
+       if (likelyhood - 65 > roll) {
           raiseAmount = (int) (1.25 * toBet);
           toDO = "raise," + raiseAmount;
           aiPot -= raiseAmount;
         }
 
-      }
+      
     }
 
-  }
 
   /**
    * @return updates the AI's pot after it has commited a amount for the round.
