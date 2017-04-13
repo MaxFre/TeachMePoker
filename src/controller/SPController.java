@@ -9,6 +9,7 @@ import deck.Deck;
 import gui.GUI;
 import player.Player;
 
+
 /**
  * 
  * @author Rikard Almgren
@@ -42,6 +43,7 @@ public class SPController {
   private boolean winnerDeclared = false;
   private ArrayList<String> name = new ArrayList<String>();
 
+
   /**
    * TestKonstruktor
    */
@@ -50,6 +52,7 @@ public class SPController {
     new GUI();
     startGame(3, 10000);
   }
+
 
   /**
    * Method which prepares the whole Session
@@ -73,6 +76,7 @@ public class SPController {
     setupPhase();
   }
 
+
   /**
    * Method that creates a list of names for AI-Players to pull from
    */
@@ -88,10 +92,12 @@ public class SPController {
     Collections.shuffle(name);
   }
 
+
   /**
    * Method which prepares a new gameround.
    */
   private void setupPhase() {
+
     if (player.getPlayerPot() > bigBlind) {
       deck = new Deck();
       deck.shuffle();
@@ -121,6 +127,7 @@ public class SPController {
 
   }
 
+
   /**
    * Method that runs the gameround itself
    */
@@ -133,7 +140,9 @@ public class SPController {
         if (currentPlayer == noOfPlayers - 1) {
           if (!player.getDecision().equals("fold")) {
             if (!(checkLivePlayers() > 1)) {
+              System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
               System.out.println("Player has won the round!");
+              System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
               winnerDeclared = true;
               break;
             }
@@ -144,7 +153,9 @@ public class SPController {
         } else {
           if (!aiPlayers.get(currentPlayer).getDecision().contains("fold")) {
             if (!(checkLivePlayers() > 1)) {
+              System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
               System.out.println(aiPlayers.get(currentPlayer).getName() + " has won the round!");
+              System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
               winnerDeclared = true;
               break;
             }
@@ -154,17 +165,26 @@ public class SPController {
           }
         }
         currentPlayer = (currentPlayer + 1) % noOfPlayers;
-        allCallorFold();
         // testkod
         if (currentPlayer != noOfPlayers - 1) {
           System.out.println("All called or folded? " + allCalledorFolded);
         }
       }
       playTurn++;
+
       allCalledorFolded = false;
+      for (Ai ai : aiPlayers) {
+        if (!ai.getDecision().equals("fold")) {
+          ai.setDecision("");
+        }
+      }
       if (winnerDeclared) {
         break;
       }
+    }
+    if (playTurn >= 4) {
+      System.out.println("One of the remaining players won");
+      // TODO Calculate an actual winner
     }
     winnerDeclared = false;
     playTurn = 0;
@@ -182,7 +202,6 @@ public class SPController {
     }
     setupPhase();
   }
-
 
 
   /**
@@ -206,10 +225,12 @@ public class SPController {
     return livePlayers;
   }
 
+
   /**
    * Method which asks the current AIplayer to make a decision based on the current max bet.
    */
   private void askForAiDecision() {
+
     Ai ai = aiPlayers.get(currentPlayer);
     System.out.println("current playTurn(0 = start, 1 = flop, 2 = turn, 3 = river): " + playTurn);
     if (playTurn == 0) {
@@ -225,7 +246,9 @@ public class SPController {
       ai.makeDecision(currentMaxBet, river);
       aiAction(currentPlayer);
     }
+    allCallorFold();
   }
+
 
   /**
    * TestMethod, Maybe used to update GUI in the future? Prints what the AI player decided to do in
@@ -234,6 +257,7 @@ public class SPController {
    * @param currentPlayer current AI player
    */
   private void aiAction(int currentPlayer) {
+
     Ai ai = aiPlayers.get(currentPlayer);
 
     String aiDecision = ai.getDecision();
@@ -259,6 +283,7 @@ public class SPController {
       System.out.println("AI " + ai.getName() + " checks");
     }
   }
+
 
   /**
    * Method which sets who the small and big blind players are dependant on who the dealer is.
@@ -295,6 +320,7 @@ public class SPController {
     }
     this.currentPotSize = smallBlind + bigBlind;
   }
+
 
   /**
    * Method which checks if everyone has folded or checked/called.
