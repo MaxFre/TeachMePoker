@@ -98,32 +98,40 @@ public class TurnOne {
       System.out.println("toBet - " + toBet);
       System.out.println("aiPot - " + aiPot);
 
-      if (roll <= likelyhood && likelyhood-45<roll) {
-        toDO = "call," + toBet;
-        aiPot -= (toBet-alreadyPaid);
-      }
+  	if (likelyhood < 45) {
+		if (roll <= 15) {
+			toDO = "call," + toBet;
+			aiPot -= (toBet-alreadyPaid);
+			System.out.println("Bluff");
+		}
+	}
 
-      if ((likelyhood - 45) >= roll && likelyhood-55<roll) {
+	if (likelyhood >= 45 && likelyhood < 100) {
+		if (aiPot == toBet) {
+			toDO = "all-in," + aiPot;
+			aiPot -= (aiPot-alreadyPaid);
+		}
+		else
+		toDO = "call," + toBet;
+		aiPot -= (toBet-alreadyPaid);
+	}
 
-        raiseAmount = (int) (1.10 * toBet); 
-        toDO = "raise," + raiseAmount;
-        aiPot -= (raiseAmount-alreadyPaid);
-      }
-    
-      if (likelyhood - 55 >= roll && likelyhood-65< roll){
-          raiseAmount = (int) (1.17 * toBet);
-          toDO = "raise," + raiseAmount;
-          aiPot -= (raiseAmount-alreadyPaid);
-        }
+	if (likelyhood >= 100) {
+		raiseAmount = (int) (1.25 * toBet);
+		if (raiseAmount < 5) {
+			raiseAmount = 10;
+		}
 
-       if (likelyhood - 65 >= roll) {
-          raiseAmount = (int) (1.25 * toBet);
-          toDO = "raise," + raiseAmount;
-          aiPot -= (raiseAmount-alreadyPaid);
-        }
+		if (aiPot <= raiseAmount) {
+			toDO = "all-in," + aiPot;
+			aiPot -= (aiPot-alreadyPaid);
+		}
+		else
+		toDO = "raise," + raiseAmount;
+		aiPot -= (raiseAmount-alreadyPaid);
+	}
 
-      
-    }
+}
 
 
   /**

@@ -21,6 +21,7 @@ public class TurnThree {
   private int toBet;
   private boolean fullColor = false;
   private int raiseAmount;
+  private int alreadyPaid;
 
   /**
    * Gets value from Ai and calls on all the methods to evaluate a respond.
@@ -29,10 +30,11 @@ public class TurnThree {
    * @param aiPot - the current size of the ais pot.
    * @param toBet - how much the ai has to commit to be able to play this turn.
    */
-  public TurnThree(ArrayList<String> aiCards, int aiPot, int toBet) {
+  public TurnThree(ArrayList<String> aiCards, int aiPot, int toBet, int alreadyPaid) {
     this.aiPot = aiPot;
     this.toBet = toBet;
-
+    this.alreadyPaid = alreadyPaid;
+    
     calculation = new AiCalculation(aiCards);
     highCards = calculation.checkHighCards();
     colorChance = calculation.checkSuit();
@@ -120,41 +122,41 @@ public class TurnThree {
       System.out.println("toBet - " + toBet);
       System.out.println("aiPot - " + aiPot);
 
-      if (likelyhood > roll && likelyhood - 35 < roll) {
-        toDO = "call," + toBet;
-        aiPot -= toBet;
-      }
+  	if (likelyhood < 45) {
+  		if (roll <= 15) {
+  			toDO = "call," + toBet;
+  			aiPot -= (toBet-alreadyPaid);
+  			System.out.println("Bluff");
+  		}
+  	}
 
-      if (likelyhood - 45 > roll && likelyhood-55<roll) {
-        raiseAmount = (int) (1.10 * toBet);
-        if (raiseAmount < (toBet + 5)) { // så man inte höjer med bara 1..
+  	if (likelyhood >= 45 && likelyhood < 100) {
+  		if (aiPot == toBet) {
+  			toDO = "all-in," + aiPot;
+  			aiPot -= (aiPot-alreadyPaid);
+  		}
+  		else
+  		toDO = "call," + toBet;
+  		aiPot -= (toBet-alreadyPaid);
+  	}
 
-          raiseAmount = (toBet + 10);
-        }
-        toDO = "raise," + raiseAmount;
+  	if (likelyhood >= 100) {
+  		raiseAmount = (int) (1.25 * toBet);
+  		if (raiseAmount < 5) {
+  			raiseAmount = 10;
+  		}
 
-        if ((likelyhood - 55) > roll && likelyhood-65<roll) {
-          raiseAmount = (int) (1.17 * toBet);
-          toDO = "raise,";
-        }
-
-        if ((likelyhood) - 65 > roll) {
-          raiseAmount = (int) (1.25 * toBet);
-          toDO = "raise,";
-        }
-
-        if (raiseAmount > aiPot) {
-          toDO = "all-in," + String.valueOf(aiPot);
-          aiPot -= aiPot;
-        }
-
-        if (raiseAmount < aiPot) {
-          toDO = "raise," + String.valueOf(raiseAmount);
-          aiPot -= raiseAmount;
-        }
-      }
+  		if (aiPot <= raiseAmount) {
+  			toDO = "all-in," + aiPot;
+  			aiPot -= (aiPot-alreadyPaid);
+  		}
+  		else
+  		toDO = "raise," + raiseAmount;
+  		aiPot -= (raiseAmount-alreadyPaid);
+  	}
     }
   }
+
 
   /**
    * @return updates the AI's pot after it has commited a amount for the round.
