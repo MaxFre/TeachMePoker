@@ -14,6 +14,7 @@ public class Ai {
 
   private boolean isSmallBlind = false;
   private boolean isBigBlind = false;
+  private boolean sameTurn = false;
   private int paidThisTurn = 0;
   private String name;
   private TurnOne turnOne;
@@ -62,9 +63,11 @@ public class Ai {
 
   // Make decision for starting hand + flop
   public void makeDecision(int currentBet, Card[] flop) {
-    for (Card card : flop) {
-      char A = card.getCardSuit().charAt(0);
-      aiCards.add(card.getCardValue() + "," + String.valueOf(A));
+    if (!sameTurn) {
+      for (Card card : flop) {
+        char A = card.getCardSuit().charAt(0);
+        aiCards.add(card.getCardValue() + "," + String.valueOf(A));
+      }
     }
 
     turnTwo = new TurnTwo(aiCards, aiPot, currentBet, paidThisTurn);
@@ -81,11 +84,12 @@ public class Ai {
   // Make decision for starting hand + flop + turn && starting hand + flop +
   // turn + river
   public void makeDecision(int currentBet, Card turn) {
-    char A = turn.getCardSuit().charAt(0);
-    aiCards.add(turn.getCardValue() + "," + String.valueOf(A));
-
+    if (!sameTurn) {
+      char A = turn.getCardSuit().charAt(0);
+      aiCards.add(turn.getCardValue() + "," + String.valueOf(A));
+    }
     if (aiCards.size() < 7) {
-      turnThree = new TurnThree(aiCards, aiPot, currentBet,paidThisTurn);
+      turnThree = new TurnThree(aiCards, aiPot, currentBet, paidThisTurn);
       whatToDo = turnThree.decision(); // TurnThree respond.
       System.out.println("PaidBeforeThisTurn: " + this.paidThisTurn);
       this.paidThisTurn += aiPot - turnThree.updateAiPot();
@@ -94,7 +98,7 @@ public class Ai {
       System.out.println("AiPot after round: " + aiPot);
 
     } else if (aiCards.size() == 7) {
-      turnFour = new TurnFour(aiCards, aiPot, currentBet,paidThisTurn);
+      turnFour = new TurnFour(aiCards, aiPot, currentBet, paidThisTurn);
       whatToDo = turnFour.decision(); // TurnFour respond.
       System.out.println("PaidBeforeThisTurn: " + this.paidThisTurn);
       this.paidThisTurn += aiPot - turnFour.updateAiPot();
@@ -134,7 +138,7 @@ public class Ai {
    * @param Updates the Ai's pot Size if it would win.
    */
   public void updateWinner(int aiPot) {
-    this.aiPot = aiPot;
+    this.aiPot += aiPot;
   }
 
 
@@ -151,7 +155,6 @@ public class Ai {
     aiPot -= bigBlind;
     this.paidThisTurn += bigBlind;
   }
-
 
   public void setSmallBlind(int smallBlind, boolean b) {
     if (smallBlind > 0) {
@@ -179,6 +182,10 @@ public class Ai {
 
   public void setPaidThisTurn(int paidThisTurn) {
     this.paidThisTurn = paidThisTurn;
+  }
+
+  public void setSameTurn(boolean sameTurn) {
+    this.sameTurn = sameTurn;
   }
 
 

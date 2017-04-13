@@ -154,7 +154,11 @@ public class SPController {
           if (!aiPlayers.get(currentPlayer).getDecision().contains("fold")) {
             if (!(checkLivePlayers() > 1)) {
               System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-              System.out.println(aiPlayers.get(currentPlayer).getName() + " has won the round!");
+              System.out.println(aiPlayers.get(currentPlayer).getName()
+                  + " has won the round! and got $" + currentPotSize
+                  + " increasing their money from " + aiPlayers.get(currentPlayer).aiPot() + " to "
+                  + (aiPlayers.get(currentPlayer).aiPot() + currentPotSize));
+              aiPlayers.get(currentPlayer).updateWinner(currentPotSize);
               System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
               winnerDeclared = true;
               break;
@@ -164,6 +168,9 @@ public class SPController {
             System.out.println("-----------------------------------------");
           }
         }
+        if (currentPlayer != noOfPlayers - 1) {
+          aiPlayers.get(currentPlayer).setSameTurn(true);
+        }
         currentPlayer = (currentPlayer + 1) % noOfPlayers;
         // testkod
         if (currentPlayer != noOfPlayers - 1) {
@@ -171,11 +178,11 @@ public class SPController {
         }
       }
       playTurn++;
-
       allCalledorFolded = false;
       for (Ai ai : aiPlayers) {
         if (!ai.getDecision().equals("fold")) {
           ai.setDecision("");
+          ai.setSameTurn(false);
         }
       }
       if (winnerDeclared) {
@@ -183,7 +190,7 @@ public class SPController {
       }
     }
     if (playTurn >= 4) {
-      System.out.println("One of the remaining players won");
+      System.out.println("\nOne of the remaining players won\n");
       // TODO Calculate an actual winner
     }
     winnerDeclared = false;
@@ -230,7 +237,6 @@ public class SPController {
    * Method which asks the current AIplayer to make a decision based on the current max bet.
    */
   private void askForAiDecision() {
-
     Ai ai = aiPlayers.get(currentPlayer);
     System.out.println("current playTurn(0 = start, 1 = flop, 2 = turn, 3 = river): " + playTurn);
     if (playTurn == 0) {
@@ -246,7 +252,9 @@ public class SPController {
       ai.makeDecision(currentMaxBet, river);
       aiAction(currentPlayer);
     }
+
     allCallorFold();
+
   }
 
 
@@ -282,6 +290,7 @@ public class SPController {
     } else if (aiDecision.contains("check")) {
       System.out.println("AI " + ai.getName() + " checks");
     }
+    System.out.println("\nCurrent Potsize: " + currentPotSize + "\n");
   }
 
 
@@ -319,6 +328,7 @@ public class SPController {
       // show animation?
     }
     this.currentPotSize = smallBlind + bigBlind;
+    System.out.println("\nCurrent Potsize: " + currentPotSize + "\n");
   }
 
 
