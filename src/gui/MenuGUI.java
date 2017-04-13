@@ -1,4 +1,4 @@
-package teachMePoker;
+package gui;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -27,80 +27,81 @@ import javafx.stage.Stage;
 
 public class MenuGUI extends Application {
 
-	private Stage window;
-	private VBox btnMenu;
-	private BorderPane borderPane;
-	private Button btnNewGame;
-	private Button btnLoadGame;
-	private Image image;
+  private Stage window;
+  private VBox btnMenu;
+  private BorderPane borderPane;
+  private Button btnNewGame;
+  private Button btnLoadGame;
+  private Image image;
 
-	public static void main(String[] args) {
-		launch(args);
-	}
+  public static void main(String[] args) {
+    launch(args);
+  }
 
-	public void start(Stage primaryStage) throws Exception {
-		window = primaryStage;
-		window.setTitle("TeachMePoker");
+  public void start(Stage primaryStage) throws Exception {
+    window = primaryStage;
+    window.setTitle("TeachMePoker");
 
-		Text txtLogga = new Text("TeachMePoker");
-		Text txtBtnNew = new Text("Nytt spel");
-		txtBtnNew.setFill(Color.WHITE);
+    Text txtLogga = new Text("TeachMePoker");
+    Text txtBtnNew = new Text("Nytt spel");
+    txtBtnNew.setFill(Color.WHITE);
 
-		btnNewGame = new Button("Nytt spel");
-		btnNewGame.setTextFill(Color.WHITE);
+    btnNewGame = new Button("Nytt spel");
+    btnNewGame.setTextFill(Color.WHITE);
 
-		btnLoadGame = new Button("Ladda spel");
-		btnLoadGame.setTextFill(Color.WHITE);
+    btnLoadGame = new Button("Ladda spel");
+    btnLoadGame.setTextFill(Color.WHITE);
 
-		btnNewGame.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-		btnLoadGame.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+    btnNewGame.setBackground(
+        new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+    btnLoadGame.setBackground(
+        new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
-		// Label lblLogga = new Label(txtLogga);
-		Font font = new Font("DINNextRoundedLTPro-Regular.otf", 25);
-		// lblLogga.setFont(font);
-		txtLogga.setFont(font);
+    // Label lblLogga = new Label(txtLogga);
+    Font font = new Font("DINNextRoundedLTPro-Regular.otf", 25);
+    // lblLogga.setFont(font);
+    txtLogga.setFont(font);
 
-		btnNewGame.setOnMouseMoved(e -> btnNewGame.requestFocus());
-		btnNewGame.setOnMouseMoved(e -> changeColor());
-		btnNewGame.setOnMouseExited(e->btnNewGame.setTextFill(Color.WHITE));
-		btnNewGame.setOnAction(e -> System.out.println("Nytt spel klickat på"));
-		
-		btnLoadGame.setOnMouseMoved(e->btnLoadGame.requestFocus());
-		btnLoadGame.setOnMouseMoved(e -> changeColor());
-		btnLoadGame.setOnMouseExited(e->btnLoadGame.setTextFill(Color.WHITE));
-		btnLoadGame.setOnAction(e->System.out.println("Ladda sparat spel klickat"));
+    btnNewGame.setOnMouseMoved(e -> btnNewGame.requestFocus());
+    btnNewGame.setOnMouseMoved(e -> changeColor());
+    btnNewGame.setOnMouseExited(e -> btnNewGame.setTextFill(Color.WHITE));
+    btnNewGame.setOnAction(e -> System.out.println("Nytt spel klickat på"));
 
-		btnMenu = new VBox(20);
-		btnMenu.getChildren().addAll(btnNewGame, btnLoadGame);
+    btnLoadGame.setOnMouseMoved(e -> btnLoadGame.requestFocus());
+    btnLoadGame.setOnMouseMoved(e -> changeColor());
+    btnLoadGame.setOnMouseExited(e -> btnLoadGame.setTextFill(Color.WHITE));
+    btnLoadGame.setOnAction(e -> System.out.println("Ladda sparat spel klickat"));
 
-		borderPane = new BorderPane();
-		btnMenu.setAlignment(Pos.BOTTOM_CENTER);
-		// lblLogga.setAlignment(Pos.CENTER);
-		txtLogga.setTextAlignment(TextAlignment.CENTER);
-		borderPane.setBottom(btnMenu);
-		borderPane.setCenter(txtLogga);
-		// borderPane.setCenter(lblLogga);
+    btnMenu = new VBox(20);
+    btnMenu.getChildren().addAll(btnNewGame, btnLoadGame);
 
-		borderPane.setPadding(new Insets(0, 10, 160, 10));
+    borderPane = new BorderPane();
+    btnMenu.setAlignment(Pos.BOTTOM_CENTER);
+    // lblLogga.setAlignment(Pos.CENTER);
+    txtLogga.setTextAlignment(TextAlignment.CENTER);
+    borderPane.setBottom(btnMenu);
+    borderPane.setCenter(txtLogga);
+    // borderPane.setCenter(lblLogga);
 
-		// BackgroundImage bcImage = new BackgroundImage(new
-		// Image("gubbe.jpg",32,32,false,true), null, null, null, null);
-		// borderPane.setBackground(new Background(bcImage));
+    borderPane.setPadding(new Insets(0, 10, 160, 10));
 
-		Scene scene = new Scene(borderPane, 600, 600);
+    // BackgroundImage bcImage = new BackgroundImage(new
+    // Image("gubbe.jpg",32,32,false,true), null, null, null, null);
+    // borderPane.setBackground(new Background(bcImage));
 
-		// window.setFullScreen(true);
-		window.setScene(scene);
-		window.show();
+    Scene scene = new Scene(borderPane, 600, 600);
 
-	}
+    // window.setFullScreen(true);
+    window.setScene(scene);
+    window.show();
 
-	public void changeColor() {
-		if(btnNewGame.isFocused()){
-		btnNewGame.setTextFill(Color.AQUA);
-		}
-		else if(btnLoadGame.isFocused()){
-			btnLoadGame.setTextFill(Color.HOTPINK);
-		}
-	}
+  }
+
+  public void changeColor() {
+    if (btnNewGame.isFocused()) {
+      btnNewGame.setTextFill(Color.AQUA);
+    } else if (btnLoadGame.isFocused()) {
+      btnLoadGame.setTextFill(Color.HOTPINK);
+    }
+  }
 }

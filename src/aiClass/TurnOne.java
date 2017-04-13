@@ -5,142 +5,137 @@ import java.util.Random;
 
 /**
  * @version 1.5
- * @author Max Frennessen
- * Calculates what the Ai should do on turn one.
- * 17-04-12
+ * @author Max Frennessen Calculates what the Ai should do on turn one. 17-04-12
  * @version 1.5
  */
-public class TurnOne{
+public class TurnOne {
 
-	private AiCalculation calculation;
-	private boolean colorChance;
-	private int straightChance;
-	private int pairs = 0;
-	private int likelyhood = 10;
-	private boolean highCards;
-	private boolean rlyhighCards;
-	private String toDO = "fold";
-	private int aiPot;
-	private int toBet;
+  private AiCalculation calculation;
+  private boolean colorChance;
+  private int straightChance;
+  private int pairs = 0;
+  private int likelyhood = 10;
+  private boolean highCards;
+  private boolean rlyhighCards;
+  private String toDO = "fold";
+  private int aiPot;
+  private int toBet;
 
-	/**
-	 * Gets value from Ai and calls on all the methods to evaluate a respond.
-	 * @param aiCards - Arraylist that contains the cards that are active this turn for the ai.
-	 * @param aiPot - the current size of the ais pot.
-	 * @param toBet - how much the ai has to commit to be able to play this turn.
-	 */
-	public TurnOne(ArrayList<String> aiCards, int aiPot, int toBet) {
-		this.aiPot = aiPot;
-		this.toBet = toBet;
+  /**
+   * Gets value from Ai and calls on all the methods to evaluate a respond.
+   * 
+   * @param aiCards - Arraylist that contains the cards that are active this turn for the ai.
+   * @param aiPot - the current size of the ais pot.
+   * @param toBet - how much the ai has to commit to be able to play this turn.
+   */
+  public TurnOne(ArrayList<String> aiCards, int aiPot, int toBet) {
+    this.aiPot = aiPot;
+    this.toBet = toBet;
 
-		calculation = new AiCalculation(aiCards);
-		highCards = calculation.checkHighCards();
-		colorChance = calculation.checkSuit();
-		pairs = calculation.checkPairAndMore();
-		straightChance = calculation.checkStraight();
-		decide();
+    calculation = new AiCalculation(aiCards);
+    highCards = calculation.checkHighCards();
+    colorChance = calculation.checkSuit();
+    pairs = calculation.checkPairAndMore();
+    straightChance = calculation.checkStraight();
+    decide();
 
-		System.out.println(aiCards);
+    System.out.println(aiCards);
 
-		System.out.println("highCards - " + highCards);
-		System.out.println("rlyhighCards - " + rlyhighCards);
-		System.out.println("colorChance - " + colorChance);
-		System.out.println("straightChance - " + straightChance);
-		System.out.println("pairs - " + pairs);
-	}
-	
-	/**
-	 * Uses all the variables and with those it calculates
-	 * a respons that the ai will do.
-	 */
-	public void decide() {
+    System.out.println("highCards - " + highCards);
+    System.out.println("rlyhighCards - " + rlyhighCards);
+    System.out.println("colorChance - " + colorChance);
+    System.out.println("straightChance - " + straightChance);
+    System.out.println("pairs - " + pairs);
+  }
 
-		if (straightChance > 0) {
-			likelyhood += 20;
-		}
+  /**
+   * Uses all the variables and with those it calculates a respons that the ai will do.
+   */
+  public void decide() {
 
-		if (highCards) {
-			likelyhood += 20;
-			if (rlyhighCards) {
-				likelyhood += 15;
-			}
-		}
+    if (straightChance > 0) {
+      likelyhood += 20;
+    }
 
-		if (colorChance) {
-			likelyhood += 20;
-		}
+    if (highCards) {
+      likelyhood += 20;
+      if (rlyhighCards) {
+        likelyhood += 15;
+      }
+    }
 
-		if (pairs > 0) {
-			likelyhood += 100;
-		}
+    if (colorChance) {
+      likelyhood += 20;
+    }
 
-		Random rand = new Random();
+    if (pairs > 0) {
+      likelyhood += 100;
+    }
 
-		int roll = rand.nextInt(90);
-		System.out.println("likelyhood - " + likelyhood);
-		System.out.println("roll - " + roll);
+    Random rand = new Random();
 
-		if (toBet == 0) {
-			toDO = "Check";
+    int roll = rand.nextInt(90);
+    System.out.println("likelyhood - " + likelyhood);
+    System.out.println("roll - " + roll);
 
-			if (likelyhood - 35 > roll) {
-				toDO = "Raise," + aiPot * 0.07;
+    if (toBet == 0) {
+      toDO = "check";
 
-			}
-		}
+      if (likelyhood - 35 > roll) {
+        toDO = "raise," + aiPot * 0.07;
 
-		else {
-			int aipotChance = (int) (aiPot * 0.025);
-			int toBetChance = (int) (toBet * 0.030 * 2);
+      }
+    } else {
+      int aipotChance = (int) (aiPot * 0.025);
+      int toBetChance = (int) (toBet * 0.030 * 2);
 
-			int diff = aipotChance - toBetChance;
+      int diff = aipotChance - toBetChance;
 
-			likelyhood = likelyhood + diff;
-			System.out.println("likelyhood efter toBet - " + likelyhood);
-			System.out.println("toBet - " + toBet);
-			System.out.println("aiPot - " + aiPot);
+      likelyhood = likelyhood + diff;
+      System.out.println("likelyhood efter toBet - " + likelyhood);
+      System.out.println("toBet - " + toBet);
+      System.out.println("aiPot - " + aiPot);
 
-			if (roll <= likelyhood) {
-				toDO = "call," + toBet;
-				aiPot -= toBet;
-			}
+      if (roll <= likelyhood) {
+        toDO = "call," + toBet;
+        aiPot -= toBet;
+      }
 
-			if ((likelyhood - 45) > roll) {
+      if ((likelyhood - 45) > roll) {
 
-				int raiseAmount = (int) (1.10 * toBet); // FIXA HUR MKT RAISE
-				toDO = "raise," + raiseAmount;
-				aiPot -= raiseAmount;
-				if (likelyhood - 55 > roll) {
-					raiseAmount = (int) (1.17 * toBet);
-					toDO = "raise," + raiseAmount;
-					aiPot -= raiseAmount;
-				}
+        int raiseAmount = (int) (1.10 * toBet); // FIXA HUR MKT RAISE
+        toDO = "raise," + raiseAmount;
+        aiPot -= raiseAmount;
+        if (likelyhood - 55 > roll) {
+          raiseAmount = (int) (1.17 * toBet);
+          toDO = "raise," + raiseAmount;
+          aiPot -= raiseAmount;
+        }
 
-				if (likelyhood - 65 > roll) {
-					raiseAmount = (int) (1.25 * toBet);
-					toDO = "raise," + raiseAmount;
-					aiPot -= raiseAmount;
-				}
+        if (likelyhood - 65 > roll) {
+          raiseAmount = (int) (1.25 * toBet);
+          toDO = "raise," + raiseAmount;
+          aiPot -= raiseAmount;
+        }
 
-			}
-		}
+      }
+    }
 
-	}
+  }
 
-	/**
-	 * @return updates the AI's pot after it has commited a amount 
-	 * for the round.
-	 *         
-	 */
-	public int updateAiPot() {
-		return aiPot;
-	}
+  /**
+   * @return updates the AI's pot after it has commited a amount for the round.
+   * 
+   */
+  public int updateAiPot() {
+    return aiPot;
+  }
 
-	/**
-	 * 
-	 * @return returns the decision that the ai has done.
-	 */
-	public String decision() {
-		return toDO;
-	}
+  /**
+   * 
+   * @return returns the decision that the ai has done.
+   */
+  public String decision() {
+    return toDO;
+  }
 }
