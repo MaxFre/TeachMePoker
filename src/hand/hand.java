@@ -1,9 +1,8 @@
 package hand;
 
 import java.util.ArrayList;
-import java.util.Random;
+
 import deck.Card;
-import deck.Deck;
 
 /**
  * The hand-class that will guide and help the noob player.
