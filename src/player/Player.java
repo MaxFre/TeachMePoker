@@ -51,8 +51,8 @@ public class Player {
       }
     }
     loopcounter = 0;
-    this.decision = JOptionPane
-        .showInputDialog("Enter your decision: \n Valid options are: \n call, fold, raise");
+    this.decision = JOptionPane.showInputDialog("Enter your decision: \n Valid options are: \n call, fold, raise");
+       
     System.out.println("decision was made for player (" + decision + ")");
     // TODO Auto-generated method stub
 

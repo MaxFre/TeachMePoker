@@ -22,7 +22,7 @@ public class TestAi {
   public TestAi() {
 
     deck = new Deck();
-    deck.shuffle();
+//    deck.shuffle();
 
     card1 = deck.getCard();
     card2 = deck.getCard();
@@ -33,26 +33,26 @@ public class TestAi {
       flop[i] = deck.getCard();
     }
 
-    ai = new Ai(1000, "test");
+    ai = new Ai(1100, "TestAiName");
 
     ai.setStartingHand(card1, card2);
     ai.makeDecision(32);
     System.out.println(ai.getDecision());
 
-    System.out.println("\n\n-Test FLOP-");
-    ai.makeDecision(32, flop);
-    System.out.println(ai.getDecision());
-
-    System.out.println("\n\n-Test TURN-");
-    ai.makeDecision(32, cardTurn);
-    System.out.println(ai.getDecision());
-
-    System.out.println("\n\n-Test RIVER-");
-    ai.makeDecision(32, cardRiver);
-    System.out.println(ai.getDecision());
-
-    ai.updateWinner(1032);
-    System.out.println("\n\nAI-pot - " + ai.aiPot());
+//    System.out.println("\n\n-Test FLOP-");
+//    ai.makeDecision(32, flop);
+//    System.out.println(ai.getDecision());
+//
+//    System.out.println("\n\n-Test TURN-");
+//    ai.makeDecision(32, cardTurn);
+//    System.out.println(ai.getDecision());
+//
+//    System.out.println("\n\n-Test RIVER-");
+//    ai.makeDecision(32, cardRiver);
+//    System.out.println(ai.getDecision());
+//
+//    ai.updateWinner(1032);
+//    System.out.println("\n\nAI-pot - " + ai.aiPot());
   }
 
   public static void main(String[] args) {

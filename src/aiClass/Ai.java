@@ -35,8 +35,8 @@ public class Ai {
   }
 
 
-  // set starting hand
-  public void setStartingHand(Card card1, Card card2) {
+  
+  public void setStartingHand(Card card1, Card card2) {		// set starting hand
     aiCards.clear(); // nollställer arraylist.
     char A = card1.getCardSuit().charAt(0);
     char B = card1.getCardSuit().charAt(0);
@@ -44,25 +44,25 @@ public class Ai {
     String secondCard = card2.getCardValue() + "," + String.valueOf(B);
     aiCards.add(firstCard);
     aiCards.add(secondCard);
-    System.out.println("starting hand set for ai player");
+//    System.out.println("starting hand set for ai player");
   }
 
 
-  // Make decision for the starting hand
-  public void makeDecision(int currentBet) {
+  
+  public void makeDecision(int currentBet) {		// Make decision for the starting hand
     turnOne = new TurnOne(aiCards, aiPot, currentBet, paidThisTurn);
-    whatToDo = turnOne.decision(); // TurnOne respond.
-    System.out.println("PaidBeforeThisTurn: " + this.paidThisTurn);
+    whatToDo = turnOne.decision();	 // TurnOne respond.
+//    System.out.println("PaidBeforeThisTurn: " + this.paidThisTurn);
     this.paidThisTurn += aiPot - turnOne.updateAiPot();
 
     aiPot = turnOne.updateAiPot();
-    System.out.println("PaidThisTurn(including what was paid before): " + this.paidThisTurn);
+//    System.out.println("PaidThisTurn(including what was paid before): " + this.paidThisTurn);
     System.out.println("AiPot after round: " + aiPot);
   }
 
 
-  // Make decision for starting hand + flop
-  public void makeDecision(int currentBet, Card[] flop) {
+  
+  public void makeDecision(int currentBet, Card[] flop) {		// Make decision for starting hand + flop
     if (!sameTurn) {
       for (Card card : flop) {
         char A = card.getCardSuit().charAt(0);
@@ -81,9 +81,9 @@ public class Ai {
   }
 
 
-  // Make decision for starting hand + flop + turn && starting hand + flop +
-  // turn + river
-  public void makeDecision(int currentBet, Card turn) {
+  
+  
+  public void makeDecision(int currentBet, Card turn) {		// Make decision for starting hand + flop + turn && starting hand + flop + turn + river
     if (!sameTurn) {
       char A = turn.getCardSuit().charAt(0);
       aiCards.add(turn.getCardValue() + "," + String.valueOf(A));

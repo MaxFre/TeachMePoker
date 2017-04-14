@@ -98,8 +98,8 @@ public class TurnOne {
       System.out.println("toBet - " + toBet);
       System.out.println("aiPot - " + aiPot);
 
-  	if (likelyhood < 45) {
-		if (roll <= 15) {
+  	if (likelyhood < 45) {   	//Less than 45 = fold.
+		if (roll <= 15) {		//if roll is less than 15 (15%) Ai bluffs.
 			toDO = "call," + toBet;
 			aiPot -= (toBet-alreadyPaid);
 			System.out.println("Bluff");
@@ -111,9 +111,16 @@ public class TurnOne {
 			toDO = "all-in," + aiPot;
 			aiPot -= (aiPot-alreadyPaid);
 		}
-		else
+		
+		else if(aiPot>toBet){
 		toDO = "call," + toBet;
 		aiPot -= (toBet-alreadyPaid);
+		}
+		
+		else if(aiPot<toBet){
+			toDO = "all-in," + aiPot;
+			aiPot-=aiPot;
+		}
 	}
 
 	if (likelyhood >= 100) {
