@@ -84,11 +84,11 @@ public class SPController {
 
     name.add("RngJesus-Max");
     name.add("MLG-Vedrana");
-    name.add("420-Lykke");
+    name.add("Dabmaster-Lykke");
     name.add("NoScope-Amin");
     name.add("Swag-Rikard");
-    name.add("MemeLord-Kristina");
-    name.add("TryHard-Rolf");
+    name.add("Yolo-Kristina");
+    name.add("420-Rolf");
     Collections.shuffle(name);
   }
 

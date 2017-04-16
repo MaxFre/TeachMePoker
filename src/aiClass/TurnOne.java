@@ -22,6 +22,7 @@ public class TurnOne {
   private int toBet;
   private int raiseAmount;
   private int alreadyPaid;
+  private boolean sameTurn;
   /**
    * Gets value from Ai and calls on all the methods to evaluate a respond.
    * 
@@ -29,11 +30,12 @@ public class TurnOne {
    * @param aiPot - the current size of the ais pot.
    * @param toBet - how much the ai has to commit to be able to play this turn.
    */
-  public TurnOne(ArrayList<String> aiCards, int aiPot, int toBet, int alreadyPaid) {
+  public TurnOne(ArrayList<String> aiCards, int aiPot, int toBet, int alreadyPaid, boolean sameTurn) {
     this.aiPot = aiPot;
     this.toBet = toBet;
     this.alreadyPaid = alreadyPaid;
-
+    this.sameTurn = sameTurn;
+    
     calculation = new AiCalculation(aiCards);
     highCards = calculation.checkHighCards();
     colorChance = calculation.checkSuit();
@@ -106,7 +108,7 @@ public class TurnOne {
 		}
 	}
 
-	if (likelyhood >= 45 && likelyhood < 100) {
+	if (likelyhood >= 45 && likelyhood < 115) {
 		if (aiPot == toBet) {
 			toDO = "all-in," + aiPot;
 			aiPot -= (aiPot-alreadyPaid);
@@ -123,7 +125,18 @@ public class TurnOne {
 		}
 	}
 
-	if (likelyhood >= 100) {
+	if (likelyhood >= 115) {
+		if(sameTurn){
+			if(aiPot>toBet){
+			toDO = "call,"+toBet;
+			aiPot-=toBet;
+			}
+			else{
+				toDO="all-in,"+aiPot;
+				aiPot-=aiPot;
+			}
+		}
+		else{
 		raiseAmount = (int) (1.25 * toBet);
 		if (raiseAmount < 5) {
 			raiseAmount = 10;
@@ -136,8 +149,8 @@ public class TurnOne {
 		else
 		toDO = "raise," + raiseAmount;
 		aiPot -= (raiseAmount-alreadyPaid);
+	  }
 	}
-
 }
 
 

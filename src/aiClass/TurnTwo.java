@@ -22,6 +22,7 @@ public class TurnTwo {
   private int toBet;
   private int raiseAmount;
   private int alreadyPaid;
+  private boolean sameTurn;
   
   /**
    * Gets value from Ai and calls on all the methods to evaluate a respond.
@@ -30,10 +31,11 @@ public class TurnTwo {
    * @param aiPot - the current size of the ais pot.
    * @param toBet - how much the ai has to commit to be able to play this turn.
    */
-  public TurnTwo(ArrayList<String> aiCards, int aiPot, int toBet, int alreadyPaid) {
+  public TurnTwo(ArrayList<String> aiCards, int aiPot, int toBet, int alreadyPaid, boolean sameTurn) {
     this.aiPot = aiPot;
     this.toBet = toBet;
     this.alreadyPaid = alreadyPaid;
+    this.sameTurn = sameTurn;
     
     calculation = new AiCalculation(aiCards);
     highCards = calculation.checkHighCards();
@@ -129,7 +131,7 @@ public class TurnTwo {
   		}
   	}
 
-  	if (likelyhood >= 45 && likelyhood < 100) {
+  	if (likelyhood >= 45 && likelyhood < 115) {
   		if (aiPot == toBet) {
   			toDO = "all-in," + aiPot;
   			aiPot -= (aiPot-alreadyPaid);
@@ -139,22 +141,34 @@ public class TurnTwo {
   		aiPot -= (toBet-alreadyPaid);
   	}
 
-  	if (likelyhood >= 100) {
-  		raiseAmount = (int) (1.25 * toBet);
-  		if (raiseAmount < 5) {
-  			raiseAmount = 10;
-  		}
+	if (likelyhood >= 115) {
+		if(sameTurn){
+			if(aiPot>toBet){
+			toDO = "call,"+toBet;
+			aiPot-=toBet;
+			}
+			else{
+				toDO="all-in,"+aiPot;
+				aiPot-=aiPot;
+			}
+		}
+		else{
+		raiseAmount = (int) (1.25 * toBet);
+		if (raiseAmount < 5) {
+			raiseAmount = 10;
+		}
 
-  		if (aiPot <= raiseAmount) {
-  			toDO = "all-in," + aiPot;
-  			aiPot -= (aiPot-alreadyPaid);
-  		}
-  		else
-  		toDO = "raise," + raiseAmount;
-  		aiPot -= (raiseAmount-alreadyPaid);
-  	}
+		if (aiPot <= raiseAmount) {
+			toDO = "all-in," + aiPot;
+			aiPot -= (aiPot-alreadyPaid);
+		}
+		else
+		toDO = "raise," + raiseAmount;
+		aiPot -= (raiseAmount-alreadyPaid);
+	  }
+	}
     }
-  }
+   }
 
   /**
    * @return updates the AI's pot after it has commited a amount for the round.
