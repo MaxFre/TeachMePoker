@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
@@ -7,9 +9,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="640.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testLykkeMenu.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="606.0" prefWidth="1070.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testLykkeMenu.Controller">
    <children>
-      <ImageView fitHeight="694.0" fitWidth="1151.0" layoutX="-51.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="640.0" fitWidth="1078.0" layoutX="-4.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/background.png" />
          </image>
@@ -17,5 +19,77 @@
             <Rectangle2D />
          </viewport>
       </ImageView>
+      <VBox layoutX="53.0" layoutY="51.0" prefHeight="543.0" prefWidth="298.0">
+         <children>
+            <Label prefHeight="78.0" prefWidth="268.0" text="Namn" textAlignment="CENTER" textFill="#fcf9f9">
+               <font>
+                  <Font size="35.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" top="30.0" />
+               </VBox.margin>
+            </Label>
+            <Label prefHeight="78.0" prefWidth="267.0" text="Antal AI-spelare" textAlignment="CENTER" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="20.0" top="30.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
+            <Label prefHeight="78.0" prefWidth="267.0" text="Startpott" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="35.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" top="30.0" />
+               </VBox.margin>
+            </Label>
+            <Label prefHeight="78.0" prefWidth="267.0" text="Visa tutorial" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="35.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" top="30.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </VBox>
+      <VBox layoutX="562.0" layoutY="46.0" prefHeight="520.0" prefWidth="460.0">
+         <padding>
+            <Insets right="20.0" top="30.0" />
+         </padding>
+         <children>
+            <TextField fx:id="tfNameInput" onAction="#tfNameInputChange" prefHeight="78.0" prefWidth="439.0" promptText="Namn">
+               <VBox.margin>
+                  <Insets bottom="20.0" top="30.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </TextField>
+            <Slider fx:id="aiSlider" blockIncrement="0.0" majorTickUnit="2.0" max="7.0" min="1.0" minorTickCount="0" onDragDetected="#aiSliderChange" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="5.0">
+               <VBox.margin>
+                  <Insets bottom="20.0" top="40.0" />
+               </VBox.margin>
+            </Slider>
+            <Slider fx:id="potSlider" blockIncrement="100.0" majorTickUnit="100.0" max="5000.0" min="200.0" minorTickCount="1" onDragDetected="#potSliderChange" showTickLabels="true" snapToTicks="true" value="500.0">
+               <VBox.margin>
+                  <Insets bottom="20.0" top="70.0" />
+               </VBox.margin>
+            </Slider>
+            <ToggleButton fx:id="tbShowTutorial" mnemonicParsing="false" onAction="#tbChanged" selected="true" text="Visa">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="60.0" />
+               </VBox.margin>
+            </ToggleButton>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
