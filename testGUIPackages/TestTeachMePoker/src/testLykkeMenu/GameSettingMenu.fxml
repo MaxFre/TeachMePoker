@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testLykkeMenu.Controller">
+   <children>
+      <ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/startGameBackground.png" />
+         </image>
+      </ImageView>
+      <VBox alignment="TOP_RIGHT" layoutX="740.0" layoutY="70.0" prefHeight="452.0" prefWidth="472.0">
+         <children>
+            <TextField fx:id="tfNameInput" onAction="#tfNameInputChange" prefHeight="98.0" prefWidth="472.0" promptText="Skriv ditt namn här...">
+               <VBox.margin>
+                  <Insets bottom="50.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Tw Cen MT" size="24.0" />
+               </font>
+            </TextField>
+            <Slider fx:id="aiSlider" blockIncrement="3.0" majorTickUnit="2.0" max="5.0" min="1.0" minorTickCount="2" onDragDetected="#aiSliderChange" prefHeight="16.0" prefWidth="415.0" showTickLabels="true" snapToTicks="true" value="5.0">
+               <VBox.margin>
+                  <Insets bottom="100.0" />
+               </VBox.margin>
+            </Slider>
+            <Slider fx:id="potSlider" blockIncrement="1200.0" majorTickUnit="100.0" max="10000.0" min="200.0" minorTickCount="0" onDragDetected="#potSliderChange" showTickMarks="true" value="1000.0">
+               <tooltip>
+                  <Tooltip text="Kolla" />
+               </tooltip></Slider>
+            <HBox prefHeight="0.0" prefWidth="440.0">
+               <children>
+                  <CheckBox fx:id="cbOn" mnemonicParsing="false" onAction="#cbOnClicked" selected="true" text="På" textFill="WHITE">
+                     <font>
+                        <Font name="Tw Cen MT" size="24.0" />
+                     </font>
+                  </CheckBox>
+                  <CheckBox fx:id="cbOff" alignment="TOP_LEFT" contentDisplay="TOP" indeterminate="true" mnemonicParsing="false" onAction="#cbOffClicked" text="Av" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="150.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Tw Cen MT" size="24.0" />
+                     </font>
+                  </CheckBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="110.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+         <effect>
+            <Lighting specularConstant="0.42" specularExponent="0.0" surfaceScale="0.0">
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+      </VBox>
+      <VBox layoutX="1230.0" layoutY="210.0" prefHeight="300.0" prefWidth="40.0">
+         <children>
+            <ImageView fx:id="ivQuestionAi" fitHeight="32.0" fitWidth="30.0" onMouseClicked="#ivQuestionAiHoovered" onMouseEntered="#ivQuestionAiHoovered" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/questionmark.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="ivQuestionPot" fitHeight="32.0" fitWidth="30.0" onMouseClicked="#ivQuestionPotHoovered" onMouseEntered="#ivQuestionPotHoovered" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/questionmark.png" />
+               </image>
+               <VBox.margin>
+                  <Insets top="90.0" />
+               </VBox.margin>
+            </ImageView>
+            <ImageView fx:id="ivQuestionTutorial" fitHeight="32.0" fitWidth="30.0" onMouseClicked="#ivQuestionTutorialHoovered" onMouseEntered="#ivQuestionTutorialHoovered" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/questionmark.png" />
+               </image>
+               <VBox.margin>
+                  <Insets top="100.0" />
+               </VBox.margin>
+            </ImageView>
+         </children>
+      </VBox>
+      <ImageView fx:id="ivStartGame" fitHeight="150.0" fitWidth="200.0" layoutX="626.0" layoutY="600.0" onMouseClicked="#startGame" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/startGame.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>
