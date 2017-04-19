@@ -34,6 +34,8 @@ public class TestHand {
       }
 
       hand = new Hand(cards);
+      
+    
     }
   }
 

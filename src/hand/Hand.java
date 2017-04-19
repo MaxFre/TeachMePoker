@@ -16,7 +16,9 @@ public class Hand {
   private ArrayList<Card> cards = new ArrayList<Card>();
   private ArrayList<String> aiCards = new ArrayList<String>();
   private ArrayList<String> toHighlight = new ArrayList<String>();
-
+  private String helper;
+  private String advice;
+  private int pwrBar;
   /**
    * Constructor
    * @param cards gets card that are important for this turn.
@@ -26,16 +28,21 @@ public class Hand {
     convertToReadable();
 
     calc = new HandCalculation(aiCards);
-    String helper = calc.Help();
+    helper = calc.Help();
+    advice = calc.advice();
+    pwrBar = calc.calcPwrBarLvl();
     toHighlight = calc.toHiglight();
 
     System.out.println(" -NEW HAND- ");
     System.out.println(aiCards);
     System.out.println("Helper - " + helper);
     System.out.println("");
+    System.out.println("Advice - " + advice);
+    System.out.println("");
+    System.out.println("pwrBar - " + pwrBar);
     System.out.println("toHighlight - " + toHighlight);
     System.out.println("");
-    System.out.println("");
+   
   }
 
   /**
@@ -52,6 +59,18 @@ public class Hand {
 
   }
 
+  
+  public int toPowerBar(){  // 1-4 ska det va.
+	  return pwrBar;
+  }
+  
+  public String theHelp(){
+	  return helper;
+  }
+  
+  public String theAdvice(){
+	  return advice;
+  }
   /**
    * @return returns what is suppost to be highlighted.
    */

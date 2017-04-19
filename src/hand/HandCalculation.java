@@ -26,7 +26,7 @@ public class HandCalculation {
 	private String otherCard ="1,1";
 	private String theColor;
 	private ArrayList<String> toHighlight = new ArrayList<String>();
-	
+	private String advicee;
 	
 	/**
 	 * 
@@ -324,6 +324,34 @@ public class HandCalculation {
 		return threshold;
 	}
 	
+	
+	
+	
+	public int calcPwrBarLvl(){
+		int pwrBar = 0;
+		
+		
+	    if (straightChance==2) {
+	    	pwrBar = 2;
+	      }
+
+	      if (highCards) {
+	    	  pwrBar = 2;
+	        if (rlyhighCards) {
+	        	pwrBar = 3;
+	        }
+	      }
+
+	      if (colorChance==2) {
+	    	  pwrBar = 2;
+	      }
+
+	      if (pairsNmore > 0) {
+	    	  pwrBar = 4;
+	      }
+		
+		return pwrBar;
+	}
 	/**
 	 * 
 	 * @return returns a advice for the player that is current for his or her hand.
@@ -520,12 +548,14 @@ public class HandCalculation {
 			helper = "You have nothing, sorry.";
 		}
 		
-		
-		return helper + "\n\nAdvice\n" + advice;
+		advicee = advice;
+		return helper;
 		
 	}
 	
-	
+	public String advice(){
+		return advicee;
+	}
 	
 	/**
 	 * 
