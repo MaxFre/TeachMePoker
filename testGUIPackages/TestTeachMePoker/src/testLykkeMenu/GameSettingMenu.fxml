@@ -27,29 +27,41 @@
                   <Font name="Tw Cen MT" size="24.0" />
                </font>
             </TextField>
-            <Slider fx:id="aiSlider" blockIncrement="3.0" majorTickUnit="2.0" max="5.0" min="1.0" minorTickCount="2" onDragDetected="#aiSliderChange" prefHeight="16.0" prefWidth="415.0" showTickLabels="true" snapToTicks="true" value="5.0">
+            <Slider fx:id="aiSlider" blockIncrement="0.0" majorTickUnit="2.0" max="5.0" min="1.0" minorTickCount="0" onDragDone="#aiSliderChange" onDragDropped="#aiSliderChange" onDragOver="#aiSliderChange" onMouseReleased="#aiSliderChange" prefHeight="16.0" prefWidth="415.0" showTickLabels="true" snapToTicks="true" value="5.0">
                <VBox.margin>
                   <Insets bottom="100.0" />
                </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Slider>
-            <Slider fx:id="potSlider" blockIncrement="1200.0" majorTickUnit="100.0" max="10000.0" min="200.0" minorTickCount="0" onDragDetected="#potSliderChange" showTickMarks="true" value="1000.0">
+            <Slider fx:id="potSlider" blockIncrement="0.0" majorTickUnit="800.0" max="10000.0" min="200.0" minorTickCount="0" onDragDetected="#potSliderChange" showTickLabels="true" value="1000.0">
                <tooltip>
                   <Tooltip text="Kolla" />
-               </tooltip></Slider>
+               </tooltip>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Slider>
             <HBox prefHeight="0.0" prefWidth="440.0">
                <children>
                   <CheckBox fx:id="cbOn" mnemonicParsing="false" onAction="#cbOnClicked" selected="true" text="På" textFill="WHITE">
                      <font>
                         <Font name="Tw Cen MT" size="24.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </CheckBox>
-                  <CheckBox fx:id="cbOff" alignment="TOP_LEFT" contentDisplay="TOP" indeterminate="true" mnemonicParsing="false" onAction="#cbOffClicked" text="Av" textFill="WHITE">
+                  <CheckBox fx:id="cbOff" alignment="TOP_LEFT" contentDisplay="TOP" mnemonicParsing="false" onAction="#cbOffClicked" text="Av" textFill="WHITE">
                      <HBox.margin>
                         <Insets left="150.0" />
                      </HBox.margin>
                      <font>
                         <Font name="Tw Cen MT" size="24.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </CheckBox>
                </children>
                <VBox.margin>
@@ -61,7 +73,7 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
          <effect>
-            <Lighting specularConstant="0.42" specularExponent="0.0" surfaceScale="0.0">
+            <Lighting diffuseConstant="1.71" specularConstant="0.52" specularExponent="0.0" surfaceScale="0.0">
                <bumpInput>
                   <Shadow />
                </bumpInput>
@@ -77,22 +89,31 @@
                <image>
                   <Image url="@../../images/questionmark.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
             </ImageView>
-            <ImageView fx:id="ivQuestionPot" fitHeight="32.0" fitWidth="30.0" onMouseClicked="#ivQuestionPotHoovered" onMouseEntered="#ivQuestionPotHoovered" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ivQuestionPot" fitHeight="32.0" fitWidth="30.0" onMouseClicked="#ivQuestionPotHoovered" onMouseDragEntered="#ivQuestionPotHoovered" onMouseEntered="#ivQuestionPotHoovered" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/questionmark.png" />
                </image>
                <VBox.margin>
                   <Insets top="90.0" />
                </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
             </ImageView>
-            <ImageView fx:id="ivQuestionTutorial" fitHeight="32.0" fitWidth="30.0" onMouseClicked="#ivQuestionTutorialHoovered" onMouseEntered="#ivQuestionTutorialHoovered" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ivQuestionTutorial" fitHeight="32.0" fitWidth="30.0" onMouseClicked="#ivQuestionTutorialHoovered" onMouseDragEntered="#ivQuestionTutorialHoovered" onMouseEntered="#ivQuestionTutorialHoovered" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/questionmark.png" />
                </image>
                <VBox.margin>
-                  <Insets top="100.0" />
+                  <Insets top="110.0" />
                </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
             </ImageView>
          </children>
       </VBox>
@@ -101,5 +122,18 @@
             <Image url="@../../images/startGame.png" />
          </image>
       </ImageView>
+      <Label fx:id="lblAiInfo" layoutX="964.0" layoutY="262.0" prefHeight="36.0" prefWidth="293.0" text="Välj hur många motståndare du vill spela mot" textFill="WHITE" visible="false">
+         <font>
+            <Font name="Tw Cen MT" size="14.0" />
+         </font></Label>
+      <Label fx:id="lblPotInfo" layoutX="964.0" layoutY="384.0" prefHeight="36.0" prefWidth="293.0" text="Välj hur mycket pengar du och dina motspelare ska börja spela om." textFill="WHITE" visible="false" wrapText="true">
+         <font>
+            <Font name="Tw Cen MT" size="14.0" />
+         </font></Label>
+      <Label fx:id="lblTutorialInfo" layoutX="964.0" layoutY="510.0" prefHeight="36.0" prefWidth="334.0" text="Välj Av om du inte vill visa tutorial innan spelet börjar" textFill="WHITE" visible="false">
+         <font>
+            <Font name="Tw Cen MT" size="14.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

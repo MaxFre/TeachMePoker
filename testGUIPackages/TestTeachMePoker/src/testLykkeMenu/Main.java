@@ -16,7 +16,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		window = primaryStage;
 		Pane rootMenu = FXMLLoader.load(getClass().getResource("FirstMenu.fxml"));
-		window.setTitle("TeachMePoker - MainMenu");
+		window.setTitle("TeachMePoker - Välkommen");
 		window.setResizable(true);
 		sceneMenu = new Scene(rootMenu, 1366, 768);
 

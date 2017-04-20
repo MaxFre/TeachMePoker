@@ -1,16 +1,11 @@
 package testLykkeMenu;
 
-import java.io.IOException;
-
-import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
@@ -45,19 +40,25 @@ public class Controller {
 	private ImageView ivQuestionPot;
 	@FXML
 	private ImageView ivQuestionTutorial;
+	@FXML
+	private Label lblAiInfo;
+	@FXML
+	private Label lblPotInfo;
+	@FXML
+	private Label lblTutorialInfo;
 
 	Stage window;
 	Scene sceneSetting;
 	Main main;
-	ChangeScene changescene;
+	ChangeScene changeScene;
 
 	public void initialize() throws Exception {
-		changescene = new ChangeScene();
+		changeScene = new ChangeScene();
 	}
 
 	public void NewGameClicked() throws Exception {
 		Stage stage = (Stage) ivNewGame.getScene().getWindow();
-		changescene.switchScene(stage);
+		changeScene.switchScene(stage);
 
 	}
 
@@ -71,8 +72,9 @@ public class Controller {
 	}
 
 	public void aiSliderChange() {
-		Double value = aiSlider.getValue();
-		System.out.println("Slider moved" + value);
+		Double val = aiSlider.getValue();
+		Integer value = val.intValue();
+		System.out.println("Slider moved to " + value);
 	}
 
 	public void potSliderChange() {
@@ -80,26 +82,54 @@ public class Controller {
 	}
 
 	public void cbOnClicked() {
+		if (cbOff.isSelected()) {
+			cbOff.setSelected(false);
+			cbOn.setSelected(true);
+
+		}
+
 		System.out.println("Tutorial On");
 	}
 
 	public void cbOffClicked() {
+		if (cbOn.isSelected()) {
+			cbOn.setSelected(false);
+			cbOff.setSelected(true);
+
+		}
 		System.out.println("Tutorial Off");
 	}
 
 	public void startGame() {
+		if(!tfNameInput.getText().isEmpty()){
+			
+		
+		if (cbOn.isSelected()) {
+			System.out.println("Tutorial ska visas");
+		}
 		System.out.println("Spel startas!");
+		}else if(tfNameInput.getText().isEmpty()){
+		System.out.println("Du måste välja ett användarnamn");
 	}
-	
-	public void ivQuestionAiHoovered(){
-		System.out.println("fet");
 	}
-	
-	public void ivQuestionPotHoovered(){
+
+	public void ivQuestionAiHoovered() {
+		lblAiInfo.setVisible(true);
+		ivQuestionAi.setOnMouseExited(e-> lblAiInfo.setVisible(false));
 		
 	}
-	
-	public void ivQuestionTutorialHoovered(){
-		
+
+	public void ivQuestionPotHoovered() {
+		lblPotInfo.setVisible(true);
+		ivQuestionPot.setOnMouseExited(e-> lblPotInfo.setVisible(false));
+
 	}
+
+	public void ivQuestionTutorialHoovered() {
+		lblTutorialInfo.setVisible(true);
+		ivQuestionTutorial.setOnMouseExited(e-> lblTutorialInfo.setVisible(false));
+	}
+	
+	
+
 }
