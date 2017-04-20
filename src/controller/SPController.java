@@ -47,11 +47,7 @@ public class SPController {
   /**
    * TestKonstruktor
    */
-  public SPController() {
-    deck = new Deck();
-    new GUI();
-    startGame(3, 10000);
-  }
+  public SPController() {}
 
 
   /**
@@ -60,7 +56,7 @@ public class SPController {
    * @param noOfAi Number of AI players
    * @param potSize Potsize for the whole table
    */
-  public void startGame(int noOfAi, int potSize) {
+  public void startGame(int noOfAi, int potSize, String playerName) {
 
     this.noOfAi = noOfAi;
     setNames();
@@ -68,7 +64,7 @@ public class SPController {
     bigBlind = (int) (potSize / noOfPlayers * 0.02);
     currentMaxBet = bigBlind;
     this.smallBlind = bigBlind / 2;
-    player = new Player(potSize / (noOfPlayers));
+    player = new Player(potSize / (noOfPlayers), playerName);
     for (int i = 0; i < noOfAi; i++) {
       aiPlayers.add(new Ai(potSize / (noOfPlayers), name.remove(0)));
     }
@@ -143,11 +139,12 @@ public class SPController {
               System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
               System.out.println("Player has won the round!");
               System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+              player.setPlayerPot(currentPotSize);
               winnerDeclared = true;
               break;
             }
             System.out.println("player turn");
-            player.makeDecision(currentMaxBet);
+            askForPlayerDecision(currentMaxBet);
             System.out.println("-----------------------------------------");
           }
         } else {
@@ -233,12 +230,42 @@ public class SPController {
   }
 
 
+
+  private void askForPlayerDecision(int currentMaxBet2) {
+    player.makeDecision(currentMaxBet2);
+    playerAction();
+  }
+
+  private void playerAction() {
+    String playerDecision = player.getDecision();
+    playerDecision.toLowerCase();
+    String[] split;
+    if (playerDecision.contains("raise")) {
+      split = playerDecision.split(",");
+      int oldMaxBet = currentMaxBet;
+      currentMaxBet = Integer.parseInt(split[1]);
+      currentPotSize += Integer.parseInt(split[1]);
+      System.out.println(player.getName() + " raised by " + (Integer.parseInt(split[1]) - oldMaxBet)
+          + " to " + currentMaxBet);
+    } else if (playerDecision.contains("fold")) {
+      System.out.println(player.getName() + " folded");
+      // TODO gui.showPlayerFolded?
+    } else if (playerDecision.contains("call")) {
+      System.out.println(player.getName() + " called " + currentMaxBet);
+      currentPotSize += currentMaxBet;
+      // TODO gui.showPlayerCalled?
+    } else if (playerDecision.contains("check")) {
+      System.out.println(player.getName() + " checks");
+    }
+    System.out.println("\nCurrent Potsize: " + currentPotSize + "\n");
+  }
+
   /**
    * Method which asks the current AIplayer to make a decision based on the current max bet.
    */
   private void askForAiDecision() {
     Ai ai = aiPlayers.get(currentPlayer);
-    System.out.println("current playTurn(0 = start, 1 = flop, 2 = turn, 3 = river): " + playTurn);
+    System.out.println("Current playTurn(0 = start, 1 = flop, 2 = turn, 3 = river): " + playTurn);
     if (playTurn == 0) {
       ai.makeDecision(currentMaxBet);
       aiAction(currentPlayer);
