@@ -1,5 +1,7 @@
 package testLykkeMenu;
 
+import java.io.IOException;
+
 import controller.SPController;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -23,8 +25,6 @@ public class Controller {
   private Slider aiSlider;
   @FXML
   private Slider potSlider;
-  @FXML
-  private ToggleButton tbShowTutorial;
   @FXML
   private ImageView ivNewGame;
   @FXML
@@ -101,10 +101,13 @@ public class Controller {
     System.out.println("Tutorial Off");
   }
 
-  public void startGame() {
+  public void startGame() throws IOException {
     if (!tfNameInput.getText().isEmpty()) {
-      spcontroller.startGame((int) aiSlider.getValue(), (int) potSlider.getValue(),
-          tfNameInput.getText());
+        Stage stage = (Stage) ivStartGame.getScene().getWindow();
+        changeScene.switchToGame(stage);
+    	
+//      spcontroller.startGame((int) aiSlider.getValue(), (int) potSlider.getValue(),
+//          tfNameInput.getText());
 
       if (cbOn.isSelected()) {
         System.out.println("Tutorial ska visas");

@@ -23,7 +23,7 @@ public class main extends Application {
 			primary.setScene(new Scene(root2,1100,640));
 			primary.show();
 	}
-	public static void main(String[] args){
-		launch(args);
-	}
+//	public static void main(String[] args){
+//		launch(args);
+//	}
 }

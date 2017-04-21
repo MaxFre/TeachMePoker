@@ -1,6 +1,8 @@
 package player;
 
 import java.util.ArrayList;
+
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import deck.Card;
 
@@ -55,56 +57,54 @@ public class Player {
         }
       }
       loopcounter = 0;
-      // test
-      Object[] options = {"Call", "Fold", "Raise"};
-      int n = JOptionPane.showOptionDialog(null, "Hey numbnut, it's your turn!", "It is your turn!",
-          JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
-          options[2]);
-      System.out.println(n);
-      if (n == 0) {
-        decision = "call";
-        playerPot -= currentMaxBet - alreadyPaid;
-        alreadyPaid += currentMaxBet - alreadyPaid;
-      } else if (n == 1) {
-        decision = "fold";
-      } else if (n == 2) {
-        decision = "raise," + JOptionPane.showInputDialog(
-            "How much would you like to raise to? \n current bet lies at " + currentMaxBet);
-        String[] split = decision.split(",");
-        int oldMaxBet = currentMaxBet;
-        int newMaxBet = Integer.parseInt(split[1]);
-        if (newMaxBet >= playerPot) {
-          newMaxBet = playerPot;
-          System.out.println("Player All-ins");
-        }
-        int actualRaise = newMaxBet - oldMaxBet;
-        playerPot -= (oldMaxBet - alreadyPaid) + actualRaise;
-        alreadyPaid += actualRaise;
-        System.out.println("PlayerPot = " + playerPot);
-      } else if (n == -1) {
-        System.exit(0);
-      }
-    }
+//      // test
+//      Object[] options = {"Call", "Fold", "Raise"};
+//      int n = JOptionPane.showOptionDialog(null, "Hey numbnut, it's your turn!", "It is your turn!",
+//          JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+//          options[2]);
+//      System.out.println(n);
+//      if (n == 0) {
+//        decision = "call";
+//        playerPot -= currentMaxBet - alreadyPaid;
+//        alreadyPaid += currentMaxBet - alreadyPaid;
+//      } else if (n == 1) {
+//        decision = "fold";
+//      } else if (n == 2) {
+//        decision = "raise," + JOptionPane.showInputDialog(
+//            "How much would you like to raise to? \n current bet lies at " + currentMaxBet);
+//        String[] split = decision.split(",");
+//        int oldMaxBet = currentMaxBet;
+//        int newMaxBet = Integer.parseInt(split[1]);
+//        if (newMaxBet >= playerPot) {
+//          newMaxBet = playerPot;
+//          System.out.println("Player All-ins");
+//        }
+//        int actualRaise = newMaxBet - oldMaxBet;
+//        playerPot -= (oldMaxBet - alreadyPaid) + actualRaise;
+//        alreadyPaid += actualRaise;
+//        System.out.println("PlayerPot = " + playerPot);
+//      } else if (n == -1) {
+//        System.exit(0);
+//      }
+//    }
     // test
-    // this.decision = JOptionPane.showInputDialog(
-    // "Enter your decision: \n Valid options are: \n call(this is also check), fold, raise\n Syntax
-    // is: \"call\", \"fold\", \"raise,<number>\"");
-    // decision.toLowerCase();
-    // String[] split;
-    // if (decision.contains("raise")) {
-    // split = decision.split(",");
-    // if (Integer.parseInt(split[1]) > playerPot) {
-    // System.out.println("You don't have that much money");
-    // this.decision = JOptionPane.showInputDialog(
-    // "Enter your decision: \n Valid options are: \n call(this is also check), fold, raise\n Syntax
-    // is: \"call\", \"fold\", \"raise,<number>\"");
-    // }
-    //
-    //
-    // }
+      final JDialog dialog = new JDialog();
+      dialog.setAlwaysOnTop(true);
+     this.decision = JOptionPane.showInputDialog(dialog, "Enter your decision: \n Valid options are: \n call(this is also check), fold, raise\n Syntax is: \"call\", \"fold\", \"raise,<number>\"");
+     decision.toLowerCase();
+     String[] split;
+     if (decision.contains("raise")) {
+     split = decision.split(",");
+     if (Integer.parseInt(split[1]) > playerPot) {
+     System.out.println("You don't have that much money");
+     this.decision = JOptionPane.showInputDialog(dialog, "Enter your decision: \n Valid options are: \n call(this is also check), fold, raise\n Syntax is: \"call\", \"fold\", \"raise,<number>\"");
+     }
+    
+    
+     
     System.out.println("Decision was made for player (" + decision + ")");
     // TODO Auto-generated method stub
-
+     }}
   }
 
   /**

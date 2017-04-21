@@ -57,7 +57,7 @@ public class TestAi {
 
 
   
-  public static void main(String[] args) {
-    TestAi run = new TestAi();
-  }
+//  public static void main(String[] args) {
+//    TestAi run = new TestAi();
+//  }
 }
