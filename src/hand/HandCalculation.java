@@ -10,6 +10,7 @@ import java.util.Arrays;
  * 17-04-12
  */
 public class HandCalculation {
+	private String secondInTwoPair = "1,c";
 	private ArrayList<String> nbrForStraight = new ArrayList<String>();
 	private ArrayList<String> nbrForStraight1 = new ArrayList<String>();
 	private ArrayList<String> aiCards = new ArrayList<String>();
@@ -214,7 +215,7 @@ public class HandCalculation {
 		if(S>color){
 			toHighlight.clear();
 			color =  S;
-			theColor = "spades";
+			theColor = "spader";
 			for(int i = 0; i<cardClr.size(); i++){
 				String temp = cardClr.get(i);
 				if(S==5)
@@ -227,7 +228,7 @@ public class HandCalculation {
 		if(H>color){
 			toHighlight.clear();
 			color =  H;
-			theColor = "hearts";
+			theColor = "hjärter";
 			for(int i = 0; i<cardClr.size(); i++){
 				String temp = cardClr.get(i);
 				if(H==5)
@@ -239,7 +240,7 @@ public class HandCalculation {
 		if(D>color){
 			toHighlight.clear();
 			color =  D;
-			theColor = "diamond";
+			theColor = "ruter";
 			for(int i = 0; i<cardClr.size(); i++){
 				String temp = cardClr.get(i);
 				if(D==5)
@@ -251,7 +252,7 @@ public class HandCalculation {
 		if(C>color){
 			toHighlight.clear();
 			color =  C;
-			theColor = "cloves";
+			theColor = "klöver";
 			for(int i = 0; i<cardClr.size(); i++){
 				String temp = cardClr.get(i);
 				if(C==5)
@@ -368,26 +369,48 @@ public class HandCalculation {
 		String pairsNmoreHelper = "";
 		String colorChanceHelper ="";
 		String yourCardInt="";
+		String yourOtherCardInt="";
+		String[] splitter2 = otherCard.split(",");
+		int secondCardNbr = Integer.parseInt(splitter2[0]);
+
+		if(secondCardNbr<11){
+			yourOtherCardInt = String.valueOf(secondCardNbr)+":or ";			
+		}
 		
-	
 		if(cardNbr<11){
-			yourCardInt = String.valueOf(cardNbr)+"s ";
+			yourCardInt = String.valueOf(cardNbr)+":or ";			
+		}
+		
+		if(secondCardNbr>10){
+			if(secondCardNbr==11){
+				yourOtherCardInt = "Knäcktar";
+			}
+			if(secondCardNbr==12){
+				yourOtherCardInt = "Damer";
+			}
+			
+			if(secondCardNbr==13){
+				yourOtherCardInt = "Kungar";
+			}
+			if(secondCardNbr==14){
+				yourOtherCardInt = "Ess";
+			}
 			
 		}
 		
 		if(cardNbr>10){
 			if(cardNbr==11){
-				yourCardInt = "Jacks";
+				yourCardInt = "Knäcktar";
 			}
 			if(cardNbr==12){
-				yourCardInt = "Queens";
+				yourCardInt = "Damer";
 			}
 			
 			if(cardNbr==13){
-				yourCardInt = "Kings";
+				yourCardInt = "Kungar";
 			}
 			if(cardNbr==14){
-				yourCardInt = "Aces";
+				yourCardInt = "Ess";
 			}
 			
 		}
@@ -396,25 +419,25 @@ public class HandCalculation {
 		if(aiCards.size()<3){
 		
 			if(straightChance==2){
-			    straightText = "You have a chance for a straight, you have 2/5.\n";
+			    straightText = "Du har en chans på en 'STRAIGHT', du har 2/5. \n";
 				advice += straightText;
 			}
 			
 			if(pairsNmore==2){			
-				pairsNmoreHelper = "You have a pair of " + yourCardInt;
+				pairsNmoreHelper = "Du har 'ONE-PAIR' i "+ yourCardInt;
 			}
 			
 			if(colorChance==2){
-				advice += "You have a chance for a flush in " + theColor + ", you have 2/5 for it.\n";
+				advice += "Du har en chans för att få en 'FLUSH' i " +theColor + ", du har 2/5 för det.\n";
 				
 			}
 			
 			if(highCards){
 				if(advice.length()<2){
-				advice = "You only have high cards. \nYou can try and see but only if its cheap\n";
+				advice = "Du har bara 'HIGH CARD'. \nOm det är billigt så kan du prova och se, FU Rikard\n";
 			}
 				else{
-					advice += "You have high cards.\n";
+					advice += "Du har höga kort.\n";
 				}
 			}
 		}
@@ -424,33 +447,33 @@ public class HandCalculation {
 		//5+ cards.
 	  if(aiCards.size()<6){
 		if(straightChance==3){
-			advice += "You have a chance for a straight, you have 3/5.\n";
+			advice += "Du har en chans på en 'STRAIGHT', du har 3/5.\n";
 		}		
 	  }
 	  
 	  if(aiCards.size()<7){
 		if(straightChance==4){
-			advice += "You have a chance for a straight, you have 4/5.\n";
+			advice += "Du har en chans på en 'STRAIGHT', du har 4/5.\n";
 		}
 	  }
 	  
 		if(straightChance==5){		
-			straighHelper = "You have a straight!! you have 5/5.\n";
-			advice += "A straight is a really good hand! Go for it!\n";
+			straighHelper = "Du har en 'STRAIGHT'!! Du har 5/5.\n";
+			advice += "En 'STRAIGHT' är en riktigt bra hand. Kör på! \nFundera även på att höja!\n";
 			toHighlight = nbrForStraight;
 			
 		}
 		
 		if(pairsNmore==2){			//par
-			pairsNmoreHelper = "You have a pair of " + yourCardInt;
+			pairsNmoreHelper = "Du har 'PAIR' i " + yourCardInt;
 			if(lowCards){
-			parisNmoreText = "A pair is a decent hand, even thou this is a low pair. If not to much, go for it.\n";
+			parisNmoreText = "'PAIR' är en ok hand, även då detta är ett lågt par. Om det inte kostar för mycket. Så kör på!\n";
 			}
 			if(!(lowCards && highCards)){
-				parisNmoreText = "A pair is a decent hand. If not to much, go for it.\n";
+				parisNmoreText = "'PAIR' är en ok hand. Om det inte kostar för mycket, kör på!\n";
 			}
 			if(highCards){
-				parisNmoreText = "A pair is a decent hand, and this is a high pair. If not to much, go for it.\n";
+				parisNmoreText = "'PAIR' är en ok hand. Och detta är även ett högt par vilket är bra. Om det inte kostar för mycket. Kör på!\n";	
 			}
 			
 			advice += parisNmoreText;
@@ -464,8 +487,8 @@ public class HandCalculation {
 			}
 		}
 		if(pairsNmore==3){			//triss
-			pairsNmoreHelper = "You have three of a kind of " + yourCardInt;			
-			parisNmoreText = "Three of a kind is a solid hand. Go for it, also you should consider to raise.\n";
+			pairsNmoreHelper = "'THREE OF A KIND' i " + yourCardInt;			
+			parisNmoreText = "'THREE OF A KIND' är en väldigt stark hand. Kör på! Fundera även på att höja!\n";
 			advice += parisNmoreText;
 			toHighlight.clear();
 			for(int i = 0; i<aiCards.size(); i++){			
@@ -477,8 +500,8 @@ public class HandCalculation {
 			}
 		}
 		if(pairsNmore==4){			//fyrtal
-			pairsNmoreHelper += "You have four of a kind in " + yourCardInt;
-			parisNmoreText = "Four of a kind is hard to beat. Raise!\n";
+			pairsNmoreHelper += "'FOUR OF A KIND' i " + yourCardInt;
+			parisNmoreText = "'FOUR OF A KIND' är svårt att slå, HÖJ!\n";
 			advice += parisNmoreText;
 			toHighlight.clear();
 			for(int i = 0; i<aiCards.size(); i++){			
@@ -492,8 +515,8 @@ public class HandCalculation {
 		
 		if(pairsNmore==22){			//2-par
 			String temps[] = yourCard2.split(",");
-			pairsNmoreHelper = "You have two pairs of  " + yourCardInt + " and " + otherCard+"s"; //buggad!
-			parisNmoreText = "Two pairs is a good hand. Go for it.\n";
+			pairsNmoreHelper = "'TWO PAIRS'  i " + yourCardInt + " och " + yourOtherCardInt ; //buggad!
+			parisNmoreText = "'TWO PAIRS' är en bra hand, kör på.\n";
 			advice += parisNmoreText;
 			toHighlight.clear();
 			
@@ -508,8 +531,8 @@ public class HandCalculation {
 		
 		if(pairsNmore == 23 || pairsNmore==32){		//kåk
 			String temps[] = yourCard2.split(",");
-			pairsNmoreHelper = "You have a full house with " + yourCardInt + " and " + otherCard+"s";   //Buggad!!
-			parisNmoreText = "There isnt much that can beat this hand. Raise is prefered.\n";
+			pairsNmoreHelper = "'FULL HOUSE' med " + yourCardInt + " och " + yourOtherCardInt;   //Buggad!!
+			parisNmoreText = "Det är inte mycket som slår denna hand. Höja är rekomenderat.\n";
 			advice += parisNmoreText;
 			
 			for(int i = 0; i<aiCards.size(); i++){			
@@ -523,29 +546,29 @@ public class HandCalculation {
 		
 		if(aiCards.size()<6){
 			if(colorChance==3){
-				advice += "You have a chance for a flush in " + theColor + ", you have 3/5 for it.\n";
+				advice += "Du har en chans för en 'FLUSH' i " + theColor + ", du har 3/5.\n";
 				
 			}
 		}
 		if(aiCards.size()<7){
 			if(colorChance==4){
-				advice += "You have a chance for a flush in " + theColor + ", you have 4/5 for it.\n";
+				advice += "Du har en chans för en 'FLUSH' i " + theColor + ", du har 4/5.\n";
 			}
 		}
 			if(colorChance==5){
-				colorChanceHelper = "You have a flush in " + theColor + ", you have 5/5!!\n";
-				advice += "You have a flush!! Go for it, your hand is hard to beat!\n";
+				colorChanceHelper = "En 'FLUSH' i " + theColor + "!! Du har 5/5!!\n";
+				advice += "Du har en 'FLUSH'! Kör på, din hand är svår att slå!\n";
 			}
 		
 		if(advice.length()==0){
-			advice = "This hand might not be the best hand to continue with.\n";
+			advice = "Denna hand kanske inte är den bästa att spela på...\n";
 		}
 		
 
 		helper += colorChanceHelper + pairsNmoreHelper + straighHelper;
 		
 		if(helper.length()<2){
-			helper = "You have nothing, sorry.";
+			helper = "Ingenting, tyvärr...";
 		}
 		
 		advicee = advice;
