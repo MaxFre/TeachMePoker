@@ -117,7 +117,7 @@
             </ImageView>
          </children>
       </VBox>
-      <ImageView fx:id="ivStartGame" fitHeight="150.0" fitWidth="200.0" layoutX="626.0" layoutY="600.0" onMouseClicked="#startGame" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ivStartGame" fitHeight="250.0" fitWidth="290.0" layoutX="538.0" layoutY="603.0" onMouseClicked="#startGame" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../resources/images/startGame.png" />
          </image>

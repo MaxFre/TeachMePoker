@@ -3,38 +3,32 @@ package testLykkeMenu;
 import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 public class ChangeScene {
 	
 	Scene sceneNewGame;
 	Scene sceneGameState;
+	Scene sceneMenu;
 
-	public void switchScene(Stage window) throws IOException{
+	public void switchScenetoSetting() throws IOException{
 		Pane rootNewGame = FXMLLoader.load(getClass().getResource("GameSettingMenu.fxml"));
-		window.setTitle("TeachMePoker - inställningar");
-		window.setResizable(true);
-		sceneNewGame = new Scene(rootNewGame, 1366, 768);
-		window.setScene(sceneNewGame);
-		window.centerOnScreen();
-        window.show();
+		sceneNewGame = new Scene(rootNewGame);
+		Main.window.setScene(sceneNewGame);
+	
 	} 
         
-	public void switchToGame(Stage window) throws IOException{
+	public void switchScenetoGame() throws IOException{
     	Pane root2 = FXMLLoader.load(getClass().getResource("PokerPlan2.fxml"));
-		window.setTitle("TeachMePoker");
-	//	primary.setScene(new Scene(root,800,600));
-		sceneGameState = new Scene(root2, 1366, 768);
-		window.setScene(sceneGameState);
-		window.centerOnScreen();
-		window.show();
+		sceneGameState = new Scene(root2);
+		Main.window.setScene(sceneGameState);
 	}
 
-	
-	
 
-	
+	public Scene firstScene() throws IOException{
+		Pane rootMenu = FXMLLoader.load(getClass().getResource("FirstMenu.fxml"));
+		 return sceneMenu = new Scene(rootMenu);
+	}
+
 }

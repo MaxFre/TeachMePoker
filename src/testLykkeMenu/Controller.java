@@ -4,18 +4,16 @@ import java.io.IOException;
 
 import controller.SPController;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 public class Controller {
   private SPController spcontroller = new SPController();
+  private ConfirmBox confirmBox;
 
   @FXML
   private Button btnNewGame;
@@ -48,23 +46,24 @@ public class Controller {
   @FXML
   private Label lblTutorialInfo;
 
-  Stage window;
-  Scene sceneSetting;
-  Main main;
   ChangeScene changeScene;
+  Sound sound;
+  
 
   public void initialize() throws Exception {
     changeScene = new ChangeScene();
   }
 
   public void NewGameClicked() throws Exception {
-    Stage stage = (Stage) ivNewGame.getScene().getWindow();
-    changeScene.switchScene(stage);
+    changeScene.switchScenetoSetting();
 
   }
 
   public void LoadGameClicked() {
     System.out.println("LoadGame");
+    sound = new Sound();
+    sound.testPlaySound();
+ 
   }
 
   public void tfNameInputChange() {
@@ -103,8 +102,7 @@ public class Controller {
 
   public void startGame() throws IOException {
     if (!tfNameInput.getText().isEmpty()) {
-        Stage stage = (Stage) ivStartGame.getScene().getWindow();
-        changeScene.switchToGame(stage);
+        changeScene.switchScenetoGame();
     	
 //      spcontroller.startGame((int) aiSlider.getValue(), (int) potSlider.getValue(),
 //          tfNameInput.getText());
@@ -114,7 +112,11 @@ public class Controller {
       }
       System.out.println("Spel startas!");
     } else if (tfNameInput.getText().isEmpty()) {
+    	confirmBox = new ConfirmBox();
+		boolean result = confirmBox.display("Varning", "Du måste välja ett användarnamn för att starta spelet");
+    	
       System.out.println("Du måste välja ett användarnamn");
+      System.out.println(result);
     }
   }
 
