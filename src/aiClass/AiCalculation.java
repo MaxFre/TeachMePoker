@@ -190,32 +190,33 @@ public class AiCalculation {
 	 */
 	public int checkStraight() {
 
-		int[] tempArray = new int[aiCards.size()];
+		if(cardNbr.get(cardNbr.size()-1) == 14){ 	//if there is a 14 it should be able to be counted as a 1, ergo adding 1.
+			cardNbr.add(1);
+		}
+		
+		int[] tempArray = new int[cardNbr.size()];
 		int treshold = 0;
-		for (int i = 0; i < aiCards.size(); i++) {
+
+		for (int i = 0; i < cardNbr.size(); i++) {
 			tempArray[i] = cardNbr.get(i);
 		}
 
 		Arrays.sort(tempArray);
-		int inStraight = 0;
-		int check = 4;
-
+	
+		int inStraight;
+		int check = 4;															//we check the spectrum for a straight i+4 cuz u need 5 for a straight.
+		
+	
+		
 		for (int x = 0; x < tempArray.length; x++) {
 			int temp = tempArray[x] + check;
-			inStraight = 0;
+			inStraight = 1;
 			check--;
 			for (int i = 0; i < tempArray.length; i++) {
-				if (tempArray[i] <= temp && !(tempArray[i] < temp - 4)) {
-
-					// problem med dubbletter i början, ex 3-3.
-
-					if (i == 0) { 			// kollar om 0 är samma som 1.
-						if (!(tempArray[i] == tempArray[i + 1])) {
-							inStraight++;
-						}
-					}
+				if (tempArray[i] <= temp && !(tempArray[i] < temp - 4)) {			//	 temp-4>  i    <temp  when i is within this range.
+	
 					if (i >= 1) {
-						if (!(tempArray[i] == tempArray[i - 1])) { // kollar om 1-4 är samma som nån annan.
+						if (!(tempArray[i] == tempArray[i - 1])) { 					// checks so that the temp isnt like the one before it.
 							inStraight++;
 						}
 					}
@@ -223,7 +224,7 @@ public class AiCalculation {
 				}
 			}
 
-			if (inStraight > treshold) {
+			if (inStraight > treshold) {											// adds new top number
 				treshold = inStraight;
 			}
 
@@ -231,5 +232,4 @@ public class AiCalculation {
 
 		return treshold;
 	}
-
 }

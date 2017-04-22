@@ -2,15 +2,8 @@ package hand;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-/**
- * Does the actuall calculation and decides what help
- * the noob player gets.
- * @author Max Frennessen
- * @version 1.5
- * 17-04-12
- */
-public class HandCalculation {
-	private String secondInTwoPair = "1,c";
+
+public class Calc {
 	private ArrayList<String> nbrForStraight = new ArrayList<String>();
 	private ArrayList<String> nbrForStraight1 = new ArrayList<String>();
 	private ArrayList<String> aiCards = new ArrayList<String>();
@@ -24,16 +17,15 @@ public class HandCalculation {
 	private int pairsNmore;
 	private String yourCard ="1,1";
 	private String yourCard2 ="1,1";
-	private String otherCard ="1,1";
+	private String otherCard = "";
 	private String theColor;
-	private ArrayList<String> toHighlight = new ArrayList<String>();
-	private String advicee;
+	private String card1,card2,card3,card4,card5;
+	private String[] StraighNbrs =  new String[5];
+
 	
-	/**
-	 * 
-	 * @param aiCards Current cards needed for evaluate.
-	 */
-	public HandCalculation(ArrayList<String> aiCards) {
+	private ArrayList<String> toHighlight = new ArrayList<String>();
+	
+	public Calc(ArrayList<String> aiCards) {
 		
 		this.aiCards = aiCards;
 		getCardValues(aiCards);
@@ -47,32 +39,25 @@ public class HandCalculation {
 	}
 
 	
-	/**
-	 * converts the cards value into two diffirent arraylists.
-	 * one for cardnumber and one for cardcolor.
-	 * @param aiCards current card being used
-	 */
+	
 	public void getCardValues(ArrayList<String> aiCards){
 		
 		for(int i = 0; i<aiCards.size(); i++){			//CardNumber
 			 String temp = aiCards.get(i);
-			 String[] splitter = temp.split(",");
-			 int tempInt = Integer.parseInt(splitter[0]);
+			 String[] test = temp.split(",");
+			 int tempInt = Integer.parseInt(test[0]);
 			 cardNbr.add(tempInt);
 		}
 
 		
 		for(int i = 0; i<aiCards.size(); i++){			//CardColor		
 			 String temp = aiCards.get(i);
-			 String[] splitter = temp.split(",");
-			 String tempString = splitter[1];
+			 String[] test = temp.split(",");
+			 String tempString = test[1];
 			 cardClr.add(tempString);
 		}
 	}
-	/**
-	 * 
-	 * @return returns how many pair or more the player has.
-	 */
+	
 	public int checkPairAndMore(){
 		int same = 1;
 		int nbrOftemp = 0;
@@ -166,11 +151,7 @@ public class HandCalculation {
 		return same;
 
 	}
-	/**
-	 * 
-	 * @return returns true of cards value >= 17.
-	 * 'rlyHigh not yet implemented.
-	 */
+	
 	public boolean checkHighCards(){
 		boolean high = false;
 		
@@ -188,10 +169,7 @@ public class HandCalculation {
 		
 		return high;
 	}
-	/**
-	 * 
-	 * @return returns if the player has a suit or even has a chance for one.
-	 */
+	
 	public int checkSuit(){
 		int C = 0; int S = 0;
 		int H = 0; int D = 0;
@@ -215,7 +193,7 @@ public class HandCalculation {
 		if(S>color){
 			toHighlight.clear();
 			color =  S;
-			theColor = "spader";
+			theColor = "spades";
 			for(int i = 0; i<cardClr.size(); i++){
 				String temp = cardClr.get(i);
 				if(S==5)
@@ -228,7 +206,7 @@ public class HandCalculation {
 		if(H>color){
 			toHighlight.clear();
 			color =  H;
-			theColor = "hjärter";
+			theColor = "hearts";
 			for(int i = 0; i<cardClr.size(); i++){
 				String temp = cardClr.get(i);
 				if(H==5)
@@ -240,7 +218,7 @@ public class HandCalculation {
 		if(D>color){
 			toHighlight.clear();
 			color =  D;
-			theColor = "ruter";
+			theColor = "diamond";
 			for(int i = 0; i<cardClr.size(); i++){
 				String temp = cardClr.get(i);
 				if(D==5)
@@ -252,7 +230,7 @@ public class HandCalculation {
 		if(C>color){
 			toHighlight.clear();
 			color =  C;
-			theColor = "klöver";
+			theColor = "cloves";
 			for(int i = 0; i<cardClr.size(); i++){
 				String temp = cardClr.get(i);
 				if(C==5)
@@ -267,140 +245,94 @@ public class HandCalculation {
 	 return color;		
 	}
 	
-	/**
-	 * 
-	 * @return returns if the player has a straight or even has a chance for one.
-	 */
+	
 	public int checkStraight(){
 		
-		if(cardNbr.get(cardNbr.size()-1) == 14){
-			cardNbr.add(1);
+		int[] test = new int[aiCards.size()];
+		int testar = 0;
+		for(int i = 0; i< aiCards.size(); i++){
+			test[i] = cardNbr.get(i);
 		}
 		
-		int[] tempArray = new int[cardNbr.size()];
-		int treshold = 0;
-
-		for (int i = 0; i < cardNbr.size(); i++) {
-			tempArray[i] = cardNbr.get(i);
-		}
-
-		Arrays.sort(tempArray);
-	
-		int inStraight;
+		Arrays.sort(test);
+		int inStraight = 0;	
 		int check = 4;
 		
-	
-		
-		for (int x = 0; x < tempArray.length; x++) {
-			int temp = tempArray[x] + check;
-			inStraight = 1;
-			check--;
-			for (int i = 0; i < tempArray.length; i++) {
-				if (tempArray[i] <= temp && !(tempArray[i] < temp - 4)) {			//	 temp-4>  i    <temp  when i is within this range
-	
-					if (i >= 1) {
-						if (!(tempArray[i] == tempArray[i - 1])) { // kollar om 1-4 är samma som nån annan.
-							inStraight++;
-						}
-					}
-
+	for(int x = 0; x<test.length; x++){	
+		int temp = test[x]+check;
+		inStraight = 0;
+		check--;
+		nbrForStraight.clear();
+		for(int i = 0; i<test.length; i++){
+			
+			if(test[i]<=temp && !(test[i]<temp-4)){
+					
+				if(i==0){							//kollar om 0 är samma som 1.
+//					if(!(test[i]==test[i+1])){
+						inStraight++;
+						nbrForStraight.add(aiCards.get(i));
+//					}
 				}
+				
+				if(i>=1){							
+					if(!(test[i]==test[i-1])){		//kollar om 1-4 är samma som nån annan.
+						inStraight++;
+						nbrForStraight.add(aiCards.get(i));
+					}
+				}	
+				
 			}
-
-			if (inStraight > treshold) {
-				treshold = inStraight;
-			}
+		}
+	
+		if(inStraight>testar){
+			nbrForStraight1.clear();
+			nbrForStraight1 = nbrForStraight;
+			
+			testar = inStraight;
+	
 
 		}
-
-		return treshold;
+		
+		
+	}
+	
+			
+		return testar;
 	}
 	
 	
-	
-	public int calcPwrBarLvl(){
-		int pwrBar = 0;
-		
-		
-	    if (straightChance==2) {
-	    	pwrBar = 2;
-	      }
-
-	      if (highCards) {
-	    	  pwrBar = 2;
-	        if (rlyhighCards) {
-	        	pwrBar = 3;
-	        }
-	      }
-
-	      if (colorChance==2) {
-	    	  pwrBar = 2;
-	      }
-
-	      if (pairsNmore > 0) {
-	    	  pwrBar = 4;
-	      }
-		
-		return pwrBar;
-	}
-	/**
-	 * 
-	 * @return returns a advice for the player that is current for his or her hand.
-	 */
 	public String Help(){
 		
 		String parisNmoreText = "";
 		String advice = "";
 		String helper="";
-		String[] splitter = yourCard.split(",");
+		String[] test = yourCard.split(",");
 		String straightText = "";
-		int cardNbr = Integer.parseInt(splitter[0]);
+		int testa = Integer.parseInt(test[0]);
 		String straighHelper = "";
 		String pairsNmoreHelper = "";
 		String colorChanceHelper ="";
 		String yourCardInt="";
-		String yourOtherCardInt="";
-		String[] splitter2 = otherCard.split(",");
-		int secondCardNbr = Integer.parseInt(splitter2[0]);
-
-		if(secondCardNbr<11){
-			yourOtherCardInt = String.valueOf(secondCardNbr)+":or ";			
-		}
 		
-		if(cardNbr<11){
-			yourCardInt = String.valueOf(cardNbr)+":or ";			
-		}
-		
-		if(secondCardNbr>10){
-			if(secondCardNbr==11){
-				yourOtherCardInt = "Knäcktar";
-			}
-			if(secondCardNbr==12){
-				yourOtherCardInt = "Damer";
-			}
-			
-			if(secondCardNbr==13){
-				yourOtherCardInt = "Kungar";
-			}
-			if(secondCardNbr==14){
-				yourOtherCardInt = "Ess";
-			}
+	
+		if(testa<11){
+			yourCardInt = String.valueOf(testa)+"s ";
 			
 		}
 		
-		if(cardNbr>10){
-			if(cardNbr==11){
-				yourCardInt = "Knäcktar";
+		if(testa>10){
+			if(testa==11){
+				yourCardInt = "Jacks";
 			}
-			if(cardNbr==12){
-				yourCardInt = "Damer";
+			if(testa==12){
+				yourCardInt = "Queens";
 			}
 			
-			if(cardNbr==13){
-				yourCardInt = "Kungar";
+			if(testa==13){
+				yourCardInt = "Kings";
 			}
-			if(cardNbr==14){
-				yourCardInt = "Ess";
+			if(testa==14){
+				yourCardInt = "Aces";
 			}
 			
 		}
@@ -409,25 +341,25 @@ public class HandCalculation {
 		if(aiCards.size()<3){
 		
 			if(straightChance==2){
-			    straightText = "Du har en chans på en 'STRAIGHT', du har 2/5. \n";
+			    straightText = "You have a chance for a straight, you have 2/5.\n";
 				advice += straightText;
 			}
 			
 			if(pairsNmore==2){			
-				pairsNmoreHelper = "Du har 'ONE-PAIR' i "+ yourCardInt;
+				pairsNmoreHelper = "You have a pair of " + yourCardInt;
 			}
 			
 			if(colorChance==2){
-				advice += "Du har en chans för att få en 'FLUSH' i " +theColor + ", du har 2/5 för det.\n";
+				advice += "You have a chance for a flush in " + theColor + ", you have 2/5 for it.\n";
 				
 			}
 			
 			if(highCards){
 				if(advice.length()<2){
-				advice = "Du har bara 'HIGH CARD'. \nOm det är billigt så kan du prova och se, FU Rikard\n";
+				advice = "You only have high cards. \nYou can try and see but only if its cheap\n";
 			}
 				else{
-					advice += "Du har höga kort.\n";
+					advice += "You have high cards.\n";
 				}
 			}
 		}
@@ -437,33 +369,33 @@ public class HandCalculation {
 		//5+ cards.
 	  if(aiCards.size()<6){
 		if(straightChance==3){
-			advice += "Du har en chans på en 'STRAIGHT', du har 3/5.\n";
+			advice += "You have a chance for a straight, you have 3/5.\n";
 		}		
 	  }
 	  
 	  if(aiCards.size()<7){
 		if(straightChance==4){
-			advice += "Du har en chans på en 'STRAIGHT', du har 4/5.\n";
+			advice += "You have a chance for a straight, you have 4/5.\n";
 		}
 	  }
 	  
 		if(straightChance==5){		
-			straighHelper = "Du har en 'STRAIGHT'!! Du har 5/5.\n";
-			advice += "En 'STRAIGHT' är en riktigt bra hand. Kör på! \nFundera även på att höja!\n";
+			straighHelper = "You have a straight!! you have 5/5.\n";
+			advice += "A straight is a really good hand! Go for it!\n";
 			toHighlight = nbrForStraight;
 			
 		}
 		
 		if(pairsNmore==2){			//par
-			pairsNmoreHelper = "Du har 'PAIR' i " + yourCardInt;
+			pairsNmoreHelper = "You have a pair of " + yourCardInt;
 			if(lowCards){
-			parisNmoreText = "'PAIR' är en ok hand, även då detta är ett lågt par. Om det inte kostar för mycket. Så kör på!\n";
+			parisNmoreText = "A pair is a decent hand, even thou this is a low pair. If not to much, go for it.\n";
 			}
 			if(!(lowCards && highCards)){
-				parisNmoreText = "'PAIR' är en ok hand. Om det inte kostar för mycket, kör på!\n";
+				parisNmoreText = "A pair is a decent hand. If not to much, go for it.\n";
 			}
 			if(highCards){
-				parisNmoreText = "'PAIR' är en ok hand. Och detta är även ett högt par vilket är bra. Om det inte kostar för mycket. Kör på!\n";	
+				parisNmoreText = "A pair is a decent hand, and this is a high pair. If not to much, go for it.\n";
 			}
 			
 			advice += parisNmoreText;
@@ -471,33 +403,33 @@ public class HandCalculation {
 			for(int i = 0; i<aiCards.size(); i++){			
 				String[] seeIfSame = aiCards.get(i).split(",");
 				int temp = Integer.parseInt(seeIfSame[0]);
-				if(cardNbr==temp){
+				if(testa==temp){
 					toHighlight.add(aiCards.get(i));
 				}
 			}
 		}
 		if(pairsNmore==3){			//triss
-			pairsNmoreHelper = "'THREE OF A KIND' i " + yourCardInt;			
-			parisNmoreText = "'THREE OF A KIND' är en väldigt stark hand. Kör på! Fundera även på att höja!\n";
+			pairsNmoreHelper = "You have three of a kind of " + yourCardInt;			
+			parisNmoreText = "Three of a kind is a solid hand. Go for it, also you should consider to raise.\n";
 			advice += parisNmoreText;
 			toHighlight.clear();
 			for(int i = 0; i<aiCards.size(); i++){			
 				String[] seeIfSame = aiCards.get(i).split(",");
 				int temp = Integer.parseInt(seeIfSame[0]);
-				if(cardNbr==temp){
+				if(testa==temp){
 					toHighlight.add(aiCards.get(i));
 				}
 			}
 		}
 		if(pairsNmore==4){			//fyrtal
-			pairsNmoreHelper += "'FOUR OF A KIND' i " + yourCardInt;
-			parisNmoreText = "'FOUR OF A KIND' är svårt att slå, HÖJ!\n";
+			pairsNmoreHelper += "You have four of a kind in " + yourCardInt;
+			parisNmoreText = "Four of a kind is hard to beat. Raise!\n";
 			advice += parisNmoreText;
 			toHighlight.clear();
 			for(int i = 0; i<aiCards.size(); i++){			
 				String[] seeIfSame = aiCards.get(i).split(",");
 				int temp = Integer.parseInt(seeIfSame[0]);
-				if(cardNbr==temp){
+				if(testa==temp){
 					toHighlight.add(aiCards.get(i));
 				}
 			}
@@ -505,15 +437,15 @@ public class HandCalculation {
 		
 		if(pairsNmore==22){			//2-par
 			String temps[] = yourCard2.split(",");
-			pairsNmoreHelper = "'TWO PAIRS'  i " + yourCardInt + " och " + yourOtherCardInt ; //buggad!
-			parisNmoreText = "'TWO PAIRS' är en bra hand, kör på.\n";
+			pairsNmoreHelper = "You have two pairs of  " + yourCardInt + " and " + temps[0]+"s";
+			parisNmoreText = "Two pairs is a good hand. Go for it.\n";
 			advice += parisNmoreText;
 			toHighlight.clear();
 			
 			for(int i = 0; i<aiCards.size(); i++){			
 				String[] seeIfSame = aiCards.get(i).split(",");
 				int temp = Integer.parseInt(seeIfSame[0]);			
-				if(cardNbr==temp || Integer.parseInt(temps[0]) == temp){
+				if(testa==temp || Integer.parseInt(temps[0]) == temp){
 					toHighlight.add(aiCards.get(i));
 				}
 			}
@@ -521,14 +453,14 @@ public class HandCalculation {
 		
 		if(pairsNmore == 23 || pairsNmore==32){		//kåk
 			String temps[] = yourCard2.split(",");
-			pairsNmoreHelper = "'FULL HOUSE' med " + yourCardInt + " och " + yourOtherCardInt;   //Buggad!!
-			parisNmoreText = "Det är inte mycket som slår denna hand. Höja är rekomenderat.\n";
+			pairsNmoreHelper = "You have a full house with " + yourCardInt + " and " + temps[0]+"s";
+			parisNmoreText = "There isnt much that can beat this hand. Raise is prefered.\n";
 			advice += parisNmoreText;
 			
 			for(int i = 0; i<aiCards.size(); i++){			
 				String[] seeIfSame = aiCards.get(i).split(",");
 				int temp = Integer.parseInt(seeIfSame[0]);			
-				if(cardNbr==temp || Integer.parseInt(temps[0]) == temp){
+				if(testa==temp || Integer.parseInt(temps[0]) == temp){
 					toHighlight.add(aiCards.get(i));
 				}
 			}
@@ -536,44 +468,39 @@ public class HandCalculation {
 		
 		if(aiCards.size()<6){
 			if(colorChance==3){
-				advice += "Du har en chans för en 'FLUSH' i " + theColor + ", du har 3/5.\n";
+				advice += "You have a chance for a flush in " + theColor + ", you have 3/5 for it.\n";
 				
 			}
 		}
 		if(aiCards.size()<7){
 			if(colorChance==4){
-				advice += "Du har en chans för en 'FLUSH' i " + theColor + ", du har 4/5.\n";
+				advice += "You have a chance for a flush in " + theColor + ", you have 4/5 for it.\n";
 			}
 		}
 			if(colorChance==5){
-				colorChanceHelper = "En 'FLUSH' i " + theColor + "!! Du har 5/5!!\n";
-				advice += "Du har en 'FLUSH'! Kör på, din hand är svår att slå!\n";
+				colorChanceHelper = "You have a flush in " + theColor + ", you have 5/5!!\n";
+				advice += "You have a flush!! Go for it, your hand is hard to beat!\n";
 			}
 		
 		if(advice.length()==0){
-			advice = "Denna hand kanske inte är den bästa att spela på...\n";
+			advice = "This hand might not be the best hand to continue with.\n";
 		}
 		
 
 		helper += colorChanceHelper + pairsNmoreHelper + straighHelper;
 		
 		if(helper.length()<2){
-			helper = "Ingenting, tyvärr...";
+			helper = "You have nothing, sorry.";
 		}
 		
-		advicee = advice;
-		return helper;
+		
+		return helper + "\n\nAdvice\n" + advice;
 		
 	}
 	
-	public String advice(){
-		return advicee;
-	}
 	
-	/**
-	 * 
-	 * @return what to be highlighed.
-	 */
+	
+	
 	public ArrayList<String> toHiglight(){
 		return toHighlight;
 		
