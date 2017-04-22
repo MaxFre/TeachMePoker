@@ -88,7 +88,7 @@ public class TurnThree {
       likelyhood += 80;
     }
 
-    if (pairsNmore == 3 || pairsNmore == 32) { // kåk
+    if (pairsNmore == 23 || pairsNmore == 32) { // kåk
       likelyhood += 120;
     }
 

@@ -14,7 +14,7 @@ public class TurnOne {
   private boolean colorChance;
   private int straightChance;
   private int pairs = 0;
-  private int likelyhood = 10;
+  private int likelyhood = 0;
   private boolean highCards;
   private boolean rlyhighCards;
   private String toDO = "fold";
@@ -57,8 +57,8 @@ public class TurnOne {
    */
   public void decide() {
 
-    if (straightChance > 0) {
-      likelyhood += 20;
+    if (straightChance==2) {
+      likelyhood += 25;
     }
 
     if (highCards) {
@@ -76,12 +76,8 @@ public class TurnOne {
       likelyhood += 100;
     }
 
-    Random rand = new Random();
-
-    int roll = rand.nextInt(90);
     System.out.println("likelyhood - " + likelyhood);
-    System.out.println("roll - " + roll);
-
+   
 //    if (toBet == 0) {
 //      toDO = "check";
 //
@@ -95,16 +91,28 @@ public class TurnOne {
 
       int diff = aipotChance - toBetChance;
 
-      likelyhood = likelyhood + diff;
+      
+      
+//      likelyhood = likelyhood + diff;
       System.out.println("likelyhood efter toBet - " + likelyhood);
       System.out.println("toBet - " + toBet);
       System.out.println("aiPot - " + aiPot);
 
   	if (likelyhood < 45) {   	//Less than 45 = fold.
+  	    Random rand = new Random();
+  	    int roll = rand.nextInt(100);
+  	    System.out.println("roll - " + roll);
 		if (roll <= 15) {		//if roll is less than 15 (15%) Ai bluffs.
+			if(toBet<aiPot){
 			toDO = "call," + toBet;
 			aiPot -= (toBet-alreadyPaid);
 			System.out.println("Bluff");
+			}
+			else if(toBet>aiPot){
+				toDO = "all-in," + aiPot;
+				aiPot -= aiPot;
+				System.out.println("Bluff");
+			}
 		}
 	}
 

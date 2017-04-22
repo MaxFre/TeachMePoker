@@ -39,7 +39,7 @@ public class Ai {
   public void setStartingHand(Card card1, Card card2) {		// set starting hand
     aiCards.clear(); // nollställer arraylist.
     char A = card1.getCardSuit().charAt(0);
-    char B = card1.getCardSuit().charAt(0);
+    char B = card2.getCardSuit().charAt(0);
     String firstCard = card1.getCardValue() + "," + String.valueOf(A);
     String secondCard = card2.getCardValue() + "," + String.valueOf(B);
     aiCards.add(firstCard);

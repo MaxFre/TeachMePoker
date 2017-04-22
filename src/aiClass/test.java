@@ -85,7 +85,7 @@ public class test {
 		}
 	}
 	
-//	public static void main(String [] args){
-//		test run = new test();
-//	}
+	public static void main(String [] args){
+		test run = new test();
+	}
 }
