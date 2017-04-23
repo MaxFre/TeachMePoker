@@ -19,6 +19,8 @@ public class TestHand {
 
   public TestHand() {
 
+
+	  
     for (int testAlot = 0; testAlot < 15; testAlot++) {
       cards.clear();
       deck = new Deck();
@@ -37,6 +39,8 @@ public class TestHand {
       
     
     }
+		
+
   }
 
   public static void main(String[] args) {

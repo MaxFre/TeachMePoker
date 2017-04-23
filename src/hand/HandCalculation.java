@@ -273,48 +273,58 @@ public class HandCalculation {
 	 */
 	public int checkStraight(){
 		
-		if(cardNbr.get(cardNbr.size()-1) == 14){
-			cardNbr.add(1);
-		}
-		
-		int[] tempArray = new int[cardNbr.size()];
-		int treshold = 0;
-
-		for (int i = 0; i < cardNbr.size(); i++) {
+		int[] tempArray = new int[aiCards.size()];
+		int threshold = 0;
+		for(int i = 0; i< aiCards.size(); i++){
 			tempArray[i] = cardNbr.get(i);
 		}
-
+		
 		Arrays.sort(tempArray);
-	
-		int inStraight;
+		int inStraight = 0;	
 		int check = 4;
 		
-	
-		
-		for (int x = 0; x < tempArray.length; x++) {
-			int temp = tempArray[x] + check;
-			inStraight = 1;
-			check--;
-			for (int i = 0; i < tempArray.length; i++) {
-				if (tempArray[i] <= temp && !(tempArray[i] < temp - 4)) {			//	 temp-4>  i    <temp  when i is within this range
-	
-					if (i >= 1) {
-						if (!(tempArray[i] == tempArray[i - 1])) { // kollar om 1-4 är samma som nån annan.
-							inStraight++;
-						}
-					}
-
+	for(int x = 0; x<tempArray.length; x++){	
+		int temp = tempArray[x]+check;
+		inStraight = 0;
+		check--;
+		nbrForStraight.clear();
+		for(int i = 0; i<tempArray.length; i++){
+			
+			if(tempArray[i]<=temp && !(tempArray[i]<temp-4)){
+					
+				if(i==0){							//kollar om 0 är samma som 1.
+//					if(!(test[i]==test[i+1])){
+						inStraight++;
+						nbrForStraight.add(aiCards.get(i));
+//					}
 				}
+				
+				if(i>=1){							
+					if(!(tempArray[i]==tempArray[i-1])){		//kollar om 1-4 är samma som nån annan.
+						inStraight++;
+						nbrForStraight.add(aiCards.get(i));
+					}
+				}	
+				
 			}
-
-			if (inStraight > treshold) {
-				treshold = inStraight;
-			}
+		}
+	
+		if(inStraight>threshold){
+			nbrForStraight1.clear();
+			nbrForStraight1 = nbrForStraight;
+			
+			threshold = inStraight;
+	
 
 		}
-
-		return treshold;
+		
+		
 	}
+	
+			
+		return threshold;
+	}
+	
 	
 	
 	
