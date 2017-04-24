@@ -8,6 +8,7 @@ public class test {
 	private String[] fromCards = new String[10];
 	private String whatToDo;
 	private TurnTwo turnTwo;
+	private ArrayList<String> temphihglightForStasdraight = new ArrayList<String>();
 	private ArrayList<String> temphihglightForStraight = new ArrayList<String>();
 	private ArrayList<String> currentHighlightForStraight = new ArrayList<String>();
 	private ArrayList<String>  cards = new  ArrayList<String>();	
@@ -17,20 +18,19 @@ public class test {
 			
 		
 		
-		cards.add("140,h");
-		cards.add("2,d");
-		cards.add("14,h");
+		cards.add("5,h");
 		cards.add("4,d");
-		cards.add("2,h");
-		cards.add("5,d");
-		cards.add("3,h");
+		cards.add("14,h");
+		cards.add("2,d");
+		cards.add("9,h");
+		cards.add("8,d");
+//		cards.add("3,h");
 		
 		
 		getCardValues();
 		int straight = turnTwo();
-		System.out.println(cardNbr);
 		System.out.println(straight);
-				
+		
 	}
 	
 	
@@ -62,6 +62,8 @@ public class test {
 		
 		int inStraight;
 		
+		System.out.println("Cards - " + cardNbr);
+		
 		for (int x = 0; x < tempArray.length; x++) {	
 			
 			int currentHighestInStraight = tempArray[x] + 4;
@@ -71,38 +73,20 @@ public class test {
 			for (int i = 0; i < cards.size(); i++) {
 			
 				if (tempArray[i] >= currentLowestInStraight && tempArray[i] <= currentHighestInStraight) {			//	 temp-4> i <temp  when i is within this range
-	
-//				if(i == 0){
-//					if(!(tempArray[0]==tempArray[1]) && tempArray[0]>=currentLowestInStraight && tempArray[0]<=currentHighestInStraight){
-//							String[] split = correctOrder[i].split(",");
-//							int split2 = Integer.parseInt(split[0]);
-//							if(tempArray[i]==split2){
-//								
-//						}
-//						
-//					}
-//				}
-				
-					if (i >= 0) {
-						
-						if(i == 0){
-							for(int find = 0; find<cards.size(); find++){
-								String[] split = correctOrder[i].split(",");
-								if(split[0].equals(String.valueOf(tempArray[find]))){
-									temphihglightForStraight.add(correctOrder[find]);
-								}
-							}			
-						}
-						
-					else if (!(tempArray[i] == tempArray[i - 1])){ // kollar om 1-4 är samma som nån annan.
+
+				if(i == 0){	
+					if(tempArray[i]==1){
+						temphihglightForStraight.add(String.valueOf(tempArray[cards.size()]));
+					}
+					else
+						temphihglightForStraight.add(String.valueOf(tempArray[i]));
+				}
+					
+				if (i > 0) {				
+					 if (!(tempArray[i] == tempArray[i - 1])){ // kollar om 1-4 är samma som nån annan.
 							inStraight++;	
-							for(int find = 0; find<cards.size(); find++){
-								String[] split = correctOrder[i].split(",");
-								if(split[0].equals(String.valueOf(tempArray[find]))){
-									temphihglightForStraight.add(correctOrder[find]);
-								}
-							}
-//							temphihglightForStraight.add(String.valueOf(tempArray[i]));
+							
+							temphihglightForStraight.add(String.valueOf(tempArray[i]));
 						}
 					}
 
