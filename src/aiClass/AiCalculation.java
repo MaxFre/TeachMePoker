@@ -189,8 +189,7 @@ public class AiCalculation {
 	 * @return returns if the Ai has a chance or has a Straight.
 	 */
 	public int checkStraight() {
-
-		if(cardNbr.get(cardNbr.size()-1) == 14){ 	//if there is a 14 it should be able to be counted as a 1, ergo adding 1.
+		if(cardNbr.get(cardNbr.size()-1) == 14){
 			cardNbr.add(1);
 		}
 		
@@ -204,18 +203,17 @@ public class AiCalculation {
 		Arrays.sort(tempArray);
 	
 		int inStraight;
-		int check = 4;															//we check the spectrum for a straight i+4 cuz u need 5 for a straight.
 		
-	
-		
-		for (int x = 0; x < tempArray.length; x++) {
-			int temp = tempArray[x] + check;
+		for (int x = 0; x < tempArray.length; x++) {			
+			int currentHighestInStraight = tempArray[x] + 4;
+			int currentLowestInStraight = currentHighestInStraight-4;
 			inStraight = 1;
+			
 			for (int i = 0; i < tempArray.length; i++) {
-				if (tempArray[i] <= temp && !(tempArray[i] < temp - 4)) {			//	 temp-4>  i    <temp  when i is within this range.
+				if (tempArray[i] >= currentHighestInStraight-4 && tempArray[i] <= currentHighestInStraight) {			//	 temp-4> i <temp  when i is within this range
 	
 					if (i > 0) {
-						if (!(tempArray[i] == tempArray[i - 1])) { 					// checks so that the temp isnt like the one before it.
+						if (!(tempArray[i] == tempArray[i - 1]) && (tempArray[i-1] >= currentLowestInStraight && tempArray[i-1] <= currentHighestInStraight)){ // kollar om 1-4 är samma som nån annan.
 							inStraight++;
 						}
 					}
@@ -223,12 +221,12 @@ public class AiCalculation {
 				}
 			}
 
-			if (inStraight > treshold) {											// adds new top number
+			if (inStraight > treshold) {
 				treshold = inStraight;
 			}
 
 		}
-
 		return treshold;
 	}
+
 }

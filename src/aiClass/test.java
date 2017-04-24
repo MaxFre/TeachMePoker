@@ -8,6 +8,8 @@ public class test {
 	private String[] fromCards = new String[10];
 	private String whatToDo;
 	private TurnTwo turnTwo;
+	private ArrayList<String> temphihglightForStraight = new ArrayList<String>();
+	private ArrayList<String> currentHighlightForStraight = new ArrayList<String>();
 	private ArrayList<String>  cards = new  ArrayList<String>();	
 	private ArrayList<Integer> cardNbr = new ArrayList<Integer>();
 	private ArrayList<String> cardClr = new ArrayList<String>();
@@ -15,56 +17,92 @@ public class test {
 			
 		
 		
+		cards.add("140,h");
+		cards.add("2,d");
+		cards.add("14,h");
+		cards.add("4,d");
 		cards.add("2,h");
-		cards.add("31,d");
-		cards.add("41,h");
-		cards.add("51,d");
-		cards.add("114,h");
+		cards.add("5,d");
+		cards.add("3,h");
 		
 		
 		getCardValues();
 		int straight = turnTwo();
 		System.out.println(cardNbr);
 		System.out.println(straight);
-		
-		
-		
-		
-		
-		
+				
 	}
 	
 	
 	public int turnTwo(){
+		int treshold = 0;
+		String[] correctOrder = new String[cards.size()];
 		
-		if(cardNbr.get(cardNbr.size()-1) == 14){
+		int a =  0;
+		for(String x: cards){
+			correctOrder[a] = x;
+			a++;
+		}
+		
+		for(int i = 0; i<cardNbr.size(); i++){
+		 if(cardNbr.get(i) == 14){
 			cardNbr.add(1);
+		 }
 		}
 		
 		int[] tempArray = new int[cardNbr.size()];
-		int treshold = 0;
+		
 
 		for (int i = 0; i < cardNbr.size(); i++) {
 			tempArray[i] = cardNbr.get(i);
 		}
-
-		Arrays.sort(tempArray);
-	
-		int inStraight;
-		int check = 4;
-		String currentTemp ="";
-	
 		
-		for (int x = 0; x < tempArray.length; x++) {			
-			int temp = tempArray[x] + check;
-			inStraight = 1;
+		Arrays.sort(tempArray);
+
+		
+		int inStraight;
+		
+		for (int x = 0; x < tempArray.length; x++) {	
 			
-			for (int i = 0; i < tempArray.length; i++) {
-				if (tempArray[i] <= temp && !(tempArray[i] < temp - 4)) {			//	 temp-4> i <temp  when i is within this range
+			int currentHighestInStraight = tempArray[x] + 4;
+			int currentLowestInStraight = currentHighestInStraight-4;
+			inStraight = 1;
+
+			for (int i = 0; i < cards.size(); i++) {
+			
+				if (tempArray[i] >= currentLowestInStraight && tempArray[i] <= currentHighestInStraight) {			//	 temp-4> i <temp  when i is within this range
 	
-					if (i > 0) {
-						if (!(tempArray[i] == tempArray[i - 1])) { // kollar om 1-4 är samma som nån annan.
-							inStraight++;
+//				if(i == 0){
+//					if(!(tempArray[0]==tempArray[1]) && tempArray[0]>=currentLowestInStraight && tempArray[0]<=currentHighestInStraight){
+//							String[] split = correctOrder[i].split(",");
+//							int split2 = Integer.parseInt(split[0]);
+//							if(tempArray[i]==split2){
+//								
+//						}
+//						
+//					}
+//				}
+				
+					if (i >= 0) {
+						
+						if(i == 0){
+							for(int find = 0; find<cards.size(); find++){
+								String[] split = correctOrder[i].split(",");
+								if(split[0].equals(String.valueOf(tempArray[find]))){
+									temphihglightForStraight.add(correctOrder[find]);
+								}
+							}			
+						}
+						
+					else if (!(tempArray[i] == tempArray[i - 1])){ // kollar om 1-4 är samma som nån annan.
+							inStraight++;	
+							for(int find = 0; find<cards.size(); find++){
+								String[] split = correctOrder[i].split(",");
+								if(split[0].equals(String.valueOf(tempArray[find]))){
+									temphihglightForStraight.add(correctOrder[find]);
+								}
+							}
+//							temphihglightForStraight.add(String.valueOf(tempArray[i]));
 						}
 					}
 
@@ -73,14 +111,13 @@ public class test {
 
 			if (inStraight > treshold) {
 				treshold = inStraight;
-				currentTemp =  String.valueOf(temp-4) + "-"+String.valueOf(temp);
+				currentHighlightForStraight = temphihglightForStraight;
+				System.out.println("sista currentHighlightForStraight - " + currentHighlightForStraight);
 			}
 
 		}
-		System.out.println("StegChans i - " + currentTemp);
 		return treshold;
 	}
-
 	
 	
 	public void getCardValues() {
