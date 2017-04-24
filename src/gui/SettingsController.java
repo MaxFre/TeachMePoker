@@ -1,6 +1,8 @@
 package gui;
 
 import java.io.IOException;
+
+import controller.SPController;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -8,146 +10,145 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
-
 public class SettingsController {
+	private SPController spController;
 
-  private ChangeScene changeScene;
-  private Sound sound;
-  private ConfirmBox confirmBox;
-  private String name;
+	private ChangeScene changeScene;
+	private Sound sound;
+	private ConfirmBox confirmBox;
+	private String name;
+	private int aiValue;
+	private int potValue;
 
-  @FXML
-  private TextField tfNameInput;
-  @FXML
-  private Slider aiSlider;
-  @FXML
-  private Slider potSlider;
-  @FXML
-  private CheckBox cbOn;
-  @FXML
-  private CheckBox cbOff;
-  @FXML
-  private ImageView ivStartGame;
-  @FXML
-  private ImageView ivQuestionAi;
-  @FXML
-  private ImageView ivQuestionPot;
-  @FXML
-  private ImageView ivQuestionTutorial;
-  @FXML
-  private Label lblAiInfo;
-  @FXML
-  private Label lblPotInfo;
-  @FXML
-  private Label lblTutorialInfo;
-  
-public void initialize() throws Exception{
-    
-  }
+	@FXML
+	private TextField tfNameInput;
+	@FXML
+	private Slider aiSlider;
+	@FXML
+	private Slider potSlider;
+	@FXML
+	private CheckBox cbOn;
+	@FXML
+	private CheckBox cbOff;
+	@FXML
+	private ImageView ivStartGame;
+	@FXML
+	private ImageView ivQuestionAi;
+	@FXML
+	private ImageView ivQuestionPot;
+	@FXML
+	private ImageView ivQuestionTutorial;
+	@FXML
+	private Label lblAiInfo;
+	@FXML
+	private Label lblPotInfo;
+	@FXML
+	private Label lblTutorialInfo;
+	@FXML
+	private ImageView ivBack;
 
+	public void initialize() throws Exception {
 
-  public void tfNameInputChange() {
+	}
 
-    this.name = tfNameInput.getText();
-  }
+	public void tfNameInputChange() {
+		this.name = tfNameInput.getText();
+	}
 
+	public void setChangeScene(ChangeScene sceneChanger) {
+		this.changeScene = sceneChanger;
+	}
 
-  public void setChangeScene(ChangeScene sceneChanger) {
+	public void aiSliderChange() {
+		Double val = aiSlider.getValue();
+		aiValue = val.intValue();
 
-    this.changeScene = sceneChanger;
-  }
+		System.out.println("Slider moved to " + aiValue);
 
+	}
 
-  public void aiSliderChange() {
+	public void potSliderChange() {
 
-    Double val = aiSlider.getValue();
-    Integer value = val.intValue();
-    System.out.println("Slider moved to " + value);
-  }
+		Double val = potSlider.getValue();
+		potValue = val.intValue();
 
+		System.out.println("Slider moved to " + potValue);
+	}
 
-  public void potSliderChange() {
+	public void cbOnClicked() {
 
-    Double val = potSlider.getValue();
-    int value = val.intValue();
-    System.out.println("Slider moved to " + value);
-  }
+		if (cbOff.isSelected()) {
+			cbOff.setSelected(false);
+			cbOff.setDisable(false);
+			cbOn.setSelected(true);
+			cbOn.setDisable(true);
 
+		}
 
-  public void cbOnClicked() {
+		System.out.println("Tutorial On");
+	}
 
-    if (cbOff.isSelected()) {
-      cbOff.setSelected(false);
-      cbOff.setDisable(false);
-      cbOn.setSelected(true);
-      cbOn.setDisable(true);
+	public void cbOffClicked() {
 
-    }
+		if (cbOn.isSelected()) {
+			cbOn.setSelected(false);
+			cbOn.setDisable(false);
+			cbOff.setSelected(true);
+			cbOff.setDisable(true);
 
-    System.out.println("Tutorial On");
-  }
+		}
+		System.out.println("Tutorial Off");
+	}
 
+	public void startGame() throws IOException {
 
-  public void cbOffClicked() {
+		if (!tfNameInput.getText().isEmpty()) {
+			name = tfNameInput.getText();
+			spController = new SPController();
+			spController.startGame(aiValue, potValue, name);
+			
 
-    if (cbOn.isSelected()) {
-      cbOn.setSelected(false);
-      cbOn.setDisable(false);
-      cbOff.setSelected(true);
-      cbOff.setDisable(true);
+			if (cbOn.isSelected()) {
+				System.out.println("Tutorial ska visas");
+			}
+			changeScene.switchScenetoGame();
+			System.out.println("Spel startas!");
 
-    }
-    System.out.println("Tutorial Off");
-  }
+		} else if (tfNameInput.getText().isEmpty()) {
+			confirmBox = new ConfirmBox();
+			boolean result = confirmBox.display("Varning", "Du måste välja ett användarnamn för att starta spelet");
 
+			System.out.println("Du måste välja ett användarnamn");
+			System.out.println(result);
+		}
+	}
 
-  public void startGame() throws IOException {
+	public void ivQuestionAiHovered() {
 
-    if (!tfNameInput.getText().isEmpty()) {
-      name = tfNameInput.getText();
+		lblAiInfo.setVisible(true);
+		ivQuestionAi.setOnMouseExited(e -> lblAiInfo.setVisible(false));
 
+	}
 
-      if (cbOn.isSelected()) {
-        System.out.println("Tutorial ska visas");
-      }
-      changeScene.switchScenetoGame();
-      System.out.println("Spel startas!");
-    } else if (tfNameInput.getText().isEmpty()) {
-      confirmBox = new ConfirmBox();
-      boolean result =
-          confirmBox.display("Varning", "Du måste välja ett användarnamn för att starta spelet");
+	public void ivQuestionPotHovered() {
 
-      System.out.println("Du måste välja ett användarnamn");
-      System.out.println(result);
-    }
-  }
+		lblPotInfo.setVisible(true);
+		ivQuestionPot.setOnMouseExited(e -> lblPotInfo.setVisible(false));
 
+	}
 
-  public void ivQuestionAiHoovered() {
+	public void ivQuestionTutorialHovered() {
 
-    lblAiInfo.setVisible(true);
-    ivQuestionAi.setOnMouseExited(e -> lblAiInfo.setVisible(false));
+		lblTutorialInfo.setVisible(true);
+		ivQuestionTutorial.setOnMouseExited(e -> lblTutorialInfo.setVisible(false));
+	}
 
-  }
+	public void back() {
+		Main.window.setScene(changeScene.sceneMenu);
+	}
 
-
-  public void ivQuestionPotHoovered() {
-
-    lblPotInfo.setVisible(true);
-    ivQuestionPot.setOnMouseExited(e -> lblPotInfo.setVisible(false));
-
-  }
-
-
-  public void ivQuestionTutorialHoovered() {
-
-    lblTutorialInfo.setVisible(true);
-    ivQuestionTutorial.setOnMouseExited(e -> lblTutorialInfo.setVisible(false));
-  }
-
-
-  public String getName() {
-    return name;
-  }
+	public String getName() {
+		return name;
+	}
 
 }

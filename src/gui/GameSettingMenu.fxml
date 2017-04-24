@@ -85,7 +85,7 @@
       </VBox>
       <VBox layoutX="1230.0" layoutY="210.0" prefHeight="300.0" prefWidth="40.0">
          <children>
-            <ImageView fx:id="ivQuestionAi" fitHeight="32.0" fitWidth="30.0" onMouseClicked="#ivQuestionAiHoovered" onMouseEntered="#ivQuestionAiHoovered" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ivQuestionAi" fitHeight="32.0" fitWidth="30.0" onMouseClicked="#ivQuestionAiHovered" onMouseEntered="#ivQuestionAiHovered" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../resources/images/questionmark.png" />
                </image>
@@ -93,7 +93,7 @@
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </ImageView>
-            <ImageView fx:id="ivQuestionPot" fitHeight="32.0" fitWidth="30.0" onMouseClicked="#ivQuestionPotHoovered" onMouseDragEntered="#ivQuestionPotHoovered" onMouseEntered="#ivQuestionPotHoovered" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ivQuestionPot" fitHeight="32.0" fitWidth="30.0" onMouseClicked="#ivQuestionPotHovered" onMouseDragEntered="#ivQuestionPotHovered" onMouseEntered="#ivQuestionPotHovered" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../resources/images/questionmark.png" />
                </image>
@@ -104,7 +104,7 @@
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </ImageView>
-            <ImageView fx:id="ivQuestionTutorial" fitHeight="32.0" fitWidth="30.0" onMouseClicked="#ivQuestionTutorialHoovered" onMouseDragEntered="#ivQuestionTutorialHoovered" onMouseEntered="#ivQuestionTutorialHoovered" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ivQuestionTutorial" fitHeight="32.0" fitWidth="30.0" onMouseClicked="#ivQuestionTutorialHovered" onMouseDragEntered="#ivQuestionTutorialHovered" onMouseEntered="#ivQuestionTutorialHovered" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../resources/images/questionmark.png" />
                </image>
@@ -135,5 +135,10 @@
             <Font name="Tw Cen MT" size="14.0" />
          </font>
       </Label>
+      <ImageView fx:id="ivBack" fitHeight="90.0" fitWidth="150.0" layoutX="50.0" layoutY="603.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../GitHub/TeachMePoker/resources/images/backButton.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>
