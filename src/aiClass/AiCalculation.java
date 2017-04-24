@@ -211,11 +211,10 @@ public class AiCalculation {
 		for (int x = 0; x < tempArray.length; x++) {
 			int temp = tempArray[x] + check;
 			inStraight = 1;
-			check--;
 			for (int i = 0; i < tempArray.length; i++) {
 				if (tempArray[i] <= temp && !(tempArray[i] < temp - 4)) {			//	 temp-4>  i    <temp  when i is within this range.
 	
-					if (i >= 1) {
+					if (i > 0) {
 						if (!(tempArray[i] == tempArray[i - 1])) { 					// checks so that the temp isnt like the one before it.
 							inStraight++;
 						}

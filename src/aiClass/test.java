@@ -16,10 +16,10 @@ public class test {
 		
 		
 		cards.add("2,h");
-		cards.add("3,d");
-		cards.add("4,h");
-		cards.add("5,d");
-		cards.add("14,h");
+		cards.add("31,d");
+		cards.add("41,h");
+		cards.add("51,d");
+		cards.add("114,h");
 		
 		
 		getCardValues();
@@ -52,17 +52,17 @@ public class test {
 	
 		int inStraight;
 		int check = 4;
-		
+		String currentTemp ="";
 	
 		
-		for (int x = 0; x < tempArray.length; x++) {
+		for (int x = 0; x < tempArray.length; x++) {			
 			int temp = tempArray[x] + check;
 			inStraight = 1;
 			
 			for (int i = 0; i < tempArray.length; i++) {
-				if (tempArray[i] <= temp && !(tempArray[i] < temp - 4)) {			//	 temp-4>  i    <temp  when i is within this range
+				if (tempArray[i] <= temp && !(tempArray[i] < temp - 4)) {			//	 temp-4> i <temp  when i is within this range
 	
-					if (i >= 1) {
+					if (i > 0) {
 						if (!(tempArray[i] == tempArray[i - 1])) { // kollar om 1-4 är samma som nån annan.
 							inStraight++;
 						}
@@ -73,10 +73,11 @@ public class test {
 
 			if (inStraight > treshold) {
 				treshold = inStraight;
+				currentTemp =  String.valueOf(temp-4) + "-"+String.valueOf(temp);
 			}
 
 		}
-
+		System.out.println("StegChans i - " + currentTemp);
 		return treshold;
 	}
 
