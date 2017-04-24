@@ -3,6 +3,7 @@ package testLykkeMenu;
 import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
@@ -20,7 +21,7 @@ public class ChangeScene {
 	} 
         
 	public void switchScenetoGame() throws IOException{
-    	Pane root2 = FXMLLoader.load(getClass().getResource("PokerPlan2.fxml"));
+		Pane root2 = FXMLLoader.load(getClass().getResource("GameState.fxml"));
 		sceneGameState = new Scene(root2);
 		Main.window.setScene(sceneGameState);
 	}

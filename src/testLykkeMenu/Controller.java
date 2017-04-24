@@ -110,6 +110,7 @@ public class Controller {
   public void startGame() throws IOException {
     if (!tfNameInput.getText().isEmpty()) {
         changeScene.switchScenetoGame();
+        
     	
 //      spcontroller.startGame((int) aiSlider.getValue(), (int) potSlider.getValue(),
 //          tfNameInput.getText());
