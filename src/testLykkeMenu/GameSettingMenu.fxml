@@ -44,7 +44,7 @@
                </cursor></Slider>
             <HBox prefHeight="0.0" prefWidth="440.0">
                <children>
-                  <CheckBox fx:id="cbOn" mnemonicParsing="false" onAction="#cbOnClicked" selected="true" text="På" textFill="WHITE">
+                  <CheckBox fx:id="cbOn" disable="true" mnemonicParsing="false" onAction="#cbOnClicked" selected="true" text="På" textFill="WHITE">
                      <font>
                         <Font name="Tw Cen MT" size="24.0" />
                      </font>
@@ -65,7 +65,7 @@
                   </CheckBox>
                </children>
                <VBox.margin>
-                  <Insets top="110.0" />
+                  <Insets top="70.0" />
                </VBox.margin>
             </HBox>
          </children>
@@ -109,7 +109,7 @@
                   <Image url="@../../resources/images/questionmark.png" />
                </image>
                <VBox.margin>
-                  <Insets top="110.0" />
+                  <Insets top="82.0" />
                </VBox.margin>
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
@@ -122,15 +122,15 @@
             <Image url="@../../resources/images/startGame.png" />
          </image>
       </ImageView>
-      <Label fx:id="lblAiInfo" layoutX="964.0" layoutY="262.0" prefHeight="36.0" prefWidth="293.0" text="Välj hur många motståndare du vill spela mot" textFill="WHITE" visible="false">
+      <Label fx:id="lblAiInfo" layoutX="964.0" layoutY="252.0" prefHeight="36.0" prefWidth="293.0" text="Välj hur många motståndare du vill spela mot" textFill="WHITE" visible="false">
          <font>
             <Font name="Tw Cen MT" size="14.0" />
          </font></Label>
-      <Label fx:id="lblPotInfo" layoutX="964.0" layoutY="384.0" prefHeight="36.0" prefWidth="293.0" text="Välj hur mycket pengar du och dina motspelare ska börja spela om." textFill="WHITE" visible="false" wrapText="true">
+      <Label fx:id="lblPotInfo" layoutX="964.0" layoutY="384.0" prefHeight="36.0" prefWidth="293.0" text="Välj hur mycket pengar du och dina motspelare ska dela på som startsumma" textFill="WHITE" visible="false" wrapText="true">
          <font>
             <Font name="Tw Cen MT" size="14.0" />
          </font></Label>
-      <Label fx:id="lblTutorialInfo" layoutX="964.0" layoutY="510.0" prefHeight="36.0" prefWidth="334.0" text="Välj Av om du inte vill visa tutorial innan spelet börjar" textFill="WHITE" visible="false">
+      <Label fx:id="lblTutorialInfo" layoutX="964.0" layoutY="490.0" prefHeight="36.0" prefWidth="293.0" text="Välj Av om du inte vill visa tips och hur spelet går till  innan du börjar spela" textFill="WHITE" visible="false" wrapText="true">
          <font>
             <Font name="Tw Cen MT" size="14.0" />
          </font>

@@ -4,6 +4,9 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.control.*;
+
+import javafx.scene.layout.Background;
+import javafx.scene.paint.Color;
 import javafx.geometry.*;
 
 public class ConfirmBox {
@@ -18,7 +21,6 @@ public Font font = new Font("Tw Cen MT", 24 );
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle(title);
 		window.setMinWidth(250);
-		
 		window.setOnCloseRequest(e -> closeProgram());
 		
 		Label label = new Label();
@@ -35,6 +37,7 @@ public Font font = new Font("Tw Cen MT", 24 );
 	
 		
 		VBox layout = new VBox(10);
+	
 		layout.getChildren().addAll(label, buttonOk);
 		layout.setAlignment(Pos.CENTER);
 		

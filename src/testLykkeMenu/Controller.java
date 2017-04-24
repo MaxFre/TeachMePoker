@@ -12,7 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
 public class Controller {
-  private SPController spcontroller = new SPController();
+  private SPController spController = new SPController();
   private ConfirmBox confirmBox;
 
   @FXML
@@ -78,13 +78,18 @@ public class Controller {
   }
 
   public void potSliderChange() {
-    System.out.println("Slider moved");
+	  Double val = potSlider.getValue();
+	  int value = val.intValue();
+    System.out.println("Slider moved to " + value);
   }
 
   public void cbOnClicked() {
+	 
     if (cbOff.isSelected()) {
       cbOff.setSelected(false);
+      cbOff.setDisable(false);
       cbOn.setSelected(true);
+      cbOn.setDisable(true);
 
     }
 
@@ -94,7 +99,9 @@ public class Controller {
   public void cbOffClicked() {
     if (cbOn.isSelected()) {
       cbOn.setSelected(false);
+      cbOn.setDisable(false);
       cbOff.setSelected(true);
+      cbOff.setDisable(true);
 
     }
     System.out.println("Tutorial Off");
