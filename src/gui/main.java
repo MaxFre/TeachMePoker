@@ -1,27 +1,40 @@
 package gui;
 
+
+import java.nio.file.Paths;
+
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
-public class main extends Application {
 
-  // public void start(Stage primary) throws Exception{
-  // Parent root = FXMLLoader.load(getClass().getResource("PokerDemo1.fxml"));
-  // primary.setTitle("TeachMePoker");
-  // primary.setScene(new Scene(root,800,600));
-  // primary.show();
+public class Main extends Application {
+  public static Stage window;
+  ChangeScene cs = new ChangeScene();
+//  Scene sceneMenu;
+//  Scene sceneNewGame;
 
-  public void start(Stage primary) throws Exception {
-    Parent root = FXMLLoader.load(getClass().getResource("PokerDemo2.fxml"));
-    primary.setTitle("TeachMePoker");
-    primary.setScene(new Scene(root, 800, 600));
-    primary.show();
+
+  public void start(Stage primaryStage) throws Exception {
+    window = primaryStage;
+    window.setTitle("TeachMePoker");
+    window.setResizable(true);
+
+    window.setScene(cs.firstScene());
+    window.sizeToScene();
+    window.centerOnScreen();
+    window.show();
+    
+   
   }
 
   public static void main(String[] args) {
-    launch(args);
+	    Media m = new Media(Paths.get("resources/sounds/cool_struttin'.mp3").toUri().toString());
+	    new MediaPlayer(m).play();
+	    
+	    
+	    launch(args);
+
   }
 }
