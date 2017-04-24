@@ -109,6 +109,7 @@ public class Ai {
       System.out.println("PaidBeforeThisTurn: " + this.paidThisTurn);
       this.paidThisTurn += aiPot - turnFour.updateAiPot();
       aiPot = turnFour.updateAiPot();
+      handStrength = turnFour.gethandStrength();
       System.out.println("PaidThisTurn(including what was paid before): " + this.paidThisTurn);
       System.out.println("AiPot after round: " + aiPot);
     }
@@ -180,45 +181,33 @@ public class Ai {
   }
 
 
-  public boolean isSmallBlind() {
+	public boolean isSmallBlind() {
+		return isSmallBlind;
+	}
 
-    return isSmallBlind;
-  }
+	public boolean isBigBlind() {
+		return isBigBlind;
+	}
 
+	public int getPaidThisTurn() {
+		return paidThisTurn;
+	}
 
-  public boolean isBigBlind() {
+	public void setPaidThisTurn(int paidThisTurn) {
+		this.paidThisTurn = paidThisTurn;
+	}
 
-    return isBigBlind;
-  }
+	public void setSameTurn(boolean sameTurn) {
+		this.sameTurn = sameTurn;
+	}
 
+	public int getHighCard() {
+		return highCard;
+	}
 
-  public int getPaidThisTurn() {
-
-    return paidThisTurn;
-  }
-
-
-  public void setPaidThisTurn(int paidThisTurn) {
-
-    this.paidThisTurn = paidThisTurn;
-  }
-
-
-  public void setSameTurn(boolean sameTurn) {
-
-    this.sameTurn = sameTurn;
-  }
-
-
-  public int getHighCard() {
-
-    return highCard;
-  }
-  
-  public int handStrength() {
-    return handStrength;
-  }
-
+	public int handStrength() {
+		return handStrength;
+	}
 
 }
 

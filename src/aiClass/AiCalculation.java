@@ -15,7 +15,10 @@ public class AiCalculation {
 	private ArrayList<String> aiCards = new ArrayList<String>();
 	private ArrayList<Integer> cardNbr = new ArrayList<Integer>();
 	private ArrayList<String> cardClr = new ArrayList<String>();
-	
+	private int handStrenght = 0;
+	private int same = 1;
+	private boolean flush = false;
+	private boolean straight = false;
 	/**
 	 * 
 	 * @param aiCards The current cards that are important.
@@ -113,6 +116,7 @@ public class AiCalculation {
 		if (cardClr.size() == 7) {
 			if (S == 5 || C == 5 || D == 5 || H == 5) {
 				Color = true;
+				flush = true;
 			}
 		}
 		return Color;
@@ -123,7 +127,7 @@ public class AiCalculation {
  * @return returns how main pairs or more that the ai has.
  */
 	public int checkPairAndMore() {
-		int same = 1;
+		
 		int nbrOftemp = 0;
 		int nbrOftemp1 = 0;
 		int nbrOftemp2 = 0;
@@ -224,9 +228,44 @@ public class AiCalculation {
 			if (inStraight > treshold) {
 				treshold = inStraight;
 			}
-
+		}
+		if(treshold==5){
+			straight = true;
 		}
 		return treshold;
 	}
+	
+	
+	public int calcHandstrenght(){
+		
+		if(same==2){
+			handStrenght=1;	
+		}
+		if(same==22){
+			handStrenght=2;
+		}
+		if(same==3){
+			handStrenght=3;
+		}
+		if(straight){
+			handStrenght=4;
+		}
+		if(flush){
+			handStrenght=5;
+		}
+		if(same==23 || same==32){
+			handStrenght=6;
+		}
+		if(same == 4 || same == 42 || same ==24){
+			handStrenght = 7;
+		}
+		if(flush && straight){
+			handStrenght = 8;
+		}
+	
+		return handStrenght;
+	}
+	
+
 
 }

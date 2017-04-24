@@ -23,6 +23,8 @@ public class TurnFour {
   private int raiseAmount;
   private int alreadyPaid;
   private boolean sameTurn;
+  private int handStrength;
+  
   
   /**
    * Gets value from Ai and calls on all the methods to evaluate a respond.
@@ -42,7 +44,7 @@ public class TurnFour {
     colorChance = calculation.checkSuit();
     pairsNmore = calculation.checkPairAndMore();
     straightChance = calculation.checkStraight();
-
+    handStrength = calculation.calcHandstrenght();
     decide();
 
     System.out.println(aiCards);
@@ -156,6 +158,9 @@ public class TurnFour {
     }
    }
 
+  public int gethandStrength(){
+	  return handStrength;
+  }
 
   /**
    * @return updates the AI's pot after it has commited a amount for the round.
