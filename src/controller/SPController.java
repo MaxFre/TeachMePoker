@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import aiClass.Ai;
 import deck.Card;
 import deck.Deck;
-import gui.GUI;
 import player.Player;
 
 
@@ -45,12 +44,6 @@ public class SPController {
 
 
   /**
-   * TestKonstruktor
-   */
-  public SPController() {}
-
-
-  /**
    * Method which prepares the whole Session
    * 
    * @param noOfAi Number of AI players
@@ -58,6 +51,7 @@ public class SPController {
    */
   public void startGame(int noOfAi, int potSize, String playerName) {
 
+    this.potSize = potSize;
     this.noOfAi = noOfAi;
     setNames();
     noOfPlayers = noOfAi + 1;
@@ -106,7 +100,7 @@ public class SPController {
         ai.setBigBlind(0, false);
         ai.setSmallBlind(0, false);
         ai.setPaidThisTurn(0);
-        player.reset("", new ArrayList<Card>());
+        player.reset("");
         card1 = deck.getCard();
         card2 = deck.getCard();
         ai.setStartingHand(card1, card2);
@@ -131,14 +125,10 @@ public class SPController {
 
     while (playTurn < 4) {
       System.out.println("Current turn: " + playTurn);
-      System.out.println("<-<-<-<-<-<-<-<-<->->->->->->->->");
       while (!allCalledorFolded) {
         if (currentPlayer == noOfPlayers - 1) {
           if (!player.getDecision().equals("fold")) {
             if (!(checkLivePlayers() > 1)) {
-              System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-              System.out.println("Player has won the round!");
-              System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
               player.setPlayerPot(currentPotSize);
               winnerDeclared = true;
               break;
@@ -150,13 +140,7 @@ public class SPController {
         } else {
           if (!aiPlayers.get(currentPlayer).getDecision().contains("fold")) {
             if (!(checkLivePlayers() > 1)) {
-              System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-              System.out.println(aiPlayers.get(currentPlayer).getName()
-                  + " has won the round! and got $" + currentPotSize
-                  + " increasing their money from " + aiPlayers.get(currentPlayer).aiPot() + " to "
-                  + (aiPlayers.get(currentPlayer).aiPot() + currentPotSize));
               aiPlayers.get(currentPlayer).updateWinner(currentPotSize);
-              System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
               winnerDeclared = true;
               break;
             }
@@ -169,10 +153,6 @@ public class SPController {
           aiPlayers.get(currentPlayer).setSameTurn(true);
         }
         currentPlayer = (currentPlayer + 1) % noOfPlayers;
-        // testkod
-        if (currentPlayer != noOfPlayers - 1) {
-          System.out.println("All called or folded? " + allCalledorFolded);
-        }
       }
       playTurn++;
       allCalledorFolded = false;
@@ -186,8 +166,8 @@ public class SPController {
         break;
       }
     }
-    if (playTurn >= 4) {
-      System.out.println("\nOne of the remaining players won\n");
+    if (playTurn >= 4 && !winnerDeclared) {
+      checkWinner();
       // TODO Calculate an actual winner
     }
     winnerDeclared = false;
@@ -208,6 +188,27 @@ public class SPController {
   }
 
 
+  private void checkWinner() {
+
+    int bestHand = 0;
+    Ai bestHandPlayer = aiPlayers.get(currentPlayer);
+    for (Ai ai : aiPlayers) {
+      if (!ai.getDecision().equals("fold")) {
+        if (ai.handStrength() > bestHand) {
+          bestHandPlayer = ai;
+        } else if (ai.handStrength() == bestHand) {
+          bestHandPlayer.getHighCard();
+        }
+      }
+    }
+    if(!player.getDecision().equals("fold")) {
+      player.getHandStrength();
+    }
+    // TODO Check Winner
+
+  }
+
+
   /**
    * Method which checks the amount of "living" players. The amount of players whose decision is not
    * fold.
@@ -225,61 +226,67 @@ public class SPController {
     if (!player.getDecision().equals("fold")) {
       livePlayers++;
     }
-    System.out.println("Live Players: " + livePlayers);
     return livePlayers;
   }
 
 
-
   private void askForPlayerDecision(int currentMaxBet2) {
-    player.makeDecision(currentMaxBet2);
+
+    // TODO gui.playerDecision?
     playerAction();
   }
 
+
   private void playerAction() {
+
+    // TODO get player Decision
     String playerDecision = player.getDecision();
     playerDecision.toLowerCase();
+
     String[] split;
     if (playerDecision.contains("raise")) {
       split = playerDecision.split(",");
       int oldMaxBet = currentMaxBet;
       currentMaxBet = Integer.parseInt(split[1]);
       currentPotSize += Integer.parseInt(split[1]);
-      System.out.println(player.getName() + " raised by " + (Integer.parseInt(split[1]) - oldMaxBet)
-          + " to " + currentMaxBet);
+      // TODO gui.showPlayerRaised?
     } else if (playerDecision.contains("fold")) {
-      System.out.println(player.getName() + " folded");
       // TODO gui.showPlayerFolded?
     } else if (playerDecision.contains("call")) {
-      System.out.println(player.getName() + " called " + currentMaxBet);
       currentPotSize += currentMaxBet;
       // TODO gui.showPlayerCalled?
     } else if (playerDecision.contains("check")) {
-      System.out.println(player.getName() + " checks");
+      // TODO gui.showPlayerChecked?
     }
-    System.out.println("\nCurrent Potsize: " + currentPotSize + "\n");
+    // TODO gui.updateTablePot
+    allCallorFold();
   }
+
 
   /**
    * Method which asks the current AIplayer to make a decision based on the current max bet.
    */
   private void askForAiDecision() {
+
     Ai ai = aiPlayers.get(currentPlayer);
-    System.out.println("Current playTurn(0 = start, 1 = flop, 2 = turn, 3 = river): " + playTurn);
+    // Starting Hand
     if (playTurn == 0) {
       ai.makeDecision(currentMaxBet);
       aiAction(currentPlayer);
+      // Flop
     } else if (playTurn == 1) {
       ai.makeDecision(currentMaxBet, flop);
       aiAction(currentPlayer);
+      // Turn
     } else if (playTurn == 2) {
       ai.makeDecision(currentMaxBet, turn);
       aiAction(currentPlayer);
+      // River
     } else if (playTurn == 3) {
       ai.makeDecision(currentMaxBet, river);
       aiAction(currentPlayer);
     }
-
+    // Check all call or fold
     allCallorFold();
 
   }
@@ -302,22 +309,19 @@ public class SPController {
       int oldMaxBet = currentMaxBet;
       currentMaxBet = Integer.parseInt(split[1]);
       currentPotSize += Integer.parseInt(split[1]);
-      System.out.println("AI " + ai.getName() + " raised by "
-          + (Integer.parseInt(split[1]) - oldMaxBet) + " to " + currentMaxBet);
+      // TODO gui.showAIRaised
 
     } else if (aiDecision.contains("fold")) {
-      System.out.println("AI " + ai.getName() + " folded");
       // TODO gui.showAIFolded?
     } else if (aiDecision.contains("call")) {
       split = aiDecision.split(",");
       currentMaxBet = Integer.parseInt(split[1]);
       currentPotSize += Integer.parseInt(split[1]);
-      System.out.println("AI " + ai.getName() + " called " + Integer.parseInt(split[1]));
       // TODO gui.showAICalled?
     } else if (aiDecision.contains("check")) {
-      System.out.println("AI " + ai.getName() + " checks");
+      // TODO gui.showAIChecked
     }
-    System.out.println("\nCurrent Potsize: " + currentPotSize + "\n");
+    // TODO gui.updateTablePot
   }
 
 
@@ -343,19 +347,19 @@ public class SPController {
     if (smallBlindPlayer == noOfPlayers - 1) {
       player.smallBlind(smallBlind);
       aiPlayers.get(bigBlindPlayer).setBigBlind(bigBlind, true);
-      // show animation?
+      // TODO show animation?
     } else if (bigBlindPlayer == noOfPlayers - 1) {
       aiPlayers.get(smallBlindPlayer).setSmallBlind(smallBlind, true);
       player.bigBlind(bigBlind);
-      // show animation?
+      // TODO show animation?
     } else {
 
       aiPlayers.get(smallBlindPlayer).setSmallBlind(smallBlind, true);
       aiPlayers.get(bigBlindPlayer).setBigBlind(bigBlind, true);
-      // show animation?
+      // TODO show animation?
     }
     this.currentPotSize = smallBlind + bigBlind;
-    System.out.println("\nCurrent Potsize: " + currentPotSize + "\n");
+    // TODO gui.updateTablePot
   }
 
 
@@ -365,15 +369,20 @@ public class SPController {
   public void allCallorFold() {
 
     int noOfAIFoldedorCalled = 0;
+    // For each AI player
     for (Ai ai : aiPlayers) {
+      // Check if folded.
       if (ai.getDecision().equals("fold")) {
         noOfAIFoldedorCalled++;
+        // if not folded, check if checked or called.
       } else if (ai.getDecision().contains("call") || ai.getDecision().contains("check")) {
         noOfAIFoldedorCalled++;
+        // if neither checked, called or folded, at least one AI is live.
       } else {
         allCalledorFolded = false;
       }
     }
+    // If all AI have folded or called, check if player has folded or called.
     if (noOfAIFoldedorCalled == noOfAi) {
 
       if (player.getDecision().equals("fold") || player.getDecision().contains("call")) {
