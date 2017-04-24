@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" layoutX="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" scaleX="1.0" scaleY="1.0" scaleZ="1.0" snapToPixel="true" translateX="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testLykkeMenu.Controller">
+<AnchorPane id="AnchorPane" layoutX="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" scaleX="1.0" scaleY="1.0" scaleZ="1.0" snapToPixel="true" translateX="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
   <children>
     <AnchorPane layoutX="0.0" layoutY="0.0" prefHeight="768.0" prefWidth="1366.0">
       <children>
@@ -184,7 +184,7 @@
                 <Font name="Arial Black" size="15.0" fx:id="x3" />
               </font>
             </Label>
-            <Label id="name" fx:id="userName" font="$x3" layoutX="716.0" layoutY="610.0" text="Vedrana" />
+            <Label fx:id="userName" font="$x3" layoutX="716.0" layoutY="610.0" text="Vedrana" />
             <Label fx:id="potValueLabel" font="$x3" layoutX="716.0" layoutY="656.0" text="Your pot" />
             <ImageView id="aiBarWithCards.png" fitHeight="158.0" fitWidth="122.0" layoutX="197.0" layoutY="330.0">
               <image>

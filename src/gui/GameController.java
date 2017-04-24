@@ -1,19 +1,14 @@
 package gui;
 
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Paths;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
-import controller.SPController;
 import deck.Card;
 import deck.Deck;
 import hand.Hand;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -21,48 +16,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-
-public class Controller {
-
-  private SPController spController = new SPController();
-  private ConfirmBox confirmBox;
-  private String name;
-
-  @FXML
-  private Button btnNewGame;
-  @FXML
-  private TextField tfNameInput;
-  @FXML
-  private Slider aiSlider;
-  @FXML
-  private Slider potSlider;
-  @FXML
-  private ImageView ivNewGame;
-  @FXML
-  private ImageView ivLoadGame;
-  @FXML
-  private CheckBox cbOn;
-  @FXML
-  private CheckBox cbOff;
-  @FXML
-  private ImageView ivStartGame;
-  @FXML
-  private ImageView ivQuestionAi;
-  @FXML
-  private ImageView ivQuestionPot;
-  @FXML
-  private ImageView ivQuestionTutorial;
-  @FXML
-  private Label lblAiInfo;
-  @FXML
-  private Label lblPotInfo;
-  @FXML
-  private Label lblTutorialInfo;
-
-  ChangeScene changeScene;
-  Sound sound;
-
-  // AMin
+public class GameController {
+  
+  private ChangeScene changeScene;
+  
   @FXML
   private TextField field;
   @FXML
@@ -106,126 +63,18 @@ public class Controller {
   ImageView imgView = new ImageView();
   ImageView imgView2 = new ImageView();
   private FileHandler pot;
-
-
-  public void initialize() throws Exception {
+  
+public void initialize() throws Exception{
+    
   }
-
-
-  public void NewGameClicked() throws Exception {
-
-    changeScene.switchScenetoSetting();
-
-  }
-
-
-  public void LoadGameClicked() {
-
-    System.out.println("LoadGame");
-    sound = new Sound();
-    sound.testPlaySound();
-
-  }
-
-
-  public void tfNameInputChange() {
-
-    System.out.println(name);
-    userName.setText(name);
-  }
-
-
-  public void aiSliderChange() {
-
-    Double val = aiSlider.getValue();
-    Integer value = val.intValue();
-    System.out.println("Slider moved to " + value);
-  }
-
-
-  public void potSliderChange() {
-
-    Double val = potSlider.getValue();
-    int value = val.intValue();
-    System.out.println("Slider moved to " + value);
-  }
-
-
-  public void cbOnClicked() {
-
-    if (cbOff.isSelected()) {
-      cbOff.setSelected(false);
-      cbOff.setDisable(false);
-      cbOn.setSelected(true);
-      cbOn.setDisable(true);
-
-    }
-
-    System.out.println("Tutorial On");
-  }
-
-
-  public void cbOffClicked() {
-
-    if (cbOn.isSelected()) {
-      cbOn.setSelected(false);
-      cbOn.setDisable(false);
-      cbOff.setSelected(true);
-      cbOff.setDisable(true);
-
-    }
-    System.out.println("Tutorial Off");
-  }
-
-
-  public void startGame() throws IOException {
-    if (!tfNameInput.getText().isEmpty()) {
-      name = tfNameInput.getText();
-        
-        
-      if (cbOn.isSelected()) {
-        System.out.println("Tutorial ska visas");
-      }
-      changeScene.switchScenetoGame();
-      tfNameInputChange();
-      System.out.println("Spel startas!");
-    } else if (tfNameInput.getText().isEmpty()) {
-    	confirmBox = new ConfirmBox();
-		boolean result = confirmBox.display("Varning", "Du måste välja ett användarnamn för att starta spelet");
-    	
-      System.out.println("Du måste välja ett användarnamn");
-      System.out.println(result);
-    }
-  }
-
-
-  public void ivQuestionAiHoovered() {
-
-    lblAiInfo.setVisible(true);
-    ivQuestionAi.setOnMouseExited(e -> lblAiInfo.setVisible(false));
-
-  }
-
-
-  public void ivQuestionPotHoovered() {
-
-    lblPotInfo.setVisible(true);
-    ivQuestionPot.setOnMouseExited(e -> lblPotInfo.setVisible(false));
-
-  }
-
-
-  public void ivQuestionTutorialHoovered() {
-
-    lblTutorialInfo.setVisible(true);
-    ivQuestionTutorial.setOnMouseExited(e -> lblTutorialInfo.setVisible(false));
-  }
-
-
-  // Amin controller
+  
   public void exitGame() {
 
     System.exit(0);
+  }
+  
+  public void setChangeScene(ChangeScene sceneChanger) {
+    this.changeScene = sceneChanger;
   }
 
 
@@ -440,5 +289,10 @@ public class Controller {
     System.gc();
   }
 
+  public void setUsername(String name) {
+    
+    userName.setText(name);
+    
+  }
 
 }
