@@ -28,7 +28,7 @@
                 <Image url="@../../resources/images/table.png" preserveRatio="true" smooth="true" />
               </image>
             </ImageView>
-            <ImageView id="rulesButton.png" fitHeight="60.0" fitWidth="60.0" layoutX="1156.0" layoutY="40.0" onMouseReleased="#helpState">
+            <ImageView id="rulesButton.png" fitHeight="60.0" fitWidth="60.0" layoutX="1156.0" layoutY="40.0" onMouseReleased="#rulesState">
               <image>
                 <Image url="@../../resources/images/rulesButton.png" preserveRatio="true" smooth="true" />
               </image>
@@ -67,7 +67,7 @@
                       <content>
                         <ImageView id="handRanking11.png" fitHeight="734.000510351565" fitWidth="267.9998779296875">
                           <image>
-                            <Image url="@../../../../Documents/Poker76/AMIN,%20SPELPLAN/spelplan/handRanking11.png" preserveRatio="true" smooth="true" />
+                            <Image url="@../../resources/images/handRanking11.png" preserveRatio="true" smooth="true" />
                           </image>
                         </ImageView>
                       </content>
