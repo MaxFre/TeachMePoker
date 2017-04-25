@@ -4,7 +4,9 @@ package gui;
 import java.nio.file.Paths;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -17,6 +19,9 @@ public class Main extends Application {
 
 
   public void start(Stage primaryStage) throws Exception {
+    cs.prepGame();
+    
+    
     window = primaryStage;
     window.setTitle("TeachMePoker");
     window.setResizable(true);

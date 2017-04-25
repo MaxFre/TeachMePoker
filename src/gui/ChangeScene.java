@@ -17,14 +17,37 @@ public class ChangeScene {
   GameController gameController;
 
 
-  public void switchScenetoSetting() throws IOException {
 
-    FXMLLoader loader =
+  public void prepGame() throws IOException {
+    System.out.println("preLoad: " + fmController);
+    FXMLLoader loaderFM = new FXMLLoader(FMController.class.getResource("FirstMenu.fxml"));
+    Pane rootMenu = loaderFM.load();
+    fmController = loaderFM.getController();
+    FXMLLoader loaderSS =
         new FXMLLoader(SettingsController.class.getResource("GameSettingMenu.fxml"));
-    Pane rootNewGame = loader.load();
-    settingsController = loader.getController();
+    Pane rootNewGame = loaderSS.load();
+    settingsController = loaderSS.getController();
+
+    FXMLLoader loaderGS = new FXMLLoader(GameController.class.getResource("GameState.fxml"));
+    Pane root2 = loaderGS.load();
+    gameController = loaderGS.getController();
+    System.out.println(gameController);
+
+
+
+    sceneMenu = new Scene(rootMenu);
     sceneNewGame = new Scene(rootNewGame);
+    sceneGameState = new Scene(root2);
+
+    gameController.setChangeScene(this);
     settingsController.setChangeScene(this);
+    fmController.setChangeScene(this);
+
+
+  }
+
+
+  public void switchScenetoSetting() throws IOException {
     Main.window.setScene(sceneNewGame);
 
 
@@ -33,26 +56,19 @@ public class ChangeScene {
 
   public void switchScenetoGame() throws IOException {
 
-    FXMLLoader loader = new FXMLLoader(GameController.class.getResource("GameState.fxml"));
-
-    Pane root2 = loader.load();
-    sceneGameState = new Scene(root2);
-    gameController = loader.getController();
     gameController.setUsername(settingsController.getName());
     Main.window.setScene(sceneGameState);
-    gameController.setChangeScene(this);
+
+
 
   }
 
 
   public Scene firstScene() throws IOException {
-
-    FXMLLoader loader = new FXMLLoader(FMController.class.getResource("FirstMenu.fxml"));
-    Pane rootMenu = loader.load();
-    sceneMenu = new Scene(rootMenu);
-    fmController = (FMController) loader.getController();
-    fmController.setChangeScene(this);
-
+    System.out.println("CS: " + this);
+    System.out.println("CS: " + settingsController);
+    System.out.println("CS: " + gameController);
+    System.out.println("CS: " + fmController);
     return sceneMenu;
   }
 
