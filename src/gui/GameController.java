@@ -11,6 +11,7 @@ import deck.Card;
 import deck.Deck;
 import hand.Hand;
 import filehandler.FileHandler;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -133,14 +134,14 @@ public class GameController {
 
   public void saveGame() {
     System.out.println("Saved Game");
-//    try {
-//      pot = new FileHandler(tablePotValue);
-//      pot.savePot();
-//      System.out.println("pot from GUI:" + pot);
-//    } catch (IOException e) {
-//      // TODO Auto-generated catch block
-//      e.printStackTrace();
-//    }
+    // try {
+    // pot = new FileHandler(tablePotValue);
+    // pot.savePot();
+    // System.out.println("pot from GUI:" + pot);
+    // } catch (IOException e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // }
   }
 
   public void sliderChange() {
@@ -420,16 +421,20 @@ public class GameController {
     cards.add(card1);
     cards.add(card2);
     this.hand = new Hand(cards);
-    image = new Image(Paths.get(cardOne).toUri().toString(), 120, 166, true, true);
-    imgCardOne = new ImageView(image);
-    playerCardsArea.getChildren().add(imgCardOne);
-    imgCardOne.setX(0);
-    imgCardOne.setY(0);
-    image = new Image(Paths.get(cardTwo).toUri().toString(), 120, 166, true, true);
-    imgCard2 = new ImageView(image);
-    playerCardsArea.getChildren().add(imgCard2);
-    imgCard2.setX(105);
-    imgCard2.setY(0);
+
+    Platform.runLater(() -> {
+
+      image = new Image(Paths.get(cardOne).toUri().toString(), 120, 166, true, true);
+      imgCardOne = new ImageView(image);
+      playerCardsArea.getChildren().add(imgCardOne);
+      imgCardOne.setX(0);
+      imgCardOne.setY(0);
+      image = new Image(Paths.get(cardTwo).toUri().toString(), 120, 166, true, true);
+      imgCard2 = new ImageView(image);
+      playerCardsArea.getChildren().add(imgCard2);
+      imgCard2.setX(105);
+      imgCard2.setY(0);
+    });
 
     handHelp();
   }
@@ -455,42 +460,45 @@ public class GameController {
     String powerBarMediumStrongHand = "resources/images/mediumStrongHand.png";
     String powerBarStrongHand = "resources/images/StrongHand.png";
 
-    String helpText = hand.theHelp();
-    helpLabel.setText(helpText);
-    String adviceText = hand.theAdvice();
-    adviceLabel.setText("Råd: \n" + adviceText);
+    Platform.runLater(() -> {
 
-    powerBarValue = hand.toPowerBar();
-    if (powerBarValue == 1) {
-      image = new Image(Paths.get(powerBarWeakHand).toUri().toString(), 120, 166, false, false);
-      imgPowerBar = new ImageView(image);
-      powerBarArea.getChildren().add(imgPowerBar);
-      imgPowerBar.setX(30);
-      imgPowerBar.setY(15);
-    } else if (powerBarValue == 2) {
-      image =
-          new Image(Paths.get(powerBarMediumWeakHand).toUri().toString(), 120, 166, false, false);
-      imgPowerBar = new ImageView(image);
-      powerBarArea.getChildren().add(imgPowerBar);
-      imgPowerBar.setX(30);
-      imgPowerBar.setY(15);
-    } else if (powerBarValue == 3) {
-      image =
-          new Image(Paths.get(powerBarMediumStrongHand).toUri().toString(), 120, 166, false, false);
-      imgPowerBar = new ImageView(image);
-      powerBarArea.getChildren().add(imgPowerBar);
-      imgPowerBar.setX(30);
-      imgPowerBar.setY(15);
-    } else if (powerBarValue == 4) {
-      image = new Image(Paths.get(powerBarStrongHand).toUri().toString(), 120, 166, false, false);
-      imgPowerBar = new ImageView(image);
-      powerBarArea.getChildren().add(imgPowerBar);
-      imgPowerBar.setX(30);
-      imgPowerBar.setY(15);
+      String helpText = hand.theHelp();
+      helpLabel.setText(helpText);
+      String adviceText = hand.theAdvice();
+      adviceLabel.setText("Råd: \n" + adviceText);
 
-    }
+      powerBarValue = hand.toPowerBar();
+      if (powerBarValue == 1) {
+        image = new Image(Paths.get(powerBarWeakHand).toUri().toString(), 120, 166, false, false);
+        imgPowerBar = new ImageView(image);
+        powerBarArea.getChildren().add(imgPowerBar);
+        imgPowerBar.setX(30);
+        imgPowerBar.setY(15);
+      } else if (powerBarValue == 2) {
+        image =
+            new Image(Paths.get(powerBarMediumWeakHand).toUri().toString(), 120, 166, false, false);
+        imgPowerBar = new ImageView(image);
+        powerBarArea.getChildren().add(imgPowerBar);
+        imgPowerBar.setX(30);
+        imgPowerBar.setY(15);
+      } else if (powerBarValue == 3) {
+        image = new Image(Paths.get(powerBarMediumStrongHand).toUri().toString(), 120, 166, false,
+            false);
+        imgPowerBar = new ImageView(image);
+        powerBarArea.getChildren().add(imgPowerBar);
+        imgPowerBar.setX(30);
+        imgPowerBar.setY(15);
+      } else if (powerBarValue == 4) {
+        image = new Image(Paths.get(powerBarStrongHand).toUri().toString(), 120, 166, false, false);
+        imgPowerBar = new ImageView(image);
+        powerBarArea.getChildren().add(imgPowerBar);
+        imgPowerBar.setX(30);
+        imgPowerBar.setY(15);
+
+      }
+    });
   }
-  
+
   public String getPlayerDecision() {
     return decision;
   }
@@ -515,7 +523,7 @@ public class GameController {
     decision = resetDecision;
     alreadyPaid = 0;
   }
-  
+
   public void setPlayerPot(int newValue) {
 
     this.playerPot += newValue;
@@ -537,7 +545,7 @@ public class GameController {
 
   public int getHandStrength() {
     return handStrength;
-    
+
   }
 
   public int getPlayerPot() {
@@ -546,17 +554,17 @@ public class GameController {
 
   public void setAiPlayers(LinkedList<Ai> aiPlayers) {
     this.aiPlayers = aiPlayers;
-    
+
   }
 
   public void aiAction(int currentPlayer, String decision, String amount) {
-    //TODO AiPlayer matching currentPlayer does decision with amount
-    
+    // TODO AiPlayer matching currentPlayer does decision with amount
+
   }
-  
+
   public void aiAction(int currentPlayer, String decision) {
-    //TODO AiPlayer matching currentPlayer does decision
-    
+    // TODO AiPlayer matching currentPlayer does decision
+
   }
 
 }
