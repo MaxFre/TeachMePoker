@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import aiClass.Ai;
 import deck.Card;
 import deck.Deck;
+import gui.GameController;
 import player.Player;
 
 
@@ -15,7 +16,7 @@ import player.Player;
  * @version 0.6
  *
  */
-public class SPController {
+public class SPController extends Thread {
 
   private Deck deck;
   private LinkedList<Ai> aiPlayers = new LinkedList<Ai>();
@@ -41,6 +42,7 @@ public class SPController {
   private boolean allCalledorFolded = false;
   private boolean winnerDeclared = false;
   private ArrayList<String> name = new ArrayList<String>();
+  private GameController gController;
 
 
   /**
@@ -62,8 +64,20 @@ public class SPController {
     for (int i = 0; i < noOfAi; i++) {
       aiPlayers.add(new Ai(potSize / (noOfPlayers), name.remove(0)));
     }
-
+    try {
+      this.sleep(1000);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     setupPhase();
+  }
+
+  public void setGameController(GameController gController) {
+
+    this.gController = gController;
+    System.out.println("This happens");
+
   }
 
 
@@ -112,16 +126,22 @@ public class SPController {
       }
       turn = deck.getCard();
       river = deck.getCard();
-      playPoker();
+      if (!this.isAlive()) {
+        start();
+      } else {
+        run();
+      }
     }
 
   }
 
 
   /**
-   * Method that runs the gameround itself
+   * Method that runs the gameround itself public void playPoker() {
    */
-  public void playPoker() {
+  public void run() {
+
+
 
     while (playTurn < 4) {
       System.out.println("Current turn: " + playTurn);
@@ -140,6 +160,7 @@ public class SPController {
         } else {
           if (!aiPlayers.get(currentPlayer).getDecision().contains("fold")) {
             if (!(checkLivePlayers() > 1)) {
+              System.out.println(aiPlayers.get(currentPlayer).getName() + " Wins");
               aiPlayers.get(currentPlayer).updateWinner(currentPotSize);
               winnerDeclared = true;
               break;
@@ -191,21 +212,25 @@ public class SPController {
   private void checkWinner() {
 
     int bestHand = 0;
-    Ai bestHandPlayer = aiPlayers.get(currentPlayer);
+    Ai bestHandPlayer = new Ai(0,"");
     for (Ai ai : aiPlayers) {
       if (!ai.getDecision().equals("fold")) {
         if (ai.handStrength() > bestHand) {
           bestHandPlayer = ai;
+          bestHand = ai.handStrength();
         } else if (ai.handStrength() == bestHand) {
-          bestHandPlayer.getHighCard();
+          if(ai.getHighCard() > bestHandPlayer.getHighCard()) {
+            bestHandPlayer = ai;
+          }
         }
       }
     }
-    if(!player.getDecision().equals("fold")) {
+    if (!player.getDecision().equals("fold")) {
       player.getHandStrength();
     }
     // TODO Check Winner
-
+    System.out.println("Winner");
+    System.out.println(bestHandPlayer.getName());
   }
 
 
@@ -226,6 +251,7 @@ public class SPController {
     if (!player.getDecision().equals("fold")) {
       livePlayers++;
     }
+    System.out.println("live Players:" + livePlayers);
     return livePlayers;
   }
 
@@ -233,6 +259,9 @@ public class SPController {
   private void askForPlayerDecision(int currentMaxBet2) {
 
     // TODO gui.playerDecision?
+    System.out.println(gController);
+
+    player.setDecision(gController.getPlayerDecision());
     playerAction();
   }
 
@@ -309,16 +338,21 @@ public class SPController {
       int oldMaxBet = currentMaxBet;
       currentMaxBet = Integer.parseInt(split[1]);
       currentPotSize += Integer.parseInt(split[1]);
+      System.out.println("AI Raises");
       // TODO gui.showAIRaised
 
     } else if (aiDecision.contains("fold")) {
+      System.out.println("AI folds");
       // TODO gui.showAIFolded?
     } else if (aiDecision.contains("call")) {
+      
       split = aiDecision.split(",");
       currentMaxBet = Integer.parseInt(split[1]);
       currentPotSize += Integer.parseInt(split[1]);
+      System.out.println("AI Calls");
       // TODO gui.showAICalled?
     } else if (aiDecision.contains("check")) {
+      System.out.println("AI Checks");
       // TODO gui.showAIChecked
     }
     // TODO gui.updateTablePot

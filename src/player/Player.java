@@ -144,4 +144,10 @@ public class Player {
     
   }
 
+
+  public void setDecision(String playerDecision) {
+    this.decision = playerDecision;
+    
+  }
+
 }

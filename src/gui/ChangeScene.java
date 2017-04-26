@@ -1,6 +1,7 @@
 package gui;
 
 import java.io.IOException;
+import controller.SPController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,9 +13,9 @@ public class ChangeScene {
   Scene sceneNewGame;
   Scene sceneGameState;
   Scene sceneMenu;
-  FMController fmController;
-  SettingsController settingsController;
-  GameController gameController;
+  private FMController fmController;
+  private SettingsController settingsController;
+  private GameController gameController;
 
 
 
@@ -70,6 +71,11 @@ public class ChangeScene {
     System.out.println("CS: " + gameController);
     System.out.println("CS: " + fmController);
     return sceneMenu;
+  }
+
+
+  public void setSPController(SPController spController) {
+    gameController.setSPController(spController);
   }
 
 }
