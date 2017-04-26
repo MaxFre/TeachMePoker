@@ -56,6 +56,7 @@ public class SettingsController {
 	}
 
 	public void setChangeScene(ChangeScene sceneChanger) {
+	  System.out.println("sup?");
 		this.changeScene = sceneChanger;
 	}
 
