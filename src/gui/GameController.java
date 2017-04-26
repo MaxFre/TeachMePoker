@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import deck.Card;
 import deck.Deck;
 import hand.Hand;
+import filehandler.FileHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -44,6 +45,8 @@ public class GameController {
 	private Label helpLabel;
 	@FXML
 	private Label userName;
+	@FXML
+    private Pane tabelCardArea;
 	private ChangeScene changeScene;
 	private int powerBarValue = 0;
 	private Image image;
@@ -54,6 +57,11 @@ public class GameController {
 	private int potValue = 2000; // just for testing, its coming from controller
 	private ImageView imgCardOne = new ImageView();
 	private ImageView imgCard2 = new ImageView();
+	private ImageView imgCard3 = new ImageView();
+	private ImageView imgCard4 = new ImageView();
+	private ImageView imgCard5 = new ImageView();
+	private ImageView imgCard6 = new ImageView();
+	private ImageView imgCard7 = new ImageView();
 	private ImageView imgPowerBar = new ImageView();
 	private FileHandler pot;
 
@@ -130,6 +138,11 @@ public class GameController {
 		deck.shuffle();
 		cards.add(deck.getCard());
 		cards.add(deck.getCard());
+		cards.add(deck.getCard());
+		cards.add(deck.getCard());
+		cards.add(deck.getCard());
+		cards.add(deck.getCard());
+		cards.add(deck.getCard());
 		hand = new Hand(cards);
 
 		highligtedCards = hand.sendToHighlight();
@@ -144,25 +157,68 @@ public class GameController {
 
 		int temp = (cards.get(0).getCardValue());
 		int temp3 = (cards.get(1).getCardValue());
+		int temp5=(cards.get(2).getCardValue());
+		int temp7=(cards.get(3).getCardValue());
+		int temp9=(cards.get(4).getCardValue());
+		int temp11=(cards.get(5).getCardValue());
+		int temp13=(cards.get(6).getCardValue());
 		String temp2 = String.valueOf(temp);
 		String temp4 = String.valueOf(temp3);
+		String temp6= String.valueOf(temp5);
+		String temp8= String.valueOf(temp7);
+		String temp10= String.valueOf(temp9);
+		String temp12= String.valueOf(temp11);
+		String temp14= String.valueOf(temp13);
 		char A = cards.get(0).getCardSuit().charAt(0);
 		char B = cards.get(1).getCardSuit().charAt(0);
+		char C=  cards.get(2).getCardSuit().charAt(0);
+		char D=cards.get(3).getCardSuit().charAt(0);
+		char E=cards.get(4).getCardSuit().charAt(0);
+		char F=cards.get(5).getCardSuit().charAt(0);
+		char G=cards.get(6).getCardSuit().charAt(0);
 		temp2 += String.valueOf(A);
 		temp4 += String.valueOf(B);
+		temp6 += String.valueOf(C);
+		temp8 += String.valueOf(D);
+		temp10 += String.valueOf(E);
+		temp12 += String.valueOf(F);
+		temp14 += String.valueOf(G);
 
 		System.out.println(temp2);
 		System.out.println(temp4);
+		System.out.println(temp6);
+		System.out.println(temp8);
+		System.out.println(temp10);
 		for (int i = 0; i < test.length; i++) {
 			if (test[i].equals(temp2)) {
 				temp2 += "O";
 			}
 			if (test[i].equals(temp4)) {
 				temp4 += "O";
+			} 
+			if (test[i].equals(temp6)) {
+				temp6 += "O";
+			}
+			if (test[i].equals(temp8)) {
+				temp8 += "O";
+			}
+			if (test[i].equals(temp10)) {
+				temp10 += "O";
+			}
+			if (test[i].equals(temp12)) {
+				temp12 += "O";
+			}
+			if (test[i].equals(temp14)) {
+				temp14 += "O";
 			}
 		}
 		String cardOne = "resources/images/" + temp2 + ".png";
 		String cardTwo = "resources/images/" + temp4 + ".png";
+		String cardThree = "resources/images/" + temp6 + ".png";
+		String cardFour = "resources/images/" + temp8 + ".png";
+		String cardFive = "resources/images/" + temp10 + ".png";
+		String cardSix = "resources/images/" + temp12 + ".png";
+		String cardSeven = "resources/images/" + temp14 + ".png";
 		String powerBarWeakHand = "resources/images/weakHand.png";
 		String powerBarMediumWeakHand = "resources/images/mediumWeakHand.png";
 		String powerBarMediumStrongHand = "resources/images/mediumStrongHand.png";
@@ -236,6 +292,32 @@ public class GameController {
 				playerCardsArea.getChildren().add(imgCard2);
 				imgCard2.setX(105);
 				imgCard2.setY(0);
+				
+				image = new Image(Paths.get(cardThree).toUri().toString(), 120, 166, false, false);
+				imgCard3 = new ImageView(image);
+				tabelCardArea.getChildren().add(imgCard3);
+				imgCard3.setX(0);
+				imgCard3.setY(0);
+				image = new Image(Paths.get(cardFour).toUri().toString(), 120, 166, false, false);
+				imgCard4 = new ImageView(image);
+				tabelCardArea.getChildren().add(imgCard4);
+				imgCard4.setX(105);
+				imgCard4.setY(0);
+				image = new Image(Paths.get(cardFive).toUri().toString(), 120, 166, false, false);
+				imgCard5 = new ImageView(image);
+				tabelCardArea.getChildren().add(imgCard5);
+				imgCard5.setX(205);
+				imgCard5.setY(0);
+				image = new Image(Paths.get(cardSix).toUri().toString(), 120, 166, false, false);
+				imgCard6 = new ImageView(image);
+				tabelCardArea.getChildren().add(imgCard6);
+				imgCard6.setX(305);
+				imgCard6.setY(0);
+				image = new Image(Paths.get(cardSeven).toUri().toString(), 120, 166, false, false);
+				imgCard7 = new ImageView(image);
+				tabelCardArea.getChildren().add(imgCard7);
+				imgCard7.setX(405);
+				imgCard7.setY(0);
 			} else {
 				lbPotValue.setText("0.0");
 				showAllIn();
@@ -268,6 +350,11 @@ public class GameController {
 		image = null;
 		imgCardOne.setImage(null);
 		imgCard2.setImage(null);
+		imgCard3.setImage(null);
+		imgCard4.setImage(null);
+		imgCard5.setImage(null);
+		imgCard6.setImage(null);
+		imgCard7.setImage(null);
 		imgPowerBar.setImage(null);
 		System.gc();
 	}
