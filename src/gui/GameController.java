@@ -406,6 +406,7 @@ public class GameController {
   }
 
   public void setStartingHand(Card card1, Card card2) {
+    nextRound();
     System.out.println(this);
     this.card1 = card1;
     this.card2 = card2;
@@ -469,27 +470,26 @@ public class GameController {
 
       powerBarValue = hand.toPowerBar();
       if (powerBarValue == 1) {
-        image = new Image(Paths.get(powerBarWeakHand).toUri().toString(), 120, 166, false, false);
+        image = new Image(Paths.get(powerBarWeakHand).toUri().toString(), 120, 166, true, true);
         imgPowerBar = new ImageView(image);
         powerBarArea.getChildren().add(imgPowerBar);
         imgPowerBar.setX(30);
         imgPowerBar.setY(15);
       } else if (powerBarValue == 2) {
         image =
-            new Image(Paths.get(powerBarMediumWeakHand).toUri().toString(), 120, 166, false, false);
+            new Image(Paths.get(powerBarMediumWeakHand).toUri().toString(), 120, 166, true, true);
         imgPowerBar = new ImageView(image);
         powerBarArea.getChildren().add(imgPowerBar);
         imgPowerBar.setX(30);
         imgPowerBar.setY(15);
       } else if (powerBarValue == 3) {
-        image = new Image(Paths.get(powerBarMediumStrongHand).toUri().toString(), 120, 166, false,
-            false);
+        image = new Image(Paths.get(powerBarMediumStrongHand).toUri().toString(), 120, 166, true, true);
         imgPowerBar = new ImageView(image);
         powerBarArea.getChildren().add(imgPowerBar);
         imgPowerBar.setX(30);
         imgPowerBar.setY(15);
       } else if (powerBarValue == 4) {
-        image = new Image(Paths.get(powerBarStrongHand).toUri().toString(), 120, 166, false, false);
+        image = new Image(Paths.get(powerBarStrongHand).toUri().toString(), 120, 166, true, true);
         imgPowerBar = new ImageView(image);
         powerBarArea.getChildren().add(imgPowerBar);
         imgPowerBar.setX(30);
