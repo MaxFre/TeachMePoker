@@ -277,23 +277,21 @@ public class GameController {
 
         powerBarValue = hand.toPowerBar();
         if (powerBarValue == 1) {
-          image = new Image(Paths.get(powerBarWeakHand).toUri().toString(), 120, 166, false, false);
+          image = new Image(Paths.get(powerBarWeakHand).toUri().toString(), 120, 166, true, true);
           imgPowerBar = new ImageView(image);
           powerBarArea.getChildren().add(imgPowerBar);
           imgPowerBar.setX(30);
           imgPowerBar.setY(15);
         }
         if (powerBarValue == 2) {
-          image = new Image(Paths.get(powerBarMediumWeakHand).toUri().toString(), 120, 166, false,
-              false);
+          image = new Image(Paths.get(powerBarMediumWeakHand).toUri().toString(), 120, 166, true, true);
           imgPowerBar = new ImageView(image);
           powerBarArea.getChildren().add(imgPowerBar);
           imgPowerBar.setX(30);
           imgPowerBar.setY(15);
         }
         if (powerBarValue == 3) {
-          image = new Image(Paths.get(powerBarMediumStrongHand).toUri().toString(), 120, 166, false,
-              false);
+          image = new Image(Paths.get(powerBarMediumStrongHand).toUri().toString(), 120, 166, true, true);
           imgPowerBar = new ImageView(image);
           powerBarArea.getChildren().add(imgPowerBar);
           imgPowerBar.setX(30);
@@ -301,7 +299,7 @@ public class GameController {
         }
         if (powerBarValue == 4) {
           image =
-              new Image(Paths.get(powerBarStrongHand).toUri().toString(), 120, 166, false, false);
+              new Image(Paths.get(powerBarStrongHand).toUri().toString(), 120, 166, true, true);
           imgPowerBar = new ImageView(image);
           powerBarArea.getChildren().add(imgPowerBar);
           imgPowerBar.setX(30);
@@ -309,38 +307,38 @@ public class GameController {
 
         }
 
-        image = new Image(Paths.get(cardOne).toUri().toString(), 120, 166, false, false);
+        image = new Image(Paths.get(cardOne).toUri().toString(), 120, 166, true, true);
         imgCardOne = new ImageView(image);
         playerCardsArea.getChildren().add(imgCardOne);
         imgCardOne.setX(0);
         imgCardOne.setY(0);
-        image = new Image(Paths.get(cardTwo).toUri().toString(), 120, 166, false, false);
+        image = new Image(Paths.get(cardTwo).toUri().toString(), 120, 166, true, true);
         imgCard2 = new ImageView(image);
         playerCardsArea.getChildren().add(imgCard2);
         imgCard2.setX(105);
         imgCard2.setY(0);
 
-        image = new Image(Paths.get(cardThree).toUri().toString(), 120, 166, false, false);
+        image = new Image(Paths.get(cardThree).toUri().toString(), 120, 166, true, true);
         imgCard3 = new ImageView(image);
         tabelCardArea.getChildren().add(imgCard3);
         imgCard3.setX(0);
         imgCard3.setY(0);
-        image = new Image(Paths.get(cardFour).toUri().toString(), 120, 166, false, false);
+        image = new Image(Paths.get(cardFour).toUri().toString(), 120, 166, true, true);
         imgCard4 = new ImageView(image);
         tabelCardArea.getChildren().add(imgCard4);
         imgCard4.setX(105);
         imgCard4.setY(0);
-        image = new Image(Paths.get(cardFive).toUri().toString(), 120, 166, false, false);
+        image = new Image(Paths.get(cardFive).toUri().toString(), 120, 166, true, true);
         imgCard5 = new ImageView(image);
         tabelCardArea.getChildren().add(imgCard5);
         imgCard5.setX(205);
         imgCard5.setY(0);
-        image = new Image(Paths.get(cardSix).toUri().toString(), 120, 166, false, false);
+        image = new Image(Paths.get(cardSix).toUri().toString(), 120, 166, true, true);
         imgCard6 = new ImageView(image);
         tabelCardArea.getChildren().add(imgCard6);
         imgCard6.setX(305);
         imgCard6.setY(0);
-        image = new Image(Paths.get(cardSeven).toUri().toString(), 120, 166, false, false);
+        image = new Image(Paths.get(cardSeven).toUri().toString(), 120, 166, true, true);
         imgCard7 = new ImageView(image);
         tabelCardArea.getChildren().add(imgCard7);
         imgCard7.setX(405);
