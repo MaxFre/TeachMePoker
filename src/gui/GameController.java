@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import aiClass.Ai;
 import controller.SPController;
 import deck.Card;
 import deck.Deck;
@@ -56,7 +58,10 @@ public class GameController {
   private Hand hand;
   private Deck deck;
   private int bet;
-  private int potValue = 2000; // just for testing, its coming from controller
+  private int tablePotValue = 2000; // just for testing, its coming from controller
+  private int playerPot = 0;
+  private int alreadyPaid = 0;
+  private int highCard;
   private ImageView imgCardOne = new ImageView();
   private ImageView imgCard2 = new ImageView();
   private ImageView imgCard3 = new ImageView();
@@ -71,6 +76,8 @@ public class GameController {
   private String decision;
   private Card card1;
   private Card card2;
+  private int handStrength;
+  private LinkedList<Ai> aiPlayers;
 
   public void initialize() throws Exception {
 
@@ -125,14 +132,15 @@ public class GameController {
   }
 
   public void saveGame() {
-    try {
-      pot = new FileHandler(potValue);
-      pot.savePot();
-      System.out.println("pot from GUI:" + pot);
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+    System.out.println("Saved Game");
+//    try {
+//      pot = new FileHandler(tablePotValue);
+//      pot.savePot();
+//      System.out.println("pot from GUI:" + pot);
+//    } catch (IOException e) {
+//      // TODO Auto-generated catch block
+//      e.printStackTrace();
+//    }
   }
 
   public void sliderChange() {
@@ -258,15 +266,15 @@ public class GameController {
     try {
 
       bet = (int) (slider.getValue());
-      if (potValue >= bet) {
+      if (tablePotValue >= bet) {
         lbPlayerAction.setText("" + bet + " §");
-        int NewPotValue = potValue - bet;
+        int NewPotValue = tablePotValue - bet;
         System.out.println("" + NewPotValue);
 
-        potValue = NewPotValue;
+        tablePotValue = NewPotValue;
         lbPotValue.setText("" + NewPotValue + " §");
         slider.setMax(NewPotValue);
-        if (bet == potValue) {
+        if (bet == tablePotValue) {
           lbPlayerAction.setText("ALL IN");
           lbPotValue.setText("" + 0 + " §");
           slider.setMax(NewPotValue);
@@ -367,9 +375,9 @@ public class GameController {
     System.out.println("Go to Main section");
   }
 
-  public double setPotValue() {
-    System.out.println(potValue);
-    return potValue;
+  public double getPotValue() {
+    System.out.println(tablePotValue);
+    return tablePotValue;
   }
 
   // restart all the images
@@ -400,6 +408,10 @@ public class GameController {
     System.out.println(this);
     this.card1 = card1;
     this.card2 = card2;
+    highCard = card1.getCardValue();
+    if (card2.getCardValue() > highCard) {
+      highCard = card2.getCardValue();
+    }
     String cardOne =
         "resources/images/" + card1.getCardValue() + card1.getCardSuit().charAt(0) + ".png";
     String cardTwo =
@@ -420,6 +432,21 @@ public class GameController {
     imgCard2.setY(0);
 
     handHelp();
+  }
+
+  public void playerSmallBlind(int i) {
+
+    this.alreadyPaid += i;
+    System.out.println("Player paid small blind(" + i + ")");
+    // TODO set smallBlindIcon at Player
+
+  }
+
+  public void playerBigBlind(int i) {
+
+    this.alreadyPaid += i;
+    System.out.println("Player paid big blind(" + i + ")");
+    // TODO set bigBlindIcon at player
   }
 
   public void handHelp() {
@@ -463,8 +490,12 @@ public class GameController {
 
     }
   }
-
+  
   public String getPlayerDecision() {
+    return decision;
+  }
+
+  public String askForPlayerDecision() {
     enableButtons();
     playerMadeDecision = false;
     while (!playerMadeDecision) {
@@ -479,6 +510,18 @@ public class GameController {
 
   }
 
+  public void playerReset(String resetDecision) {
+
+    decision = resetDecision;
+    alreadyPaid = 0;
+  }
+  
+  public void setPlayerPot(int newValue) {
+
+    this.playerPot += newValue;
+  }
+
+
   public void disableButtons() {
     btCall.setVisible(false);
     btRaise.setVisible(false);
@@ -490,6 +533,30 @@ public class GameController {
     btRaise.setVisible(true);
     btRaise.setVisible(true);
 
+  }
+
+  public int getHandStrength() {
+    return handStrength;
+    
+  }
+
+  public int getPlayerPot() {
+    return playerPot;
+  }
+
+  public void setAiPlayers(LinkedList<Ai> aiPlayers) {
+    this.aiPlayers = aiPlayers;
+    
+  }
+
+  public void aiAction(int currentPlayer, String decision, String amount) {
+    //TODO AiPlayer matching currentPlayer does decision with amount
+    
+  }
+  
+  public void aiAction(int currentPlayer, String decision) {
+    //TODO AiPlayer matching currentPlayer does decision
+    
   }
 
 }

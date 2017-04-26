@@ -7,7 +7,6 @@ import aiClass.Ai;
 import deck.Card;
 import deck.Deck;
 import gui.GameController;
-import player.Player;
 
 
 /**
@@ -32,7 +31,6 @@ public class SPController extends Thread {
   private int currentPotSize;
   private int currentMaxBet;
   private int blindCounter;
-  private Player player;
   private Card card1;
   private Card card2;
   private Card turn;
@@ -60,16 +58,16 @@ public class SPController extends Thread {
     bigBlind = (int) (potSize / noOfPlayers * 0.02);
     currentMaxBet = bigBlind;
     this.smallBlind = bigBlind / 2;
-    player = new Player(potSize / (noOfPlayers), playerName);
+    gController.setPlayerPot((potSize / noOfPlayers));
     for (int i = 0; i < noOfAi; i++) {
       aiPlayers.add(new Ai(potSize / (noOfPlayers), name.remove(0)));
     }
     try {
       this.sleep(1000);
     } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
+    gController.setAiPlayers(aiPlayers);
     setupPhase();
   }
 
@@ -102,12 +100,11 @@ public class SPController extends Thread {
    */
   private void setupPhase() {
 
-    if (player.getPlayerPot() > bigBlind) {
+    if (gController.getPlayerPot() > bigBlind) {
       deck = new Deck();
       deck.shuffle();
       card1 = deck.getCard();
       card2 = deck.getCard();
-      player.setStartingHand(card1, card2);
       gController.setStartingHand(card1, card2);
       // show animation?
       for (Ai ai : aiPlayers) {
@@ -115,7 +112,7 @@ public class SPController extends Thread {
         ai.setBigBlind(0, false);
         ai.setSmallBlind(0, false);
         ai.setPaidThisTurn(0);
-        player.reset("");
+        gController.playerReset("");
         card1 = deck.getCard();
         card2 = deck.getCard();
         ai.setStartingHand(card1, card2);
@@ -132,6 +129,8 @@ public class SPController extends Thread {
       } else {
         run();
       }
+    } else {
+      // TODO player loses
     }
 
   }
@@ -148,9 +147,9 @@ public class SPController extends Thread {
       System.out.println("Current turn: " + playTurn);
       while (!allCalledorFolded) {
         if (currentPlayer == noOfPlayers - 1) {
-          if (!player.getDecision().equals("fold")) {
+          if (!gController.getPlayerDecision().equals("fold")) {
             if (!(checkLivePlayers() > 1)) {
-              player.setPlayerPot(currentPotSize);
+              gController.setPlayerPot(currentPotSize);
               winnerDeclared = true;
               break;
             }
@@ -190,7 +189,6 @@ public class SPController extends Thread {
     }
     if (playTurn >= 4 && !winnerDeclared) {
       checkWinner();
-      // TODO Calculate an actual winner
     }
     winnerDeclared = false;
     playTurn = 0;
@@ -213,21 +211,22 @@ public class SPController extends Thread {
   private void checkWinner() {
 
     int bestHand = 0;
-    Ai bestHandPlayer = new Ai(0,"");
+    Ai bestHandPlayer = new Ai(0, "");
     for (Ai ai : aiPlayers) {
       if (!ai.getDecision().equals("fold")) {
         if (ai.handStrength() > bestHand) {
           bestHandPlayer = ai;
           bestHand = ai.handStrength();
         } else if (ai.handStrength() == bestHand) {
-          if(ai.getHighCard() > bestHandPlayer.getHighCard()) {
+          if (ai.getHighCard() > bestHandPlayer.getHighCard()) {
             bestHandPlayer = ai;
           }
         }
       }
     }
-    if (!player.getDecision().equals("fold")) {
-      player.getHandStrength();
+    if (!gController.getPlayerDecision().equals("fold")) {
+      gController.getHandStrength();
+      // TODO actually do something with this.
     }
     // TODO Check Winner
     System.out.println("Winner");
@@ -249,7 +248,7 @@ public class SPController extends Thread {
         livePlayers++;
       }
     }
-    if (!player.getDecision().equals("fold")) {
+    if (!gController.getPlayerDecision().equals("fold")) {
       livePlayers++;
     }
     System.out.println("live Players:" + livePlayers);
@@ -258,19 +257,15 @@ public class SPController extends Thread {
 
 
   private void askForPlayerDecision(int currentMaxBet2) {
-
-    // TODO gui.playerDecision?
-    System.out.println(gController);
-
-    player.setDecision(gController.getPlayerDecision());
+    gController.askForPlayerDecision();
     playerAction();
   }
 
 
   private void playerAction() {
-
-    // TODO get player Decision
-    String playerDecision = player.getDecision();
+    // TODO Rethink this method. Is it necessary?
+    
+    String playerDecision = gController.getPlayerDecision();
     playerDecision.toLowerCase();
 
     String[] split;
@@ -340,21 +335,30 @@ public class SPController extends Thread {
       currentMaxBet = Integer.parseInt(split[1]);
       currentPotSize += Integer.parseInt(split[1]);
       System.out.println("AI Raises");
+      
       // TODO gui.showAIRaised
-
+      gController.aiAction(currentPlayer, split[0], split[1]);
+      
     } else if (aiDecision.contains("fold")) {
       System.out.println("AI folds");
-      // TODO gui.showAIFolded?
-    } else if (aiDecision.contains("call")) {
       
+      // TODO gui.showAIFolded?
+      gController.aiAction(currentPlayer, aiDecision);
+      
+    } else if (aiDecision.contains("call")) {
+
       split = aiDecision.split(",");
       currentMaxBet = Integer.parseInt(split[1]);
       currentPotSize += Integer.parseInt(split[1]);
       System.out.println("AI Calls");
+      
       // TODO gui.showAICalled?
+      gController.aiAction(currentPlayer, split[0], split[1]);
+      
     } else if (aiDecision.contains("check")) {
       System.out.println("AI Checks");
       // TODO gui.showAIChecked
+      gController.aiAction(currentPlayer, aiDecision);
     }
     // TODO gui.updateTablePot
   }
@@ -380,12 +384,12 @@ public class SPController extends Thread {
     }
 
     if (smallBlindPlayer == noOfPlayers - 1) {
-      player.smallBlind(smallBlind);
+      gController.playerSmallBlind(smallBlind);
       aiPlayers.get(bigBlindPlayer).setBigBlind(bigBlind, true);
       // TODO show animation?
     } else if (bigBlindPlayer == noOfPlayers - 1) {
       aiPlayers.get(smallBlindPlayer).setSmallBlind(smallBlind, true);
-      player.bigBlind(bigBlind);
+      gController.playerBigBlind(bigBlind);
       // TODO show animation?
     } else {
 
@@ -420,7 +424,8 @@ public class SPController extends Thread {
     // If all AI have folded or called, check if player has folded or called.
     if (noOfAIFoldedorCalled == noOfAi) {
 
-      if (player.getDecision().equals("fold") || player.getDecision().contains("call")) {
+      if (gController.getPlayerDecision().equals("fold")
+          || gController.getPlayerDecision().contains("call")) {
         allCalledorFolded = true;
       } else {
         allCalledorFolded = false;

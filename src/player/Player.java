@@ -21,36 +21,6 @@ public class Player {
   private int alreadyPaid = 0;
   private int highCard;
 
-
-  /**
-   * Constructor
-   * 
-   * @param initialPotsize The player's pot
-   */
-  public Player(int initialPotsize, String name) {
-    this.playerPot = initialPotsize;
-    this.name = name;
-  }
-
-
-  /**
-   * Method which sets the starting hand(hole cards) for the player
-   * 
-   * @param card1 His first card
-   * @param card2 His second card
-   */
-  public void setStartingHand(Card card1, Card card2) {
-
-    this.card1 = card1;
-    this.card2 = card2;
-    highCard = card1.getCardValue();
-    if (card2.getCardValue() > highCard) {
-      highCard = card2.getCardValue();
-    }
-
-  }
-
-
   /**
    * Method which forces the player to pay the small blind when it is his turn
    * 
