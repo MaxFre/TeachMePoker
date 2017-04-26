@@ -108,6 +108,7 @@ public class SPController extends Thread {
       card1 = deck.getCard();
       card2 = deck.getCard();
       player.setStartingHand(card1, card2);
+      gController.setStartingHand(card1, card2);
       // show animation?
       for (Ai ai : aiPlayers) {
         ai.setDecision("");

@@ -69,6 +69,8 @@ public class GameController {
   private SPController spController;
   private boolean playerMadeDecision = false;
   private String decision;
+  private Card card1;
+  private Card card2;
 
   public void initialize() throws Exception {
 
@@ -284,22 +286,23 @@ public class GameController {
           imgPowerBar.setY(15);
         }
         if (powerBarValue == 2) {
-          image = new Image(Paths.get(powerBarMediumWeakHand).toUri().toString(), 120, 166, true, true);
+          image =
+              new Image(Paths.get(powerBarMediumWeakHand).toUri().toString(), 120, 166, true, true);
           imgPowerBar = new ImageView(image);
           powerBarArea.getChildren().add(imgPowerBar);
           imgPowerBar.setX(30);
           imgPowerBar.setY(15);
         }
         if (powerBarValue == 3) {
-          image = new Image(Paths.get(powerBarMediumStrongHand).toUri().toString(), 120, 166, true, true);
+          image = new Image(Paths.get(powerBarMediumStrongHand).toUri().toString(), 120, 166, true,
+              true);
           imgPowerBar = new ImageView(image);
           powerBarArea.getChildren().add(imgPowerBar);
           imgPowerBar.setX(30);
           imgPowerBar.setY(15);
         }
         if (powerBarValue == 4) {
-          image =
-              new Image(Paths.get(powerBarStrongHand).toUri().toString(), 120, 166, true, true);
+          image = new Image(Paths.get(powerBarStrongHand).toUri().toString(), 120, 166, true, true);
           imgPowerBar = new ImageView(image);
           powerBarArea.getChildren().add(imgPowerBar);
           imgPowerBar.setX(30);
@@ -393,12 +396,72 @@ public class GameController {
     lbAllIn.setVisible(true);
   }
 
-  public void setStartingHand() {
+  public void setStartingHand(Card card1, Card card2) {
+    System.out.println(this);
+    this.card1 = card1;
+    this.card2 = card2;
+    String cardOne =
+        "resources/images/" + card1.getCardValue() + card1.getCardSuit().charAt(0) + ".png";
+    String cardTwo =
+        "resources/images/" + card2.getCardValue() + card2.getCardSuit().charAt(0) + ".png";
+    ArrayList<Card> cards = new ArrayList<Card>();
+    cards.add(card1);
+    cards.add(card2);
+    this.hand = new Hand(cards);
+    image = new Image(Paths.get(cardOne).toUri().toString(), 120, 166, true, true);
+    imgCardOne = new ImageView(image);
+    playerCardsArea.getChildren().add(imgCardOne);
+    imgCardOne.setX(0);
+    imgCardOne.setY(0);
+    image = new Image(Paths.get(cardTwo).toUri().toString(), 120, 166, true, true);
+    imgCard2 = new ImageView(image);
+    playerCardsArea.getChildren().add(imgCard2);
+    imgCard2.setX(105);
+    imgCard2.setY(0);
 
+    handHelp();
   }
 
   public void handHelp() {
+    String powerBarWeakHand = "resources/images/weakHand.png";
+    String powerBarMediumWeakHand = "resources/images/mediumWeakHand.png";
+    String powerBarMediumStrongHand = "resources/images/mediumStrongHand.png";
+    String powerBarStrongHand = "resources/images/StrongHand.png";
 
+    String helpText = hand.theHelp();
+    helpLabel.setText(helpText);
+    String adviceText = hand.theAdvice();
+    adviceLabel.setText("Råd: \n" + adviceText);
+
+    powerBarValue = hand.toPowerBar();
+    if (powerBarValue == 1) {
+      image = new Image(Paths.get(powerBarWeakHand).toUri().toString(), 120, 166, false, false);
+      imgPowerBar = new ImageView(image);
+      powerBarArea.getChildren().add(imgPowerBar);
+      imgPowerBar.setX(30);
+      imgPowerBar.setY(15);
+    } else if (powerBarValue == 2) {
+      image =
+          new Image(Paths.get(powerBarMediumWeakHand).toUri().toString(), 120, 166, false, false);
+      imgPowerBar = new ImageView(image);
+      powerBarArea.getChildren().add(imgPowerBar);
+      imgPowerBar.setX(30);
+      imgPowerBar.setY(15);
+    } else if (powerBarValue == 3) {
+      image =
+          new Image(Paths.get(powerBarMediumStrongHand).toUri().toString(), 120, 166, false, false);
+      imgPowerBar = new ImageView(image);
+      powerBarArea.getChildren().add(imgPowerBar);
+      imgPowerBar.setX(30);
+      imgPowerBar.setY(15);
+    } else if (powerBarValue == 4) {
+      image = new Image(Paths.get(powerBarStrongHand).toUri().toString(), 120, 166, false, false);
+      imgPowerBar = new ImageView(image);
+      powerBarArea.getChildren().add(imgPowerBar);
+      imgPowerBar.setX(30);
+      imgPowerBar.setY(15);
+
+    }
   }
 
   public String getPlayerDecision() {
