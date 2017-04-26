@@ -29,7 +29,7 @@ public class TestHand {
       Random rand = new Random();
       int RandomSize = rand.nextInt(4);
 
-      int thisTurn = turn[RandomSize];
+      int thisTurn = turn[1];
 
       for (int i = 0; i < thisTurn; i++) {
         cards.add(deck.getCard());
