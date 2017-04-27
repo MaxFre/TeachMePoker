@@ -11,6 +11,8 @@ import java.util.Arrays;
  */
 public class HandCalculation {
 	private String secondInTwoPair = "1,c";
+	
+	private ArrayList<String> finalHihglight = new ArrayList<String>();
 	private ArrayList<String> nbrForStraight = new ArrayList<String>();
 	private ArrayList<String> nbrForStraight1 = new ArrayList<String>();
 	private ArrayList<String> aiCards = new ArrayList<String>();
@@ -271,58 +273,95 @@ public class HandCalculation {
 	 */
 	public int checkStraight(){
 		
-		int[] tempArray = new int[aiCards.size()];
 		int threshold = 0;
-		for(int i = 0; i< aiCards.size(); i++){
-			tempArray[i] = cardNbr.get(i);
+		
+		int[] CorrectOrderArray = new int[cardNbr.size()];
+
+		for (int i = 0; i < cardNbr.size(); i++) {			//as referance when getting to highlight.
+			CorrectOrderArray[i] = cardNbr.get(i);
 		}
 		
-		Arrays.sort(tempArray);
+		for(int i = 0; i<cardNbr.size(); i++){
+			if(cardNbr.get(i)==14){
+				cardNbr.add(1);
+			}
+		}
+		
+		int[] CurrentCardsArray = new int[cardNbr.size()];
+		
+		for(int i = 0; i< cardNbr.size(); i++){
+			CurrentCardsArray[i] = cardNbr.get(i);
+		}
+		
+		Arrays.sort(CurrentCardsArray);
 		int inStraight = 0;	
 		int check = 4;
 		
-	for(int x = 0; x<tempArray.length; x++){	
-		int temp = tempArray[x]+check;
+	for(int x = 0; x<CurrentCardsArray.length; x++){	
+		int CurrentHighestInStraight = CurrentCardsArray[x]+check;
+		int CurrentLowestInStraight = CurrentCardsArray[x];
+		
 		inStraight = 0;
-		check--;
-		nbrForStraight.clear();
-		for(int i = 0; i<tempArray.length; i++){
-			
-			if(tempArray[i]<=temp && !(tempArray[i]<temp-4)){
+
+		
+		for(int i = 0; i<CurrentCardsArray.length; i++){
+		  
+			if(CurrentCardsArray[i]<=CurrentHighestInStraight && !(CurrentCardsArray[i]<CurrentLowestInStraight)){
 					
 				if(i==0){							//kollar om 0 är samma som 1.
 			
 						inStraight++;
-						nbrForStraight.add(aiCards.get(i));
+						if(CurrentCardsArray[i]==1){
+							nbrForStraight.add(String.valueOf(CurrentCardsArray[CurrentCardsArray.length-1]));
+						}
+						else{
+							nbrForStraight.add(String.valueOf(CurrentCardsArray[i]));
+						}
 					
 				}
 				
 				if(i>=1){							
-					if(!(tempArray[i]==tempArray[i-1])){		//kollar om 1-4 är samma som nån annan.
+					if(!(CurrentCardsArray[i]==CurrentCardsArray[i-1])){		//kollar om 1-4 är samma som nån annan.
 						inStraight++;
-						nbrForStraight.add(aiCards.get(i));
+						nbrForStraight.add(String.valueOf(CurrentCardsArray[i]));
 					}
-				}	
-				
+				}
+
 			}
 		}
-	
-		if(inStraight>threshold){
-			nbrForStraight1.clear();
-			nbrForStraight1 = nbrForStraight;
-			
-			threshold = inStraight;
-	
 
+		if (inStraight > threshold) {
+
+			threshold = inStraight;
+
+			nbrForStraight1.clear();
+			for (String a : nbrForStraight) {
+				nbrForStraight1.add(a);
+			}
 		}
-		
-		
+		nbrForStraight.clear();
 	}
+
+	return threshold;
+}
 	
-			
-		return threshold;
+	public ArrayList<String> getToHighlight() {
+		for (int y = 0; y < nbrForStraight1.size(); y++) {
+			int same = 1;
+			for (int i = 0; i < aiCards.size(); i++) {
+				
+				String temp = aiCards.get(i);
+				String[] tempSplit = temp.split(",");
+				if (nbrForStraight1.get(y).equals(tempSplit[0])) {
+					if(same==1){
+					finalHihglight.add(aiCards.get(i));
+					same++;
+					}
+				}
+			}
+		}
+		return finalHihglight;
 	}
-	
 	
 	
 	
@@ -346,6 +385,7 @@ public class HandCalculation {
 		}
 		return pwrBar;
 	}
+	
 	public int pwrBarLvlOnTurnOne(){
 		int pwrBar = 1;
 		if (colorChance == 2) {
@@ -528,7 +568,7 @@ public class HandCalculation {
 		}
 		
 		if(cardNbr.get(1)>10){
-			if(cardNbr.get(0)==11){
+			if(cardNbr.get(1)==11){
 				cardTwo = "Knäcktar";
 			}
 			if(cardNbr.get(1)==12){
@@ -587,8 +627,19 @@ public class HandCalculation {
 					advice = "'ONE-PAIR' är en ok hand, även då detta är ett lågt par.\nOm det inte kostar för mycket. Så kör på!\n";
 				}
 				if(highCards){
-					advice = "'ONE-PAIR'  är en ok hand. Och detta är även ett högt par vilket är bra.\n Om det inte kostar för mycket. Kör på!\n";
+					advice = "'ONE-PAIR'  är en ok hand. Och detta är även ett högt par vilket är ännu bättre.\n Om det inte kostar för mycket. Kör på!\n";
 				 }
+				}
+				
+				if(aiCards.size()>5){
+					advice = "'ONE-PAIR' är en hyfsat ok hand. Om det inte kostar för mycket. Så kör på!\n";
+					if(lowCards){
+						advice = "'ONE-PAIR' är en hyfsat ok hand, även då detta är ett lågt par.\nOm det inte kostar för mycket. Så kör på!\n";
+					}
+					if(highCards){
+						advice = "'ONE-PAIR'  är en hyfsat ok hand. Och detta är även ett högt par vilket är ännu bättre.\nOm det inte kostar för mycket."
+								+ " Kör på!\n";
+					 }	
 				}
 				// writes the active cards to hihglight
 				if(straightChance<5 && colorChance<5){
@@ -648,7 +699,7 @@ public class HandCalculation {
 			helper = "Du har en 'STRAIGHT'!! Du har 5/5.\n";
 			advice = "En 'STRAIGHT' är en riktigt bra hand. Kör på! \nFundera även på att höja!\n";
 			// writes the active cards to hihglight
-			toHighlight = nbrForStraight;		
+			toHighlight = getToHighlight();		
 		}
 		
 		//FLUSH
