@@ -174,6 +174,7 @@ public class SPController extends Thread {
           aiPlayers.get(currentPlayer).setSameTurn(true);
         }
         currentPlayer = (currentPlayer + 1) % noOfPlayers;
+        // TODO Timer/Delay here?
       }
       playTurn++;
       allCalledorFolded = false;

@@ -554,6 +554,7 @@ public class GameController {
 
   public void setAiPlayers(LinkedList<Ai> aiPlayers) {
     this.aiPlayers = aiPlayers;
+    //TODO set AI players in GUI
 
   }
 
