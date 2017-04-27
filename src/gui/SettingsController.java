@@ -46,8 +46,9 @@ public class SettingsController {
   @FXML
   private ImageView ivBack;
 
-  public void initialize() throws Exception {
 
+  public void initialize() throws Exception {
+	  
   }
 
   public void tfNameInputChange() {
@@ -56,6 +57,7 @@ public class SettingsController {
 
   public void setChangeScene(ChangeScene sceneChanger) {
     System.out.println("sup?");
+
     this.changeScene = sceneChanger;
   }
 
