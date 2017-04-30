@@ -42,7 +42,6 @@ public class SPController extends Thread {
   private ArrayList<String> name = new ArrayList<String>();
   private GameController gController;
 
-
   /**
    * Method which prepares the whole Session
    * 
@@ -77,7 +76,15 @@ public class SPController extends Thread {
     System.out.println("This happens");
 
   }
-
+  
+  public int getCurrentMaxBet(){
+		return currentMaxBet;
+  }
+  
+  public int getPotSize(){
+		return potSize;
+  }
+  
 
   /**
    * Method that creates a list of names for AI-Players to pull from
@@ -91,7 +98,7 @@ public class SPController extends Thread {
     name.add("Swag-Rikard");
     name.add("Yolo-Kristina");
     name.add("420-Rolf");
-    Collections.shuffle(name);
+   // Collections.shuffle(name);
   }
 
 
@@ -338,7 +345,7 @@ public class SPController extends Thread {
       System.out.println("AI Raises");
       
       // TODO gui.showAIRaised
-      gController.aiAction(currentPlayer, split[0], split[1]);
+      gController.aiAction(currentPlayer, aiDecision);
       
     } else if (aiDecision.contains("fold")) {
       System.out.println("AI folds");
@@ -354,7 +361,7 @@ public class SPController extends Thread {
       System.out.println("AI Calls");
       
       // TODO gui.showAICalled?
-      gController.aiAction(currentPlayer, split[0], split[1]);
+      gController.aiAction(currentPlayer, aiDecision);
       
     } else if (aiDecision.contains("check")) {
       System.out.println("AI Checks");
@@ -396,7 +403,10 @@ public class SPController extends Thread {
 
       aiPlayers.get(smallBlindPlayer).setSmallBlind(smallBlind, true);
       aiPlayers.get(bigBlindPlayer).setBigBlind(bigBlind, true);
-      // TODO show animation?
+      aiPlayers.get(smallBlindPlayer).setDecision("SmallBlind");
+      aiPlayers.get(bigBlindPlayer).setDecision("BigBlind");
+      gController.aiAction(smallBlindPlayer, "SmallBlind");
+      gController.aiAction(bigBlindPlayer, "BigBlind");
     }
     this.currentPotSize = smallBlind + bigBlind;
     // TODO gui.updateTablePot
