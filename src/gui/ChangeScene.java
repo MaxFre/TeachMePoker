@@ -19,8 +19,12 @@ public class ChangeScene {
 
 
 
-  public void prepGame() throws IOException {
+
+  public void prepGame() throws IOException, InstantiationException, IllegalAccessException {
+
+
     System.out.println("preLoad: " + fmController);
+    Sound.class.newInstance().playBackgroundMusic();
     FXMLLoader loaderFM = new FXMLLoader(FMController.class.getResource("FirstMenu.fxml"));
     Pane rootMenu = loaderFM.load();
     fmController = loaderFM.getController();
@@ -66,6 +70,7 @@ public class ChangeScene {
 
 
   public Scene firstScene() throws IOException {
+		
     System.out.println("CS: " + this);
     System.out.println("CS: " + settingsController);
     System.out.println("CS: " + gameController);
