@@ -159,6 +159,13 @@ public class SPController extends Thread {
               winnerDeclared = true;
               break;
             }
+            if(playTurn == 1) {
+              gController.setFlop(flop);
+            }else if(playTurn == 2) {
+             //TODO gController.setTurn(turn);
+            }else if(playTurn == 3){
+              //TODO gController.setRiver(river);
+            }
             System.out.println("player turn");
             askForPlayerDecision(currentMaxBet);
             System.out.println("-----------------------------------------");

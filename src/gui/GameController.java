@@ -107,6 +107,7 @@ public class GameController {
 	private int powerBarValue = 0;
 	private Image image;
 	private ArrayList<String> cardsIcon = new ArrayList<String>();
+	private ArrayList<Card> cards = new ArrayList<Card>();
 	private Hand hand;
 	private Deck deck;
 	private int bet;
@@ -562,7 +563,7 @@ public class GameController {
 				"resources/images/" + card1.getCardValue() + card1.getCardSuit().charAt(0) + ".png";
 		String cardTwo =
 				"resources/images/" + card2.getCardValue() + card2.getCardSuit().charAt(0) + ".png";
-		ArrayList<Card> cards = new ArrayList<Card>();
+		
 		cards.add(card1);
 		cards.add(card2);
 		this.hand = new Hand(cards);
@@ -586,6 +587,34 @@ public class GameController {
 
 		updatePlayerValues("");
 
+	}
+	
+	public void setFlop(Card[] flop) {
+	  for(Card c : flop) {
+	  cards.add(c);
+	  }
+	  String cardThree = ""+ flop[0].getCardValue() + flop[0].getCardSuit().charAt(0);
+	  String cardFour = ""+ flop[1].getCardValue() + flop[1].getCardSuit().charAt(0);
+	  String cardFive = ""+ flop[2].getCardValue() + flop[2].getCardSuit().charAt(0);
+	  this.hand = new Hand(cards);
+	  
+	  image = new Image(Paths.get(cardThree).toUri().toString(), 120, 166, true, true);
+      imgCard3 = new ImageView(image);
+      tabelCardArea.getChildren().add(imgCard3);
+      imgCard3.setX(0);
+      imgCard3.setY(0);
+      image = new Image(Paths.get(cardFour).toUri().toString(), 120, 166, true, true);
+      imgCard4 = new ImageView(image);
+      tabelCardArea.getChildren().add(imgCard4);
+      imgCard4.setX(105);
+      imgCard4.setY(0);
+      image = new Image(Paths.get(cardFive).toUri().toString(), 120, 166, true, true);
+      imgCard5 = new ImageView(image);
+      tabelCardArea.getChildren().add(imgCard5);
+      imgCard5.setX(205);
+      imgCard5.setY(0);
+      
+	  handHelp();
 	}
 
 	public void playerSmallBlind(int i) {
@@ -675,6 +704,7 @@ public class GameController {
 
 		decision = resetDecision;
 		alreadyPaid = 0;
+		cards = new ArrayList<Card>();
 	}
 
 	public void setPlayerPot(int newValue) {
