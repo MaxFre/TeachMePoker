@@ -198,7 +198,7 @@ public class GameController {
   }
 
   public void playerCheck() {
-    // disableButtons();
+    disableButtons();
     System.out.println("Player checked");
     // okBox();
     this.decision = "check";
@@ -209,7 +209,7 @@ public class GameController {
   }
 
   public void playerFold() {
-    // disableButtons();
+    disableButtons();
     System.out.println("Player folded");
     this.decision = "fold";
     lbPlayerAction.setText("Fold");
@@ -220,7 +220,7 @@ public class GameController {
   }
 
   public void playerCall() {
-    // disableButtons();
+    disableButtons();
     System.out.println("Player call");
     this.playerPot -= (spController.getCurrentMaxBet() - alreadyPaid);
     this.alreadyPaid += spController.getCurrentMaxBet();
@@ -240,7 +240,7 @@ public class GameController {
   }
 
   public void playerRaise() {
-    // disableButtons();
+    disableButtons();
     this.playerPot -= (int) slider.getValue();
 
     this.decision = "raise," + ((int) slider.getValue() + alreadyPaid);
@@ -270,7 +270,8 @@ public class GameController {
     }
     // TODO
   }
-
+ 
+  
   public void newGame() {
     System.out.println("new game");
   }
@@ -457,7 +458,6 @@ public class GameController {
       powerBarArea.getChildren().add(imgPowerBar);
       imgPowerBar.setX(30);
       imgPowerBar.setY(15);
-
     }
 
     image = new Image(Paths.get(cardOne).toUri().toString(), 120, 166, true, true);
@@ -563,7 +563,7 @@ public class GameController {
     this.hand = new Hand(cards);
 
     Platform.runLater(() -> {
-
+    	//okBox();
       image = new Image(Paths.get(cardOne).toUri().toString(), 120, 166, true, true);
       imgCardOne = new ImageView(image);
       playerCardsArea.getChildren().add(imgCardOne);
@@ -574,13 +574,9 @@ public class GameController {
       playerCardsArea.getChildren().add(imgCard2);
       imgCard2.setX(105);
       imgCard2.setY(0);
+      updatePlayerValues("");
     });
-
     handHelp();
-
-
-    updatePlayerValues("");
-
   }
 
   public void setFlop(Card[] flop) {
@@ -591,24 +587,58 @@ public class GameController {
       cards.add(c);
       System.out.println(cards.size());
     }
+    String resource =  "resources/images/";
     String cardThree = "" + flop[0].getCardValue() + flop[0].getCardSuit().charAt(0);
     String cardFour = "" + flop[1].getCardValue() + flop[1].getCardSuit().charAt(0);
     String cardFive = "" + flop[2].getCardValue() + flop[2].getCardSuit().charAt(0);
+    
+
+
     this.hand = new Hand(cards);
     Platform.runLater(() -> {
-
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println(cardThree);
+        System.out.println(cardFour);
+        System.out.println(cardFive);
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        System.out.println("FLOPPP THIS MAFFFAKA!");
+        
+ 
       tabelCardArea.requestLayout();
-      image = new Image(Paths.get(cardThree).toUri().toString(), 120, 166, true, true);
+      image = new Image(Paths.get(resource + cardThree + ".png").toUri().toString(), 120, 166, true, true);
       imgCard3 = new ImageView(image);
       tabelCardArea.getChildren().add(imgCard3);
       imgCard3.setX(0);
       imgCard3.setY(0);
-      image = new Image(Paths.get(cardFour).toUri().toString(), 120, 166, true, true);
+      image = new Image(Paths.get(resource + cardFour + ".png").toUri().toString(), 120, 166, true, true);
       imgCard4 = new ImageView(image);
       tabelCardArea.getChildren().add(imgCard4);
       imgCard4.setX(105);
       imgCard4.setY(0);
-      image = new Image(Paths.get(cardFive).toUri().toString(), 120, 166, true, true);
+      image = new Image(Paths.get(resource + cardFive + ".png").toUri().toString(), 120, 166, true, true);
       imgCard5 = new ImageView(image);
       tabelCardArea.getChildren().add(imgCard5);
       imgCard5.setX(205);
@@ -746,10 +776,11 @@ public class GameController {
       }
     }
   }
-
+ 
   public void disableButtons() {
     btCall.setVisible(false);
     btRaise.setVisible(false);
+    btCheck.setVisible(false);
   }
 
   private void enableButtons() {

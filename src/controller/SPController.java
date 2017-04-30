@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import aiClass.Ai;
 import deck.Card;
 import deck.Deck;
+import gui.ConfirmBox;
 import gui.GameController;
 
 
@@ -49,7 +50,7 @@ public class SPController extends Thread {
    * @param potSize Potsize for the whole table
    */
   public void startGame(int noOfAi, int potSize, String playerName) {
-
+	gController.disableButtons();
     this.potSize = potSize;
     this.noOfAi = noOfAi;
     setNames();
@@ -253,6 +254,8 @@ public class SPController extends Thread {
     // TODO Check Winner
     System.out.println("Winner");
     System.out.println(bestHandPlayer.getName());
+    ConfirmBox winnerWindow = new ConfirmBox();
+    winnerWindow.display("We have a winner!", bestHandPlayer.getName() + " won a bounty of " + currentPotSize + "!");
   }
 
 
