@@ -151,6 +151,13 @@ public class SPController extends Thread {
 
     while (playTurn < 4) {
       System.out.println("Current turn: " + playTurn);
+      if(playTurn == 1) {
+        gController.setFlop(flop);
+      }else if(playTurn == 2) {
+       //TODO gController.setTurn(turn);
+      }else if(playTurn == 3){
+        //TODO gController.setRiver(river);
+      }
       while (!allCalledorFolded) {
         if (currentPlayer == noOfPlayers - 1) {
           if (!gController.getPlayerDecision().equals("fold")) {
@@ -159,13 +166,7 @@ public class SPController extends Thread {
               winnerDeclared = true;
               break;
             }
-            if(playTurn == 1) {
-              gController.setFlop(flop);
-            }else if(playTurn == 2) {
-             //TODO gController.setTurn(turn);
-            }else if(playTurn == 3){
-              //TODO gController.setRiver(river);
-            }
+            
             System.out.println("player turn");
             askForPlayerDecision(currentMaxBet);
             System.out.println("-----------------------------------------");
@@ -190,7 +191,7 @@ public class SPController extends Thread {
         // TODO Timer/Delay here?
         
         try {
-			Thread.sleep(3000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -437,7 +438,7 @@ public class SPController extends Thread {
     // For each AI player
     for (Ai ai : aiPlayers) {
       // Check if folded.
-      if (ai.getDecision().equals("fold")) {
+      if (ai.getDecision().contains("fold")) {
         noOfAIFoldedorCalled++;
         // if not folded, check if checked or called.
       } else if (ai.getDecision().contains("call") || ai.getDecision().contains("check")) {
@@ -448,16 +449,20 @@ public class SPController extends Thread {
       }
     }
     // If all AI have folded or called, check if player has folded or called.
-    if (noOfAIFoldedorCalled == noOfAi) {
+    if (noOfAIFoldedorCalled >= noOfAi) {
+      String[] split = gController.getPlayerDecision().split(",");
 
-      if (gController.getPlayerDecision().equals("fold")
-          || gController.getPlayerDecision().contains("call")) {
+      if (gController.getPlayerDecision().contains("fold") || gController.getPlayerDecision().contains("call")) {
         allCalledorFolded = true;
-      } else {
+      } else if(gController.getPlayerDecision().contains("raise") && Integer.parseInt(split[1]) == currentMaxBet) {
+        allCalledorFolded = true;
+      }else if(gController.getPlayerDecision().contains("check")){
+        allCalledorFolded = true;
+      }else {
         allCalledorFolded = false;
       }
     }
-
+    System.out.println(allCalledorFolded);
   }
 
 }
