@@ -203,7 +203,7 @@ public class GameController {
 	}
 
 	public void playerCheck() {
-		disableButtons();
+		//disableButtons();
 		System.out.println("Player checked");
 		//okBox();
 		this.decision = "check";
@@ -214,7 +214,7 @@ public class GameController {
 	}
 
 	public void playerFold() {
-		disableButtons();
+		//disableButtons();
 		System.out.println("Player folded");
 		this.decision = "fold";
 		lbPlayerAction.setText("Fold");
@@ -225,7 +225,7 @@ public class GameController {
 	}
 
 	public void playerCall() {
-		disableButtons();
+		//disableButtons();
 		System.out.println("Player call");
 		this.playerPot -=(spController.getCurrentMaxBet()-alreadyPaid);
 		this.alreadyPaid = spController.getCurrentMaxBet();
@@ -245,7 +245,7 @@ public class GameController {
 	}
 	
 	public void playerRaise() {
-		disableButtons();
+		//disableButtons();
 		this.playerPot -= (int) slider.getValue();
 		
 		this.decision = "raise," +  ((int) slider.getValue() + alreadyPaid);
@@ -294,7 +294,7 @@ public class GameController {
 
 	public void setSliderValues(){
 		slider.setMax(playerPot);
-		if ((spController.getCurrentMaxBet()-alreadyPaid)+(spController.getCurrentMaxBet() *0.25) <= playerPot){
+		if ((spController.getCurrentMaxBet()-alreadyPaid) + (int) (spController.getCurrentMaxBet() *0.25) <= playerPot){
 			slider.setMin(spController.getCurrentMaxBet()*1.25);	
 		}else{
 			slider.setMin(0);
@@ -584,7 +584,6 @@ public class GameController {
 		handHelp();
 
 
-		///VEDRANA HELPER FIND
 		updatePlayerValues("");
 
 	}
@@ -657,7 +656,8 @@ public class GameController {
 	}
 
 	public String askForPlayerDecision() {
-		enableButtons();
+		//enableButtons();
+		handleButtons();
 		playerMadeDecision = false;
 		while (!playerMadeDecision) {
 			try {
@@ -682,16 +682,44 @@ public class GameController {
 		this.playerPot += newValue;
 	}
 
+	public void handleButtons(){
 
+		if(alreadyPaid == spController.getCurrentMaxBet()){
+			//show check, hide all other
+			btCheck.setVisible(true);
+
+			btCall.setVisible(false);
+			btRaise.setVisible(false);
+		}else{
+			if(alreadyPaid < spController.getCurrentMaxBet() && playerPot >= spController.getCurrentMaxBet()){
+				//hide check, show call
+				btCheck.setVisible(false);
+
+				btCall.setVisible(true);
+			}else{
+				//hide call, hide check
+				btCheck.setVisible(false);
+				
+				btCall.setVisible(false);
+			}
+
+			if((spController.getCurrentMaxBet()-alreadyPaid)+ (int) (spController.getCurrentMaxBet() *0.25) <= playerPot){
+				//show raise
+				btRaise.setVisible(true);
+			}else{
+				//hide raise				
+				btRaise.setVisible(false);
+			}
+		}
+	}
+	
 	public void disableButtons() {
 		btCall.setVisible(false);
-		btRaise.setVisible(false);
 		btRaise.setVisible(false);
 	}
 
 	private void enableButtons() {
 		btCall.setVisible(true);
-		btRaise.setVisible(true);
 		btRaise.setVisible(true);
 
 	}

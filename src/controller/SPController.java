@@ -85,7 +85,6 @@ public class SPController extends Thread {
 		return potSize;
   }
   
-
   /**
    * Method that creates a list of names for AI-Players to pull from
    */
@@ -182,6 +181,13 @@ public class SPController extends Thread {
         }
         currentPlayer = (currentPlayer + 1) % noOfPlayers;
         // TODO Timer/Delay here?
+        
+        try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
       }
       playTurn++;
       allCalledorFolded = false;
@@ -407,6 +413,8 @@ public class SPController extends Thread {
       aiPlayers.get(bigBlindPlayer).setDecision("BigBlind");
       gController.aiAction(smallBlindPlayer, "SmallBlind");
       gController.aiAction(bigBlindPlayer, "BigBlind");
+      //sets dealer as well
+      gController.aiAction(dealer, "Dealer");
     }
     this.currentPotSize = smallBlind + bigBlind;
     // TODO gui.updateTablePot
