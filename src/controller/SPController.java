@@ -3,11 +3,14 @@ package controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
+
 import aiClass.Ai;
 import deck.Card;
 import deck.Deck;
 import gui.ConfirmBox;
 import gui.GameController;
+import javafx.application.Platform;
 
 
 /**
@@ -42,6 +45,7 @@ public class SPController extends Thread {
   private boolean winnerDeclared = false;
   private ArrayList<String> name = new ArrayList<String>();
   private GameController gController;
+  private Ai bestHandPlayerAi;
 
   /**
    * Method which prepares the whole Session
@@ -148,16 +152,19 @@ public class SPController extends Thread {
    */
   public void run() {
 
-
-
+	 Card[] turnCards = { flop[0], flop[1], flop[2], turn};
+	 Card[] riverCards = { flop[0], flop[1], flop[2], turn, river};
     while (playTurn < 4) {
       System.out.println("Current turn: " + playTurn);
       if(playTurn == 1) {
-        gController.setFlop(flop);
+    	  
+        gController.setFlopTurnRiver(flop);
       }else if(playTurn == 2) {
-       //TODO gController.setTurn(turn);
+    	gController.setFlopTurnRiver(turnCards);
+
       }else if(playTurn == 3){
-        //TODO gController.setRiver(river);
+    	 gController.setFlopTurnRiver(riverCards);
+
       }
       while (!allCalledorFolded) {
         if (currentPlayer == noOfPlayers - 1) {
@@ -169,6 +176,7 @@ public class SPController extends Thread {
             }
             
             System.out.println("player turn");
+            gController.handHelp();
             askForPlayerDecision(currentMaxBet);
             System.out.println("-----------------------------------------");
           }
@@ -192,12 +200,13 @@ public class SPController extends Thread {
         // TODO Timer/Delay here?
         
         try {
-			Thread.sleep(2000);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
       }
+      
       playTurn++;
       allCalledorFolded = false;
       for (Ai ai : aiPlayers) {
@@ -227,6 +236,7 @@ public class SPController extends Thread {
     } else {
       dealer = 0;
     }
+    
     setupPhase();
   }
 
@@ -243,6 +253,7 @@ public class SPController extends Thread {
         } else if (ai.handStrength() == bestHand) {
           if (ai.getHighCard() > bestHandPlayer.getHighCard()) {
             bestHandPlayer = ai;
+            this.bestHandPlayerAi = ai;
           }
         }
       }
@@ -254,8 +265,7 @@ public class SPController extends Thread {
     // TODO Check Winner
     System.out.println("Winner");
     System.out.println(bestHandPlayer.getName());
-    ConfirmBox winnerWindow = new ConfirmBox();
-    winnerWindow.display("We have a winner!", bestHandPlayer.getName() + " won a bounty of " + currentPotSize + "!");
+
   }
 
 
