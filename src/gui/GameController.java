@@ -12,14 +12,15 @@ import hand.Hand;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 public class GameController {
-
 
 	@FXML
 	private ImageView btCheck;
@@ -53,7 +54,6 @@ public class GameController {
 	private Pane tabelCardArea;
 	@FXML
 	private AnchorPane AnchorPaneAll;
-
 
 	@FXML
 	private ImageView imgPlayerOneCards;
@@ -114,6 +114,26 @@ public class GameController {
 	@FXML
 	private ImageView imgCard7;
 
+	@FXML
+	private ImageView ivBigBlind;
+	@FXML
+	private ImageView ivSmallBlind;
+	@FXML
+	private ImageView ivDealer;
+	@FXML
+	private TitledPane tpHandRanking;
+	@FXML
+	public ImageView ivSound;
+	@FXML
+	public MenuItem miNewGame;
+	@FXML
+	public MenuItem miClose;
+	@FXML
+	public MenuItem miSettings;
+	@FXML
+	public MenuItem miAbout;
+
+	private ConfirmBox confirmBox;
 	private ChangeScene changeScene;
 	private int powerBarValue = 0;
 	private Image image;
@@ -123,7 +143,8 @@ public class GameController {
 	private Hand tableCards;
 	private Deck deck;
 	private int bet;
-	private int tablePotValue = 2000; // just for testing, its coming from controller
+	private int tablePotValue = 2000; // just for testing, its coming from
+										// controller
 	private int playerPot = 0;
 	private int alreadyPaid = 0;
 	private int highCard;
@@ -140,23 +161,20 @@ public class GameController {
 	private Label[][] collectionOfLabelsAi;
 	private ImageView[] collectionOfCardsAi;
 	private ImageView[] collectionOfCardsTable;
+
 	public void initialize() throws Exception {
 
-		this.collectionOfLabelsAi =
-				new Label[][] {{labelPlayerOneName, labelPlayerOnePot, labelPlayerOneAction},
-			{labelPlayerTwoName, labelPlayerTwoPot, labelPlayerTwoAction},
-			{labelPlayerThreeName, labelPlayerThreePot, labelPlayerThreeAction},
-			{labelPlayerFourName, labelPlayerFourPot, labelPlayerFourAction},
-			{labelPlayerFiveName, labelPlayerFivePot, labelPlayerFiveAction}};
+		this.collectionOfLabelsAi = new Label[][] { { labelPlayerOneName, labelPlayerOnePot, labelPlayerOneAction },
+				{ labelPlayerTwoName, labelPlayerTwoPot, labelPlayerTwoAction },
+				{ labelPlayerThreeName, labelPlayerThreePot, labelPlayerThreeAction },
+				{ labelPlayerFourName, labelPlayerFourPot, labelPlayerFourAction },
+				{ labelPlayerFiveName, labelPlayerFivePot, labelPlayerFiveAction } };
 
-			this.collectionOfCardsAi = new ImageView[] {imgPlayerOneCards, imgPlayerTwoCards,
-					imgPlayerThreeCards, imgPlayerFourCards, imgPlayerFiveCards};
+		this.collectionOfCardsAi = new ImageView[] { imgPlayerOneCards, imgPlayerTwoCards, imgPlayerThreeCards,
+				imgPlayerFourCards, imgPlayerFiveCards };
 
-			this.collectionOfCardsTable = new ImageView[] {
-					imgCard3, imgCard4, imgCard5, imgCard6, imgCard7
-			};
-			this.tableCards = null;
-
+		this.collectionOfCardsTable = new ImageView[] { imgCard3, imgCard4, imgCard5, imgCard6, imgCard7 };
+		this.tableCards = null;
 
 	}
 
@@ -164,7 +182,7 @@ public class GameController {
 		collectionOfLabelsAi[position][0].setVisible(true);
 		collectionOfLabelsAi[position][1].setVisible(true);
 		collectionOfLabelsAi[position][2].setVisible(true);
-		
+
 		collectionOfCardsAi[position].setVisible(true);
 	}
 
@@ -183,10 +201,10 @@ public class GameController {
 	public void setUIAiFolded(int position, boolean folded) {
 		String resource = "resources/images/";
 
-		Image showCards = new Image(Paths.get(resource + "aiBarWithCards.png").toUri().toString(), 122,
-				158, true, true);
-		Image foldCards = new Image(Paths.get(resource + "aiBarWithoutCards.png").toUri().toString(),
-				122, 158, true, true);
+		Image showCards = new Image(Paths.get(resource + "aiBarWithCards.png").toUri().toString(), 122, 158, true,
+				true);
+		Image foldCards = new Image(Paths.get(resource + "aiBarWithoutCards.png").toUri().toString(), 122, 158, true,
+				true);
 
 		if (folded == true) {
 			collectionOfCardsAi[position].setImage(showCards);
@@ -194,11 +212,6 @@ public class GameController {
 		} else {
 			collectionOfCardsAi[position].setImage(foldCards);
 		}
-	}
-
-	public void exitGame() {
-
-		System.exit(0);
 	}
 
 	public void setSPController(SPController spController) {
@@ -227,12 +240,13 @@ public class GameController {
 		playerMadeDecision = true;
 		updatePlayerValues(decision);
 	}
-
+	
+	@FXML
 	public void playerCall() {
 		disableButtons();
-		//TODO Kontrollera att spelaren har pengar
-		//TODO Se till att spelaren betalar rätt
-		
+		// TODO Kontrollera att spelaren har pengar
+		// TODO Se till att spelaren betalar rätt
+
 		System.out.println("Player call");
 		this.playerPot -= (spController.getCurrentMaxBet() - alreadyPaid);
 		this.alreadyPaid += spController.getCurrentMaxBet();
@@ -249,9 +263,9 @@ public class GameController {
 
 	public void playerRaise() {
 		disableButtons();
-		//TODO Kontrollera att spelaren har pengar
-        //TODO Se till att spelaren betalar rätt
-		
+		// TODO Kontrollera att spelaren har pengar
+		// TODO Se till att spelaren betalar rätt
+
 		this.playerPot -= (int) slider.getValue();
 
 		this.decision = "raise," + ((int) slider.getValue() + alreadyPaid);
@@ -279,16 +293,15 @@ public class GameController {
 		}
 	}
 
-
 	public void newGame() {
-	  //TODO Necessary?
+		// TODO Necessary?
 		System.out.println("new game");
 	}
 
 	public void saveGame() {
 		System.out.println("Saved Game");
-		//TODO försök lista ut hur fan den ska spara.
-		
+		// TODO försök lista ut hur fan den ska spara.
+
 		// try {
 		// pot = new FileHandler(tablePotValue);
 		// pot.savePot();
@@ -314,7 +327,8 @@ public class GameController {
 		val = (int) slider.getValue();
 		this.sliderValue = val;
 
-		// ****************** if we like to show the bet value in the text field ******************
+		// ****************** if we like to show the bet value in the text field
+		// ******************
 		// field.setText(""+val);
 		// slider.setValue((int)(INIT_VALUE));
 		// field.setText(new Integer((int)(INIT_VALUE)).toString());
@@ -324,49 +338,54 @@ public class GameController {
 	}
 
 	public void soundSetting() {
-	  //TODO Sound settings?
+		// TODO Av-mutea, lägg till effektljud.
+		Sound.mp.setMute(true);
+
+		if (Sound.mp.isMute() == true) {
+			Sound.mp.play();
+		}
 		System.out.println("Sound Setting");
 	}
 
 	public void rulesState() {
-	  //TODO Rules State?
+		// TODO Rules State?
 		System.out.println("Go to Rules section");
 	}
 
 	public void mainState() {
-	  // TODO Return to main menu
+		// TODO Return to main menu
 		System.out.println("Go to Main section");
 	}
 
 	public double getPotValue() {
-	  // TODO Find out what this is for
+		// TODO Find out what this is for
 		System.out.println(tablePotValue);
 		return tablePotValue;
 	}
 
 	// restart all the images
-	//TODO behövs?
-//	public void nextRound() {
-//
-//		image = null;
-//		imgCard1.setImage(null);
-//		imgCard2.setImage(null);
-//		imgCard3.setImage(null);
-//		imgCard4.setImage(null);
-//		imgCard5.setImage(null);
-//		imgCard6.setImage(null);
-//		imgCard7.setImage(null);
-//		imgPowerBar.setImage(null);
-//		tabelCardArea.requestLayout();
-//
-//	}
+	// TODO behövs?
+	// public void nextRound() {
+	//
+	// image = null;
+	// imgCard1.setImage(null);
+	// imgCard2.setImage(null);
+	// imgCard3.setImage(null);
+	// imgCard4.setImage(null);
+	// imgCard5.setImage(null);
+	// imgCard6.setImage(null);
+	// imgCard7.setImage(null);
+	// imgPowerBar.setImage(null);
+	// tabelCardArea.requestLayout();
+	//
+	// }
 
 	public void setUsername(String name) {
 		userName.setText(name);
 
 	}
 
-	//TODO Vet inte?
+	// TODO Vet inte?
 	public void showAllIn() {
 		lbAllIn.setVisible(true);
 	}
@@ -377,10 +396,10 @@ public class GameController {
 			newMatch.display("NEW Match!", "Starting new match...");
 		});
 		clearFlopTurnRiver();
-		
-		for(int i = 0; i < 5; i++) {
-		  setUIAiFolded(i, true);
-		  setLabelUIAiBarAction(i, "");
+
+		for (int i = 0; i < 5; i++) {
+			setUIAiFolded(i, true);
+			setLabelUIAiBarAction(i, "");
 		}
 
 		cards.clear();
@@ -400,46 +419,53 @@ public class GameController {
 		System.out.println("setStartingHand()");
 	}
 
-	public void checkHand(){
+	public void checkHand() {
 
 		Platform.runLater(() -> {
-			
-			Hand tempHand =  hand;
+
+			Hand tempHand = hand;
 
 			tempHand.reCalc();
-//			System.out.println("X-------------------------");
-//			System.out.println(tempHand.sendToHighlightChecker());
-//			System.out.println(tempHand.sendToHighlight());
-//			System.out.println("X-------------------------");
+			// System.out.println("X-------------------------");
+			// System.out.println(tempHand.sendToHighlightChecker());
+			// System.out.println(tempHand.sendToHighlight());
+			// System.out.println("X-------------------------");
 			playerCardsArea.requestLayout();
 			playerCardsArea.getChildren().clear();
 			String cardOne = "resources/images/" + card1.getCardValue() + card1.getCardSuit().charAt(0) + ".png";
 			String cardTwo = "resources/images/" + card2.getCardValue() + card2.getCardSuit().charAt(0) + ".png";
-			
-			if(tempHand.sendToHighlightChecker().contains(Integer.toString(card1.getCardValue()))){
-//				System.out.println("-------------------------");
-//				System.out.println("cardONE TRUE!!! " + Integer.toString(card1.getCardValue()) + " || " + tempHand.sendToHighlightChecker());
-//				System.out.println("-------------------------");
+
+			if (tempHand.sendToHighlightChecker().contains(Integer.toString(card1.getCardValue()))) {
+				// System.out.println("-------------------------");
+				// System.out.println("cardONE TRUE!!! " +
+				// Integer.toString(card1.getCardValue()) + " || " +
+				// tempHand.sendToHighlightChecker());
+				// System.out.println("-------------------------");
 				cardOne = "resources/images/" + card1.getCardValue() + card1.getCardSuit().charAt(0) + "O.png";
-			}else{
-//				System.out.println("-------------------------");
-//				System.out.println("cardONE False!!! " + Integer.toString(card1.getCardValue()) + " || " + tempHand.sendToHighlightChecker());
-//				System.out.println("-------------------------");
-				//cardTwo = "resources/images/" + card2.getCardValue() + card2.getCardSuit().charAt(0) + ".png";
+			} else {
+				// System.out.println("-------------------------");
+				// System.out.println("cardONE False!!! " +
+				// Integer.toString(card1.getCardValue()) + " || " +
+				// tempHand.sendToHighlightChecker());
+				// System.out.println("-------------------------");
+				// cardTwo = "resources/images/" + card2.getCardValue() +
+				// card2.getCardSuit().charAt(0) + ".png";
 			}
 
-			if(tempHand.sendToHighlightChecker().contains(Integer.toString(card2.getCardValue()))){
+			if (tempHand.sendToHighlightChecker().contains(Integer.toString(card2.getCardValue()))) {
 				cardTwo = "resources/images/" + card2.getCardValue() + card2.getCardSuit().charAt(0) + "O.png";
-			}else{
-//				System.out.println("-------------------------");
-//				System.out.println("cardTwocardTwo False!!! " + Integer.toString(card2.getCardValue()) + " || " + tempHand.sendToHighlightChecker());
-//				System.out.println("-------------------------");
-				//cardTwo = "resources/images/" + card2.getCardValue() + card2.getCardSuit().charAt(0) + ".png";
+			} else {
+				// System.out.println("-------------------------");
+				// System.out.println("cardTwocardTwo False!!! " +
+				// Integer.toString(card2.getCardValue()) + " || " +
+				// tempHand.sendToHighlightChecker());
+				// System.out.println("-------------------------");
+				// cardTwo = "resources/images/" + card2.getCardValue() +
+				// card2.getCardSuit().charAt(0) + ".png";
 			}
-			
-			
-			//IF PAIR IN HAND
-			if(card1.getCardValue() == card2.getCardValue()){
+
+			// IF PAIR IN HAND
+			if (card1.getCardValue() == card2.getCardValue()) {
 				cardOne = "resources/images/" + card1.getCardValue() + card1.getCardSuit().charAt(0) + "O.png";
 				cardTwo = "resources/images/" + card2.getCardValue() + card2.getCardSuit().charAt(0) + "O.png";
 			}
@@ -449,13 +475,13 @@ public class GameController {
 			ImageView imgCard1 = new ImageView(imageTemp);
 			ImageView imgCard2 = new ImageView(imageTemp);
 
-			Image image = new Image(Paths.get(cardOne).toUri().toString(), 120, 166, true, true);
+			Image image = new Image(Paths.get(cardOne).toUri().toString(), 114, 148, true, true);
 			imgCard1 = new ImageView(image);
 			playerCardsArea.getChildren().add(imgCard1);
 			imgCard1.setX(0);
 			imgCard1.setY(0);
 
-			image = new Image(Paths.get(cardTwo).toUri().toString(), 120, 166, true, true);
+			image = new Image(Paths.get(cardTwo).toUri().toString(), 114, 148, true, true);
 			imgCard2 = new ImageView(image);
 			playerCardsArea.getChildren().add(imgCard2);
 			imgCard2.setX(105);
@@ -465,20 +491,19 @@ public class GameController {
 		});
 	}
 
-
-	public void setFlopTurnRiver(Card[] setOfCards){
+	public void setFlopTurnRiver(Card[] setOfCards) {
 
 		this.cards.clear();
-		ArrayList<Card> tempCard =  new ArrayList<Card>();
+		ArrayList<Card> tempCard = new ArrayList<Card>();
 		this.cards = new ArrayList<Card>();
-		
+
 		tempCard.add(card1);
 		tempCard.add(card2);
 		for (Card c : setOfCards) {
 			cards.add(c);
 			tempCard.add(c);
 			System.out.println(cards.size());
-			System.out.println("creating new hand, card:" + c.getCardValue() + c.getCardSuit().charAt(0) );
+			System.out.println("creating new hand, card:" + c.getCardValue() + c.getCardSuit().charAt(0));
 		}
 		this.tableCards = new Hand(tempCard);
 		this.hand = new Hand(tempCard);
@@ -488,23 +513,29 @@ public class GameController {
 			tabelCardArea.getChildren().clear();
 			tabelCardArea.requestLayout();
 			int xCord = 0;
-			for(int i = 0; i < setOfCards.length; i++){
+			for (int i = 0; i < setOfCards.length; i++) {
 				String baseCard = "";
-				if(tableCards.sendToHighlightChecker().contains(Integer.toString(setOfCards[i].getCardValue()))){
-					baseCard = "resources/images/" + setOfCards[i].getCardValue() + setOfCards[i].getCardSuit().charAt(0) + "O.png";
-//					System.out.println("TRUE!!! " + Integer.toString(setOfCards[i].getCardValue()) + " || " + tableCards.sendToHighlightChecker());
-//					System.out.println(tableCards.sendToHighlightChecker());
-//					System.out.println(tableCards.sendToHighlight());
-				}else{
-//					System.out.println("FALSE!!! " + Integer.toString(setOfCards[i].getCardValue()) + " || " + tableCards.sendToHighlightChecker());
-					baseCard = "resources/images/" + setOfCards[i].getCardValue() + setOfCards[i].getCardSuit().charAt(0) + ".png";
+				if (tableCards.sendToHighlightChecker().contains(Integer.toString(setOfCards[i].getCardValue()))) {
+					baseCard = "resources/images/" + setOfCards[i].getCardValue()
+							+ setOfCards[i].getCardSuit().charAt(0) + "O.png";
+					// System.out.println("TRUE!!! " +
+					// Integer.toString(setOfCards[i].getCardValue()) + " || " +
+					// tableCards.sendToHighlightChecker());
+					// System.out.println(tableCards.sendToHighlightChecker());
+					// System.out.println(tableCards.sendToHighlight());
+				} else {
+					// System.out.println("FALSE!!! " +
+					// Integer.toString(setOfCards[i].getCardValue()) + " || " +
+					// tableCards.sendToHighlightChecker());
+					baseCard = "resources/images/" + setOfCards[i].getCardValue()
+							+ setOfCards[i].getCardSuit().charAt(0) + ".png";
 				}
-				if(i == 1){
+				if (i == 1) {
 					xCord = 105;
-				}else if(i > 1){
+				} else if (i > 1) {
 					xCord += 105;
 				}
-				Image imageTemp = new Image(Paths.get(baseCard).toUri().toString(), 120, 166, true, true);
+				Image imageTemp = new Image(Paths.get(baseCard).toUri().toString(), 114, 148, true, true);
 
 				collectionOfCardsTable[i] = new ImageView(imageTemp);
 				tabelCardArea.getChildren().add(collectionOfCardsTable[i]);
@@ -516,21 +547,23 @@ public class GameController {
 		checkHand();
 	}
 
-	public ImageView getNow(int i){
+	public ImageView getNow(int i) {
 		return this.collectionOfCardsTable[i];
 	}
 
-	public void clearFlopTurnRiver(){
+	public void clearFlopTurnRiver() {
 		Platform.runLater(() -> {
 			tabelCardArea.getChildren().clear();
 		});
 
 	}
+
 	public void playerSmallBlind(int i) {
 
 		this.alreadyPaid += i;
 		System.out.println("Player paid small blind(" + i + ")");
-		// TODO set smallBlindIcon at Player
+		ivSmallBlind.setLayoutX(520);
+		ivSmallBlind.setLayoutY(425);
 
 	}
 
@@ -538,7 +571,8 @@ public class GameController {
 
 		this.alreadyPaid += i;
 		System.out.println("Player paid big blind(" + i + ")");
-		// TODO set bigBlindIcon at player
+		ivBigBlind.setLayoutX(520);
+		ivBigBlind.setLayoutY(425);
 	}
 
 	public int getPlayerAlreadyPaid() {
@@ -552,16 +586,16 @@ public class GameController {
 		String powerBarStrongHand = "resources/images/StrongHand.png";
 
 		Platform.runLater(() -> {
-			if(tableCards != null){
+			if (tableCards != null) {
 				String helpText = tableCards.theHelp();
-				helpLabel.setText(helpText);
+				helpLabel.setText("Du har: " + helpText);
 				String adviceText = tableCards.theAdvice();
 				adviceLabel.setText("Råd: \n" + adviceText);
 
 				powerBarValue = hand.toPowerBar();
-			}else{
+			} else {
 				String helpText = hand.theHelp();
-				helpLabel.setText(helpText);
+				helpLabel.setText("Du har: " + helpText);
 				String adviceText = hand.theAdvice();
 				adviceLabel.setText("Råd: \n" + adviceText);
 
@@ -576,15 +610,13 @@ public class GameController {
 				imgPowerBar.setX(30);
 				imgPowerBar.setY(15);
 			} else if (powerBarValue == 2) {
-				image =
-						new Image(Paths.get(powerBarMediumWeakHand).toUri().toString(), 120, 166, true, true);
+				image = new Image(Paths.get(powerBarMediumWeakHand).toUri().toString(), 120, 166, true, true);
 				imgPowerBar = new ImageView(image);
 				powerBarArea.getChildren().add(imgPowerBar);
 				imgPowerBar.setX(30);
 				imgPowerBar.setY(15);
 			} else if (powerBarValue == 3) {
-				image =
-						new Image(Paths.get(powerBarMediumStrongHand).toUri().toString(), 120, 166, true, true);
+				image = new Image(Paths.get(powerBarMediumStrongHand).toUri().toString(), 120, 166, true, true);
 				imgPowerBar = new ImageView(image);
 				powerBarArea.getChildren().add(imgPowerBar);
 				imgPowerBar.setX(30);
@@ -605,7 +637,7 @@ public class GameController {
 	}
 
 	public String askForPlayerDecision() {
-	  //TODO Fixa de buttons to be correcto
+		// TODO Fixa de buttons to be correcto
 		handleButtons();
 		playerMadeDecision = false;
 		while (!playerMadeDecision) {
@@ -639,8 +671,7 @@ public class GameController {
 			btCall.setVisible(false);
 			btRaise.setVisible(false);
 		} else {
-			if (alreadyPaid < spController.getCurrentMaxBet()
-					&& playerPot >= spController.getCurrentMaxBet()) {
+			if (alreadyPaid < spController.getCurrentMaxBet() && playerPot >= spController.getCurrentMaxBet()) {
 				// hide check, show call
 				btCheck.setVisible(false);
 
@@ -706,7 +737,6 @@ public class GameController {
 
 	}
 
-
 	public void aiAction(int currentAI, String decision) {
 		Ai ai = aiPlayers.get(currentAI);
 		if (decision == "fold") {
@@ -749,6 +779,21 @@ public class GameController {
 		}
 	}
 
+	public void closeProgram() {
+		System.exit(0);
+	}
 
+	public void goToMainMenu() {
+		Main.window.setScene(changeScene.sceneMenu);
+	}
+
+	public void aboutBox() {
+		confirmBox = new ConfirmBox();
+		confirmBox.display("Om projektet",
+				"Detta projekt är format och skapat av "
+						+ "Vedrana Zeba, Rikard Almgren, Amin Harirchian, Max Frennessen och Lykke Levin under "
+						+ "vårterminen 2017 som en del av kursen Systemutveckling och projekt 1.");
+
+	}
 
 }
