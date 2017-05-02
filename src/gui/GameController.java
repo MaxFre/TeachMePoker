@@ -1,24 +1,18 @@
 package gui;
 
-import java.io.IOException;
 import java.nio.file.Paths;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import aiClass.Ai;
 import controller.SPController;
 import deck.Card;
 import deck.Deck;
-import hand.Hand;
 import filehandler.FileHandler;
+import hand.Hand;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -170,7 +164,7 @@ public class GameController {
 		collectionOfLabelsAi[position][0].setVisible(true);
 		collectionOfLabelsAi[position][1].setVisible(true);
 		collectionOfLabelsAi[position][2].setVisible(true);
-
+		
 		collectionOfCardsAi[position].setVisible(true);
 	}
 
@@ -219,7 +213,6 @@ public class GameController {
 	public void playerCheck() {
 		disableButtons();
 		System.out.println("Player checked");
-		// okBox();
 		this.decision = "check";
 		lbPlayerAction.setText("Check");
 		playerMadeDecision = true;
@@ -237,6 +230,9 @@ public class GameController {
 
 	public void playerCall() {
 		disableButtons();
+		//TODO Kontrollera att spelaren har pengar
+		//TODO Se till att spelaren betalar rätt
+		
 		System.out.println("Player call");
 		this.playerPot -= (spController.getCurrentMaxBet() - alreadyPaid);
 		this.alreadyPaid += spController.getCurrentMaxBet();
@@ -253,6 +249,9 @@ public class GameController {
 
 	public void playerRaise() {
 		disableButtons();
+		//TODO Kontrollera att spelaren har pengar
+        //TODO Se till att spelaren betalar rätt
+		
 		this.playerPot -= (int) slider.getValue();
 
 		this.decision = "raise," + ((int) slider.getValue() + alreadyPaid);
@@ -282,17 +281,19 @@ public class GameController {
 
 
 	public void newGame() {
+	  //TODO Necessary?
 		System.out.println("new game");
 	}
 
 	public void saveGame() {
 		System.out.println("Saved Game");
+		//TODO försök lista ut hur fan den ska spara.
+		
 		// try {
 		// pot = new FileHandler(tablePotValue);
 		// pot.savePot();
 		// System.out.println("pot from GUI:" + pot);
 		// } catch (IOException e) {
-		// // TODO Auto-generated catch block
 		// e.printStackTrace();
 		// }
 	}
@@ -300,8 +301,8 @@ public class GameController {
 	public void setSliderValues() {
 		slider.setMax(playerPot);
 		if ((spController.getCurrentMaxBet() - alreadyPaid)
-				+ (int) (spController.getCurrentMaxBet() * 0.25) <= playerPot) {
-			slider.setMin(spController.getCurrentMaxBet() * 1.25);
+				+ (spController.getCurrentMaxBet() + spController.getBigBlind()) <= playerPot) {
+			slider.setMin(spController.getCurrentMaxBet() + spController.getBigBlind());
 		} else {
 			slider.setMin(0);
 		}
@@ -323,43 +324,49 @@ public class GameController {
 	}
 
 	public void soundSetting() {
+	  //TODO Sound settings?
 		System.out.println("Sound Setting");
 	}
 
 	public void rulesState() {
+	  //TODO Rules State?
 		System.out.println("Go to Rules section");
 	}
 
 	public void mainState() {
+	  // TODO Return to main menu
 		System.out.println("Go to Main section");
 	}
 
 	public double getPotValue() {
+	  // TODO Find out what this is for
 		System.out.println(tablePotValue);
 		return tablePotValue;
 	}
 
 	// restart all the images
-	public void nextRound() {
-
-		image = null;
-		imgCard1.setImage(null);
-		imgCard2.setImage(null);
-		imgCard3.setImage(null);
-		imgCard4.setImage(null);
-		imgCard5.setImage(null);
-		imgCard6.setImage(null);
-		imgCard7.setImage(null);
-		imgPowerBar.setImage(null);
-		tabelCardArea.requestLayout();
-
-	}
+	//TODO behövs?
+//	public void nextRound() {
+//
+//		image = null;
+//		imgCard1.setImage(null);
+//		imgCard2.setImage(null);
+//		imgCard3.setImage(null);
+//		imgCard4.setImage(null);
+//		imgCard5.setImage(null);
+//		imgCard6.setImage(null);
+//		imgCard7.setImage(null);
+//		imgPowerBar.setImage(null);
+//		tabelCardArea.requestLayout();
+//
+//	}
 
 	public void setUsername(String name) {
 		userName.setText(name);
 
 	}
 
+	//TODO Vet inte?
 	public void showAllIn() {
 		lbAllIn.setVisible(true);
 	}
@@ -370,6 +377,11 @@ public class GameController {
 			newMatch.display("NEW Match!", "Starting new match...");
 		});
 		clearFlopTurnRiver();
+		
+		for(int i = 0; i < 5; i++) {
+		  setUIAiFolded(i, true);
+		  setLabelUIAiBarAction(i, "");
+		}
 
 		cards.clear();
 		this.card1 = card1;
@@ -593,6 +605,7 @@ public class GameController {
 	}
 
 	public String askForPlayerDecision() {
+	  //TODO Fixa de buttons to be correcto
 		handleButtons();
 		playerMadeDecision = false;
 		while (!playerMadeDecision) {

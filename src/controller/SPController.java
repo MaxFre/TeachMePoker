@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-
 import aiClass.Ai;
 import deck.Card;
 import deck.Deck;
@@ -47,6 +46,7 @@ public class SPController extends Thread {
   private GameController gController;
   private Ai bestHandPlayerAi;
 
+
   /**
    * Method which prepares the whole Session
    * 
@@ -54,7 +54,8 @@ public class SPController extends Thread {
    * @param potSize Potsize for the whole table
    */
   public void startGame(int noOfAi, int potSize, String playerName) {
-	gController.disableButtons();
+
+    gController.disableButtons();
     this.potSize = potSize;
     this.noOfAi = noOfAi;
     setNames();
@@ -75,21 +76,27 @@ public class SPController extends Thread {
     setupPhase();
   }
 
+
   public void setGameController(GameController gController) {
 
     this.gController = gController;
     System.out.println("This happens");
 
   }
-  
-  public int getCurrentMaxBet(){
-		return currentMaxBet;
+
+
+  public int getCurrentMaxBet() {
+
+    return currentMaxBet;
   }
-  
-  public int getPotSize(){
-		return potSize;
+
+
+  public int getPotSize() {
+
+    return potSize;
   }
-  
+
+
   /**
    * Method that creates a list of names for AI-Players to pull from
    */
@@ -102,7 +109,7 @@ public class SPController extends Thread {
     name.add("Swag-Rikard");
     name.add("Yolo-Kristina");
     name.add("420-Rolf");
-   // Collections.shuffle(name);
+    // Collections.shuffle(name);
   }
 
 
@@ -117,7 +124,6 @@ public class SPController extends Thread {
       card1 = deck.getCard();
       card2 = deck.getCard();
       gController.setStartingHand(card1, card2);
-      // show animation?
       for (Ai ai : aiPlayers) {
         ai.setDecision("");
         ai.setBigBlind(0, false);
@@ -127,7 +133,6 @@ public class SPController extends Thread {
         card1 = deck.getCard();
         card2 = deck.getCard();
         ai.setStartingHand(card1, card2);
-        // show animation?
       }
       setBlinds(noOfPlayers);
       for (int i = 0; i < flop.length; i++) {
@@ -152,21 +157,23 @@ public class SPController extends Thread {
    */
   public void run() {
 
-	 Card[] turnCards = { flop[0], flop[1], flop[2], turn};
-	 Card[] riverCards = { flop[0], flop[1], flop[2], turn, river};
+    Card[] turnCards = {flop[0], flop[1], flop[2], turn};
+    Card[] riverCards = {flop[0], flop[1], flop[2], turn, river};
     while (playTurn < 4) {
       System.out.println("Current turn: " + playTurn);
-      if(playTurn == 1) {
-    	  
-        gController.setFlopTurnRiver(flop);
-      }else if(playTurn == 2) {
-    	gController.setFlopTurnRiver(turnCards);
+      if (playTurn == 1) {
 
-      }else if(playTurn == 3){
-    	 gController.setFlopTurnRiver(riverCards);
+        gController.setFlopTurnRiver(flop);
+      } else if (playTurn == 2) {
+        gController.setFlopTurnRiver(turnCards);
+
+      } else if (playTurn == 3) {
+        gController.setFlopTurnRiver(riverCards);
 
       }
+      
       while (!allCalledorFolded) {
+        System.out.println("VEM FAN SPELAR? " + currentPlayer);
         if (currentPlayer == noOfPlayers - 1) {
           if (!gController.getPlayerDecision().equals("fold")) {
             if (!(checkLivePlayers() > 1)) {
@@ -174,9 +181,8 @@ public class SPController extends Thread {
               winnerDeclared = true;
               break;
             }
-            
+
             System.out.println("player turn");
-            gController.handHelp();
             askForPlayerDecision(currentMaxBet);
             System.out.println("-----------------------------------------");
           }
@@ -197,16 +203,15 @@ public class SPController extends Thread {
           aiPlayers.get(currentPlayer).setSameTurn(true);
         }
         currentPlayer = (currentPlayer + 1) % noOfPlayers;
-        // TODO Timer/Delay here?
-        
+
         try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+          Thread.sleep(1000);
+          //TODO Make it obvious which player is playing?
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
       }
-      
+
       playTurn++;
       allCalledorFolded = false;
       for (Ai ai : aiPlayers) {
@@ -236,7 +241,7 @@ public class SPController extends Thread {
     } else {
       dealer = 0;
     }
-    
+
     setupPhase();
   }
 
@@ -259,12 +264,14 @@ public class SPController extends Thread {
       }
     }
     if (!gController.getPlayerDecision().equals("fold")) {
-      gController.getHandStrength();
-      // TODO actually do something with this.
+      if(gController.getHandStrength() > bestHand) {
+        //TODO gui.Spelarenvinner
+        //TODO dela ut pengar
+      }else {
+        //TODO gui. ai = bestHandPlayer vinner
+        //TODO dela ut pengar
+      }
     }
-    // TODO Check Winner
-    System.out.println("Winner");
-    System.out.println(bestHandPlayer.getName());
 
   }
 
@@ -292,33 +299,28 @@ public class SPController extends Thread {
 
 
   private void askForPlayerDecision(int currentMaxBet2) {
+
     gController.askForPlayerDecision();
     playerAction();
   }
 
 
   private void playerAction() {
-    // TODO Rethink this method. Is it necessary?
-    
+
     String playerDecision = gController.getPlayerDecision();
     playerDecision.toLowerCase();
 
     String[] split;
     if (playerDecision.contains("raise")) {
       split = playerDecision.split(",");
-      int oldMaxBet = currentMaxBet;
       currentMaxBet = Integer.parseInt(split[1]);
       currentPotSize += Integer.parseInt(split[1]);
-      // TODO gui.showPlayerRaised?
+      System.out.println("raise" + split[1]);
     } else if (playerDecision.contains("fold")) {
-      // TODO gui.showPlayerFolded?
     } else if (playerDecision.contains("call")) {
       currentPotSize += currentMaxBet;
-      // TODO gui.showPlayerCalled?
     } else if (playerDecision.contains("check")) {
-      // TODO gui.showPlayerChecked?
     }
-    // TODO gui.updateTablePot
     allCallorFold();
   }
 
@@ -366,36 +368,27 @@ public class SPController extends Thread {
     String[] split;
     if (aiDecision.contains("raise")) {
       split = aiDecision.split(",");
-      int oldMaxBet = currentMaxBet;
       currentMaxBet = Integer.parseInt(split[1]);
       currentPotSize += Integer.parseInt(split[1]);
       System.out.println("AI Raises");
-      
-      // TODO gui.showAIRaised
       gController.aiAction(currentPlayer, aiDecision);
-      
+
     } else if (aiDecision.contains("fold")) {
       System.out.println("AI folds");
-      
-      // TODO gui.showAIFolded?
       gController.aiAction(currentPlayer, aiDecision);
-      
+
     } else if (aiDecision.contains("call")) {
 
       split = aiDecision.split(",");
       currentMaxBet = Integer.parseInt(split[1]);
       currentPotSize += Integer.parseInt(split[1]);
       System.out.println("AI Calls");
-      
-      // TODO gui.showAICalled?
       gController.aiAction(currentPlayer, aiDecision);
-      
+
     } else if (aiDecision.contains("check")) {
       System.out.println("AI Checks");
-      // TODO gui.showAIChecked
       gController.aiAction(currentPlayer, aiDecision);
     }
-    // TODO gui.updateTablePot
   }
 
 
@@ -421,11 +414,9 @@ public class SPController extends Thread {
     if (smallBlindPlayer == noOfPlayers - 1) {
       gController.playerSmallBlind(smallBlind);
       aiPlayers.get(bigBlindPlayer).setBigBlind(bigBlind, true);
-      // TODO show animation?
     } else if (bigBlindPlayer == noOfPlayers - 1) {
       aiPlayers.get(smallBlindPlayer).setSmallBlind(smallBlind, true);
       gController.playerBigBlind(bigBlind);
-      // TODO show animation?
     } else {
 
       aiPlayers.get(smallBlindPlayer).setSmallBlind(smallBlind, true);
@@ -434,8 +425,12 @@ public class SPController extends Thread {
       aiPlayers.get(bigBlindPlayer).setDecision("BigBlind");
       gController.aiAction(smallBlindPlayer, "SmallBlind");
       gController.aiAction(bigBlindPlayer, "BigBlind");
-      //sets dealer as well
-      gController.aiAction(dealer, "Dealer");
+      // sets dealer as well
+      if (dealer != noOfPlayers - 1) {
+        gController.aiAction(dealer, "Dealer");
+      } else {
+        //TODO set player as Dealer
+      }
     }
     this.currentPotSize = smallBlind + bigBlind;
     // TODO gui.updateTablePot
@@ -465,17 +460,24 @@ public class SPController extends Thread {
     if (noOfAIFoldedorCalled >= noOfAi) {
       String[] split = gController.getPlayerDecision().split(",");
 
-      if (gController.getPlayerDecision().contains("fold") || gController.getPlayerDecision().contains("call")) {
+      if (gController.getPlayerDecision().contains("fold")
+          || gController.getPlayerDecision().contains("call")) {
         allCalledorFolded = true;
-      } else if(gController.getPlayerDecision().contains("raise") && Integer.parseInt(split[1]) == currentMaxBet) {
+      } else if (gController.getPlayerDecision().contains("raise")
+          && Integer.parseInt(split[1]) == currentMaxBet) {
         allCalledorFolded = true;
-      }else if(gController.getPlayerDecision().contains("check")){
+      } else if (gController.getPlayerDecision().contains("check")) {
         allCalledorFolded = true;
-      }else {
+      } else {
         allCalledorFolded = false;
       }
     }
     System.out.println(allCalledorFolded);
+  }
+
+
+  public int getBigBlind() {
+    return bigBlind;
   }
 
 }

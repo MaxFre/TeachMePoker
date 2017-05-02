@@ -33,15 +33,15 @@ public class Hand {
 		pwrBar = calc.calcPwrBarLvl();
 		toHighlight = calc.toHiglight();
 
-		System.out.println(" -NEW HAND- ");
-		System.out.println(aiCards);
-		System.out.println("Helper - " + helper);
-		System.out.println("");
-		System.out.println("Advice - " + advice);
-		System.out.println("");
-		System.out.println("pwrBar - " + pwrBar);
-		System.out.println("toHighlight - " + toHighlight);
-		System.out.println("");
+//		System.out.println(" -NEW HAND- ");
+//		System.out.println(aiCards);
+//		System.out.println("Helper - " + helper);
+//		System.out.println("");
+//		System.out.println("Advice - " + advice);
+//		System.out.println("");
+//		System.out.println("pwrBar - " + pwrBar);
+//		System.out.println("toHighlight - " + toHighlight);
+//		System.out.println("");
 
 	}
 
