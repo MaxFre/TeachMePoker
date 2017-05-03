@@ -1,5 +1,7 @@
 package gui;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -301,14 +303,14 @@ public class GameController {
 	public void saveGame() {
 		System.out.println("Saved Game");
 		// TODO försök lista ut hur fan den ska spara.
-
-		// try {
-		// pot = new FileHandler(tablePotValue);
-		// pot.savePot();
-		// System.out.println("pot from GUI:" + pot);
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
+	
+//		 try {
+//		 pot = new FileHandler(Integer.toString(playerPot));
+//		 pot.savePot();
+//		 System.out.println("pot from GUI:" + pot);
+//		 } catch (IOException e) {
+//		 e.printStackTrace();
+//		 }
 	}
 
 	public void setSliderValues() {
@@ -338,7 +340,7 @@ public class GameController {
 	}
 
 	public void soundSetting() {
-		// TODO Av-mutea, lägg till effektljud.
+		// TODO Av-mutea, lägg till effektljud. Ny ruta med settings?
 		Sound.mp.setMute(true);
 
 		if (Sound.mp.isMute() == true) {
@@ -577,6 +579,12 @@ public class GameController {
 
 	public int getPlayerAlreadyPaid() {
 		return this.alreadyPaid;
+	}
+	
+	public void playerIsDealer(){
+		
+		ivDealer.setLayoutX(520);
+		ivDealer.setLayoutY(425);
 	}
 
 	public void handHelp() {

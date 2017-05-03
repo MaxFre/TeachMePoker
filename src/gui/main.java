@@ -1,11 +1,14 @@
 package gui;
 
-import java.nio.file.Paths;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
+/**
+ * Main method to start the program. 
+ * @author Lykke Levin
+ * @version 1.0
+ *
+ */
 
 public class Main extends Application {
   public static Stage window;

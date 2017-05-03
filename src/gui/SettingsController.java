@@ -9,6 +9,12 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
+/**
+ * Controller for FXML-doc GameSettingMenu.fxml
+ * @author Lykke Levin
+ * @version 1.0
+ *
+ */
 public class SettingsController {
   private SPController spController;
 
