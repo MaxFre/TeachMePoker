@@ -23,6 +23,7 @@ public class TurnOne {
   private int raiseAmount;
   private int alreadyPaid;
   private boolean sameTurn;
+  private int raiseBet = 0;
   /**
    * Gets value from Ai and calls on all the methods to evaluate a respond.
    * 
@@ -33,8 +34,12 @@ public class TurnOne {
   public TurnOne(ArrayList<String> aiCards, int aiPot, int toBet, int alreadyPaid, boolean sameTurn) {
     this.aiPot = aiPot;
     this.toBet = toBet;
+    this.raiseBet  = toBet;
     this.alreadyPaid = alreadyPaid;
     this.sameTurn = sameTurn;
+    if(toBet != 0) {
+    this.toBet -= alreadyPaid;
+    }
     
     calculation = new AiCalculation(aiCards);
     highCards = calculation.checkHighCards();
@@ -50,6 +55,7 @@ public class TurnOne {
     System.out.println("colorChance - " + colorChance);
     System.out.println("straightChance - " + straightChance);
     System.out.println("pairs - " + pairs);
+    
   }
 
   /**
@@ -96,6 +102,7 @@ public class TurnOne {
 //      likelyhood = likelyhood + diff;
       System.out.println("likelyhood efter toBet - " + likelyhood);
       System.out.println("toBet - " + toBet);
+      System.out.println("AlreadyPaid - " + alreadyPaid);
       System.out.println("aiPot - " + aiPot);
 
   	if (likelyhood < 45) {   	//Less than 45 = fold.
@@ -105,7 +112,7 @@ public class TurnOne {
 		if (roll <= 15) {		//if roll is less than 15 (15%) Ai bluffs.
 			if(toBet<aiPot){
 			toDO = "call," + toBet;
-			aiPot -= (toBet-alreadyPaid);
+			aiPot -= (toBet);
 			System.out.println("Bluff");
 			}
 			else if(toBet>aiPot){
@@ -119,12 +126,14 @@ public class TurnOne {
 	if (likelyhood >= 45 && likelyhood < 115) {
 		if (aiPot == toBet) {
 			toDO = "all-in," + aiPot;
-			aiPot -= (aiPot-alreadyPaid);
+			aiPot -= (aiPot);
 		}
 		
 		else if(aiPot>toBet){
+		  System.out.println("What AI should pay = " +  (toBet));
 		toDO = "call," + toBet;
-		aiPot -= (toBet-alreadyPaid);
+		System.out.println("What AI claimed to pay = " + toBet);
+		aiPot -= (toBet);
 		}
 		
 		else if(aiPot<toBet){
@@ -145,18 +154,18 @@ public class TurnOne {
 			}
 		}
 		else{
-		raiseAmount = (int) (1.25 * toBet);
+		raiseAmount = (int) (1.25 * raiseBet);
 		if (raiseAmount < 5) {
 			raiseAmount = 10;
 		}
 
 		if (aiPot <= raiseAmount) {
 			toDO = "all-in," + aiPot;
-			aiPot -= (aiPot-alreadyPaid);
+			aiPot -= (aiPot);
 		}
 		else
 		toDO = "raise," + raiseAmount;
-		aiPot -= (raiseAmount-alreadyPaid);
+		aiPot -= (raiseAmount);
 	  }
 	}
 }

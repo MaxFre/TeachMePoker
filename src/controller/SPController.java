@@ -67,12 +67,13 @@ public class SPController extends Thread {
     for (int i = 0; i < noOfAi; i++) {
       aiPlayers.add(new Ai(potSize / (noOfPlayers), name.remove(0)));
     }
+    gController.setAiPlayers(aiPlayers);
     try {
-      this.sleep(1000);
+      SPController.sleep(1000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    gController.setAiPlayers(aiPlayers);
+
     setupPhase();
   }
 
@@ -102,13 +103,13 @@ public class SPController extends Thread {
    */
   public void setNames() {
 
-    name.add("RngJesus-Max");
-    name.add("MLG-Vedrana");
-    name.add("Dabmaster-Lykke");
-    name.add("NoScope-Amin");
-    name.add("Swag-Rikard");
-    name.add("Yolo-Kristina");
-    name.add("420-Rolf");
+    name.add("Max");
+    name.add("Vedrana");
+    name.add("Lykke");
+    name.add("Amin");
+    name.add("Rikard");
+    name.add("Kristina");
+    name.add("Rolf");
     // Collections.shuffle(name);
   }
 
@@ -146,6 +147,8 @@ public class SPController extends Thread {
         run();
       }
     } else {
+      gController.playerLost();
+      System.exit(0);
       // TODO player loses
     }
 
@@ -171,12 +174,14 @@ public class SPController extends Thread {
         gController.setFlopTurnRiver(riverCards);
 
       }
-      
+
       while (!allCalledorFolded) {
         System.out.println("VEM FAN SPELAR? " + currentPlayer);
+        System.out.println("current Pot: " + currentPotSize);
         if (currentPlayer == noOfPlayers - 1) {
           if (!gController.getPlayerDecision().equals("fold")) {
             if (!(checkLivePlayers() > 1)) {
+              System.out.println("Player Wins " + currentPotSize);
               gController.setPlayerPot(currentPotSize);
               winnerDeclared = true;
               break;
@@ -189,7 +194,8 @@ public class SPController extends Thread {
         } else {
           if (!aiPlayers.get(currentPlayer).getDecision().contains("fold")) {
             if (!(checkLivePlayers() > 1)) {
-              System.out.println(aiPlayers.get(currentPlayer).getName() + " Wins");
+              System.out
+                  .println(aiPlayers.get(currentPlayer).getName() + " Wins " + currentPotSize);
               aiPlayers.get(currentPlayer).updateWinner(currentPotSize);
               winnerDeclared = true;
               break;
@@ -206,7 +212,7 @@ public class SPController extends Thread {
 
         try {
           Thread.sleep(1000);
-          //TODO Make it obvious which player is playing?
+          // TODO Make it obvious which player is playing?
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
@@ -264,12 +270,18 @@ public class SPController extends Thread {
       }
     }
     if (!gController.getPlayerDecision().equals("fold")) {
-      if(gController.getHandStrength() > bestHand) {
-        //TODO gui.Spelarenvinner
-        //TODO dela ut pengar
-      }else {
-        //TODO gui. ai = bestHandPlayer vinner
-        //TODO dela ut pengar
+      if (gController.getHandStrength() > bestHand) {
+        gController.setPlayerPot(currentPotSize);
+        System.out.println("Player Wins " + currentPotSize);
+      } else if (gController.getHandStrength() == bestHand) {
+        if (gController.getGetHighCard() > bestHandPlayer.getHighCard()) {
+          gController.setPlayerPot(currentPotSize);
+          System.out.println("Player Wins " + currentPotSize);
+        }
+      } else {
+        System.out
+        .println(bestHandPlayer.getName() + " Wins " + currentPotSize);
+        bestHandPlayer.updateWinner(currentPotSize);
       }
     }
 
@@ -380,10 +392,20 @@ public class SPController extends Thread {
     } else if (aiDecision.contains("call")) {
 
       split = aiDecision.split(",");
+      if(Integer.parseInt(split[1]) > currentMaxBet) {
       currentMaxBet = Integer.parseInt(split[1]);
       currentPotSize += Integer.parseInt(split[1]);
-      System.out.println("AI Calls");
-      gController.aiAction(currentPlayer, aiDecision);
+      } else {
+        currentPotSize += currentMaxBet;
+      }
+
+      if (Integer.parseInt(split[1]) <= 0) {
+        gController.aiAction(currentPlayer, "Check");
+        System.out.println("AI Checks");
+      } else {
+        gController.aiAction(currentPlayer, split[0]);
+        System.out.println("AI Calls");
+      }
 
     } else if (aiDecision.contains("check")) {
       System.out.println("AI Checks");
@@ -429,7 +451,7 @@ public class SPController extends Thread {
       if (dealer != noOfPlayers - 1) {
         gController.aiAction(dealer, "Dealer");
       } else {
-        //TODO set player as Dealer
+        // TODO set player as Dealer
       }
     }
     this.currentPotSize = smallBlind + bigBlind;

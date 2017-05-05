@@ -24,6 +24,7 @@ public class TurnFour {
   private int alreadyPaid;
   private boolean sameTurn;
   private int handStrength;
+  private int raiseBet = 0;
   
   
   /**
@@ -36,8 +37,12 @@ public class TurnFour {
   public TurnFour(ArrayList<String> aiCards, int aiPot, int toBet, int alreadyPaid, boolean sameTurn) {
     this.aiPot = aiPot;
     this.toBet = toBet;
+    this.raiseBet   = toBet;
     this.alreadyPaid = alreadyPaid;
     this.sameTurn = sameTurn;
+    if(toBet != 0) {
+      this.toBet -= alreadyPaid;
+      }
     
     calculation = new AiCalculation(aiCards);
     highCards = calculation.checkHighCards();
@@ -114,7 +119,7 @@ public class TurnFour {
   	if (likelyhood < 45) {
   		if (roll <= 15) {
   			toDO = "call," + toBet;
-  			aiPot -= (toBet-alreadyPaid);
+  			aiPot -= (toBet);
   			System.out.println("Bluff");
   		}
   	}
@@ -122,11 +127,11 @@ public class TurnFour {
   	if (likelyhood >= 45 && likelyhood < 115) {
   		if (aiPot == toBet) {
   			toDO = "all-in," + aiPot;
-  			aiPot -= (aiPot-alreadyPaid);
+  			aiPot -= (aiPot);
   		}
   		else
   		toDO = "call," + toBet;
-  		aiPot -= (toBet-alreadyPaid);
+  		aiPot -= (toBet);
   	}
 
   	if (likelyhood >= 115) {
@@ -141,18 +146,18 @@ public class TurnFour {
 			}
 		}
 		else{
-		raiseAmount = (int) (1.25 * toBet);
+		raiseAmount = (int) (1.25 * raiseBet);
 		if (raiseAmount < 5) {
 			raiseAmount = 10;
 		}
 
 		if (aiPot <= raiseAmount) {
 			toDO = "all-in," + aiPot;
-			aiPot -= (aiPot-alreadyPaid);
+			aiPot -= (aiPot);
 		}
 		else
 		toDO = "raise," + raiseAmount;
-		aiPot -= (raiseAmount-alreadyPaid);
+		aiPot -= (raiseAmount);
 	  }
 	}
     }

@@ -20,7 +20,7 @@ import javafx.geometry.*;
 
 public class ConfirmBox {
 
-	public boolean answer;
+	public boolean answer = false;
 	public Stage window = new Stage();
 	public Font font = new Font("Tw Cen MT", 18);
 

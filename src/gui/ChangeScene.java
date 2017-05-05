@@ -24,8 +24,6 @@ public class ChangeScene {
 	private GameController gameController;
 
 	public void prepGame() throws IOException, InstantiationException, IllegalAccessException {
-
-		System.out.println("preLoad: " + fmController);
 		Sound.class.newInstance().playBackgroundMusic();
 		FXMLLoader loaderFM = new FXMLLoader(FMController.class.getResource("FirstMenu.fxml"));
 		Pane rootMenu = loaderFM.load();
@@ -37,7 +35,6 @@ public class ChangeScene {
 		FXMLLoader loaderGS = new FXMLLoader(GameController.class.getResource("GameState.fxml"));
 		Pane root2 = loaderGS.load();
 		gameController = loaderGS.getController();
-		System.out.println(gameController);
 
 		sceneMenu = new Scene(rootMenu);
 		sceneNewGame = new Scene(rootNewGame);
@@ -62,11 +59,6 @@ public class ChangeScene {
 	}
 
 	public Scene firstScene() throws IOException {
-
-		System.out.println("CS: " + this);
-		System.out.println("CS: " + settingsController);
-		System.out.println("CS: " + gameController);
-		System.out.println("CS: " + fmController);
 		return sceneMenu;
 	}
 

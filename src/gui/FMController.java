@@ -33,14 +33,10 @@ public class FMController {
 
 	public void setChangeScene(ChangeScene sceneChanger) {
 		this.changeScene = sceneChanger;
-		System.out.println("SCS: " + changeScene);
-		System.out.println("SCS: " + this);
 
 	}
 
 	public void NewGameClicked() throws Exception {
-		System.out.println("NG: " + changeScene);
-		System.out.println("NG: " + this);
 
 		changeScene.switchScenetoSetting();
 
