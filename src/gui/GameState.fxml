@@ -169,6 +169,7 @@
 			</Label>
 			<Label fx:id="userName" alignment="CENTER" font="$x3" layoutX="475.0" layoutY="572.0" prefHeight="18.0" prefWidth="172.0" text="Vedrana" />
 			<Label id="potValueLabel" fx:id="lbPotValue" alignment="CENTER" contentDisplay="CENTER" font="$x3" graphicTextGap="4.0" layoutX="535.0" layoutY="660.0" text="Your pot" />
+            <Label fx:id="raiseLabel" layoutX="918.0" layoutY="612.0" text="Testlabel" textFill="#e8dbdb" />
 			<ImageView id="aiBarWithCards.png" fx:id="imgPlayerOneCards" fitHeight="148.0" fitWidth="114.0" layoutX="170.0" layoutY="290.0" visible="false">
 			  <image>
 			    <Image preserveRatio="true" smooth="true" url="@../../resources/images/aiBarWithCards.png" />
