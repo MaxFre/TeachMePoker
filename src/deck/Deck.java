@@ -58,8 +58,7 @@ public class Deck {
 		for(Suit suit : Suit.values()) {
 			try {
 				for(CardValue card : CardValue.values()) {
-					deck.add(new Card(suit, card,
-							new ImageIcon(ImageIO.read(classLoader.getResourceAsStream("images/" + card.getCardValue() + suit.getSuitLetter() + ".png")))));
+					deck.add(new Card(suit, card, new ImageIcon(ImageIO.read(classLoader.getResourceAsStream("images/" + card.getCardValue() + suit.getSuitLetter() + ".png")))));
 				}
 
 			} catch(IOException e) {

@@ -92,10 +92,10 @@ public class TurnOne {
 //
 //      }
 //    } else {
-      int aipotChance = (int) (aiPot * 0.025);
-      int toBetChance = (int) (toBet * 0.030 * 2);
+//      int aipotChance = (int) (aiPot * 0.025);
+//      int toBetChance = (int) (toBet * 0.030 * 2);
 
-      int diff = aipotChance - toBetChance;
+    //  int diff = aipotChance - toBetChance;
 
       
       

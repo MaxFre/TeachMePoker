@@ -1,15 +1,11 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 import aiClass.Ai;
 import deck.Card;
 import deck.Deck;
-import gui.ConfirmBox;
 import gui.GameController;
-import javafx.application.Platform;
 
 
 /**
@@ -44,7 +40,6 @@ public class SPController extends Thread {
   private boolean winnerDeclared = false;
   private ArrayList<String> name = new ArrayList<String>();
   private GameController gController;
-  private Ai bestHandPlayerAi;
 
 
   /**
@@ -264,7 +259,6 @@ public class SPController extends Thread {
         } else if (ai.handStrength() == bestHand) {
           if (ai.getHighCard() > bestHandPlayer.getHighCard()) {
             bestHandPlayer = ai;
-            this.bestHandPlayerAi = ai;
           }
         }
       }

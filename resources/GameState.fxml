@@ -26,42 +26,42 @@
     <children>
       <ImageView id="background.png" fitHeight="720.0" fitWidth="1280.0" layoutX="1.0" layoutY="-1.0" visible="true">
         <image>
-          <Image preserveRatio="true" smooth="true" url="@../../resources/images/background.png" />
+          <Image preserveRatio="true" smooth="true" url="@/images/background.png" />
         </image>
       </ImageView>
       <ImageView id="table.png" fitHeight="379.0" fitWidth="916.0" layoutX="211.0" layoutY="120.0">
         <image>
-          <Image preserveRatio="true" smooth="true" url="@../../resources/images/table.png" />
+          <Image preserveRatio="true" smooth="true" url="@/images/table.png" />
         </image>
       </ImageView>
       <ImageView id="rulesButton.png" fitHeight="45.0" fitWidth="45.0" layoutX="1120.0" layoutY="40.0" onMouseReleased="#rulesState">
         <image>
-          <Image preserveRatio="true" smooth="true" url="@../../resources/images/rulesButton.png" />
+          <Image preserveRatio="true" smooth="true" url="@/images/rulesButton.png" />
         </image>
       </ImageView>
       <ImageView id="soundButton.png" fx:id="ivSound" fitHeight="45.0" fitWidth="45.0" layoutX="1175.0" layoutY="40.0" onMouseClicked="#soundSetting" onMousePressed="#soundSetting" onMouseReleased="#soundSetting">
         <image>
-          <Image preserveRatio="true" smooth="true" url="@../../resources/images/soundButton.png" />
+          <Image preserveRatio="true" smooth="true" url="@/images/soundButton.png" />
         </image>
       </ImageView>
       <ImageView id="saveButton.png" fitHeight="45.0" fitWidth="45.0" layoutX="1230.0" layoutY="40.0" onMouseReleased="#saveGame">
         <image>
-          <Image preserveRatio="true" smooth="true" url="@../../resources/images/saveButton.png" />
+          <Image preserveRatio="true" smooth="true" url="@/images/saveButton.png" />
         </image>
       </ImageView>
       <ImageView id="dealer.png" fx:id="ivDealer" fitHeight="37.0" fitWidth="37.0" layoutX="417.0" layoutY="172.0">
         <image>
-          <Image preserveRatio="true" smooth="true" url="@../../resources/images/dealer.png" />
+          <Image preserveRatio="true" smooth="true" url="@/images/dealer.png" />
         </image>
       </ImageView>
       <ImageView id="smallBlind.png" fx:id="ivSmallBlind" fitHeight="37.0" fitWidth="37.0" layoutX="524.0" layoutY="172.0">
         <image>
-          <Image preserveRatio="true" smooth="true" url="@../../resources/images/smallBlind.png" />
+          <Image preserveRatio="true" smooth="true" url="@/images/smallBlind.png" />
         </image>
       </ImageView>
       <ImageView id="bigBlind.png" fx:id="ivBigBlind" fitHeight="37.0" fitWidth="37.0" layoutX="474.0" layoutY="172.0">
         <image>
-          <Image preserveRatio="true" smooth="true" url="@../../resources/images/bigBlind.png" />
+          <Image preserveRatio="true" smooth="true" url="@/images/bigBlind.png" />
         </image>
       </ImageView>
       <Accordion layoutX="17.0" layoutY="432.0" />
@@ -79,7 +79,7 @@
                 <content>
                   <ImageView id="handRanking11.png" fitHeight="302.0" fitWidth="171.0">
                     <image>
-                      <Image preserveRatio="true" smooth="true" url="@../../resources/images/handRanking11.png" />
+                      <Image preserveRatio="true" smooth="true" url="@/images/handRanking11.png" />
                     </image>
                   </ImageView>
                 </content>
@@ -93,7 +93,7 @@
     
       </TitledPane>
         <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-      <Slider fx:id="slider" blockIncrement="1.0" layoutX="693.0" layoutY="610.0" majorTickUnit="450.0" max="2000.0" min="50.0" minorTickCount="1" mouseTransparent="false" onDragDetected="#sliderChange" onDragDone="#sliderChange" onDragDropped="#sliderChange" onScrollFinished="#showAllIn" orientation="HORIZONTAL" pickOnBounds="false" prefWidth="214.0" showTickLabels="true" showTickMarks="true" snapToTicks="false" value="50.0">
+      <Slider fx:id="slider" blockIncrement="1.0" layoutX="693.0" layoutY="610.0" majorTickUnit="500.0" max="2000.0" min="50.0" minorTickCount="100" mouseTransparent="false" onDragDetected="#sliderChange" onDragDone="#sliderChange" onDragDropped="#sliderChange" onScrollFinished="#showAllIn" orientation="HORIZONTAL" pickOnBounds="false" prefWidth="214.0" showTickLabels="true" showTickMarks="true" snapToTicks="false" value="50.0">
         <effect>
           <Lighting diffuseConstant="1.5238095238095237" specularConstant="2.0" surfaceScale="0.0">
             <bumpInput>
@@ -156,7 +156,7 @@
           
 			   <ImageView id="userBar.png" fitHeight="155.0" fitWidth="203.0" layoutX="464.0" layoutY="550.0">
 			  <image>
-			    <Image preserveRatio="true" smooth="true" url="@../../resources/images/userBar.png" />
+			    <Image preserveRatio="true" smooth="true" url="@/images/userBar.png" />
 			  </image>
 			</ImageView>
 			<Label id="label" fx:id="lbPlayerAction" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="4.0" layoutX="535.0" layoutY="620.0" text="Your bet">
@@ -167,32 +167,32 @@
 			    <TextField fx:id="field" editable="false" layoutX="972.0" layoutY="379.0" prefWidth="75.0" />
 			  </labelFor>
 			</Label>
-			<Label fx:id="userName" alignment="CENTER" font="$x3" layoutX="475.0" layoutY="572.0" prefHeight="18.0" prefWidth="172.0" text="Vedrana" />
+			<Label fx:id="userName" alignment="CENTER" contentDisplay="CENTER" font="$x3" layoutX="475.0" layoutY="572.0" prefHeight="18.0" prefWidth="184.0" text="Vedrana" />
 			<Label id="potValueLabel" fx:id="lbPotValue" alignment="CENTER" contentDisplay="CENTER" font="$x3" graphicTextGap="4.0" layoutX="535.0" layoutY="660.0" text="Your pot" />
-            <Label fx:id="raiseLabel" layoutX="918.0" layoutY="612.0" text="Testlabel" textFill="#e8dbdb" />
+            <Label fx:id="raiseLabel" layoutX="918.0" layoutY="612.0" textFill="#e8dbdb" />
 			<ImageView id="aiBarWithCards.png" fx:id="imgPlayerOneCards" fitHeight="148.0" fitWidth="114.0" layoutX="170.0" layoutY="290.0" visible="false">
 			  <image>
-			    <Image preserveRatio="true" smooth="true" url="@../../resources/images/aiBarWithCards.png" />
+			    <Image preserveRatio="true" smooth="true" url="@/images/aiBarWithCards.png" />
 			  </image>
 			</ImageView>
 			<ImageView id="aiBarWithCards.png" fx:id="imgPlayerFiveCards" fitHeight="148.0" fitWidth="114.0" layoutX="1095.0" layoutY="290.0" visible="false">
 			  <image>
-			    <Image preserveRatio="true" smooth="true" url="@../../resources/images/aiBarWithCards.png" />
+			    <Image preserveRatio="true" smooth="true" url="@/images/aiBarWithCards.png" />
 			  </image>
 			</ImageView>
 			<ImageView id="aiBarWithCards.png" fx:id="imgPlayerFourCards" fitHeight="148.0" fitWidth="114.0" layoutX="980.0" layoutY="43.0" visible="false">
 			  <image>
-			    <Image preserveRatio="true" smooth="true" url="@../../resources/images/aiBarWithCards.png" />
+			    <Image preserveRatio="true" smooth="true" url="@/images/aiBarWithCards.png" />
 			  </image>
 			</ImageView>
 			<ImageView id="aiBarWithCards.png" fx:id="imgPlayerThreeCards" fitHeight="148.0" fitWidth="114.0" layoutX="628.0" layoutY="34.0" visible="false">
 			  <image>
-			    <Image preserveRatio="true" smooth="true" url="@../../resources/images/aiBarWithCards.png" />
+			    <Image preserveRatio="true" smooth="true" url="@/images/aiBarWithCards.png" />
 			  </image>
 			</ImageView>
 			<ImageView id="aiBarWithCards.png" fx:id="imgPlayerTwoCards" fitHeight="148.0" fitWidth="114.0" layoutX="258.0" layoutY="43.0" visible="false">
 			  <image>
-			    <Image preserveRatio="true" smooth="true" url="@../../resources/images/aiBarWithCards.png" />
+			    <Image preserveRatio="true" smooth="true" url="@/images/aiBarWithCards.png" />
 			  </image>
 			</ImageView>
 			
@@ -216,22 +216,22 @@
 	
             <ImageView id="checkButton.png" fx:id="btCheck" fitHeight="44.0" fitWidth="101.0" layoutX="693.0" layoutY="550.0" onMouseReleased="#playerCheck">
                <image>
-                  <Image url="@../../resources/images/checkButton.png" />
+                  <Image url="@/images/checkButton.png" />
                </image>
             </ImageView>
       <ImageView id="callButton.png" fx:id="btCall" fitHeight="44.0" fitWidth="101.0" layoutX="693.0" layoutY="550.0" onMouseReleased="#playerCall">
         <image>
-          <Image preserveRatio="true" smooth="true" url="@../../resources/images/callButton.png" />
+          <Image preserveRatio="true" smooth="true" url="@/images/callButton.png" />
         </image>
       </ImageView>
       <ImageView id="foldButton.png" fx:id="btFold" fitHeight="44.0" fitWidth="101.0" layoutX="814.0" layoutY="550.0" onMouseReleased="#playerFold">
         <image>
-          <Image preserveRatio="true" smooth="true" url="@../../resources/images/foldButton.png" />
+          <Image preserveRatio="true" smooth="true" url="@/images/foldButton.png" />
         </image>
       </ImageView>
       <ImageView id="raiseButton.png" fx:id="btRaise" fitHeight="44.0" fitWidth="101.0" layoutX="745.0" layoutY="660.0" onMouseReleased="#playerRaise">
         <image>
-          <Image preserveRatio="true" smooth="true" url="@../../resources/images/raiseButton.png" />
+          <Image preserveRatio="true" smooth="true" url="@/images/raiseButton.png" />
         </image>
       </ImageView>
       <Label fx:id="lbAllIn" disable="false" focusTraversable="false" font="$x3" labelFor="$slider" layoutX="932.0" layoutY="614.0" prefHeight="28.0" prefWidth="49.0" text="All IN" textFill="WHITE" visible="false" />

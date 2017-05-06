@@ -25,14 +25,14 @@ public class ChangeScene {
 
 	public void prepGame() throws IOException, InstantiationException, IllegalAccessException {
 		Sound.class.newInstance().playBackgroundMusic();
-		FXMLLoader loaderFM = new FXMLLoader(FMController.class.getResource("FirstMenu.fxml"));
+		FXMLLoader loaderFM = new FXMLLoader(FMController.class.getResource("/FirstMenu.fxml"));
 		Pane rootMenu = loaderFM.load();
 		fmController = loaderFM.getController();
-		FXMLLoader loaderSS = new FXMLLoader(SettingsController.class.getResource("GameSettingMenu.fxml"));
+		FXMLLoader loaderSS = new FXMLLoader(SettingsController.class.getResource("/GameSettingMenu.fxml"));
 		Pane rootNewGame = loaderSS.load();
 		settingsController = loaderSS.getController();
 
-		FXMLLoader loaderGS = new FXMLLoader(GameController.class.getResource("GameState.fxml"));
+		FXMLLoader loaderGS = new FXMLLoader(GameController.class.getResource("/GameState.fxml"));
 		Pane root2 = loaderGS.load();
 		gameController = loaderGS.getController();
 

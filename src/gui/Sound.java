@@ -14,7 +14,8 @@ import javafx.scene.media.MediaPlayer;
  */
 public class Sound {
 	private AudioClip audio;
-	private static Media m = new Media(Paths.get("resources/sounds/cool_struttin'.mp3").toUri().toString());
+//	private static Media m = new Media(Paths.get("resources/sounds/cool_struttin'.mp3").toUri().toString());
+	private static Media m = new Media(Sound.class.getResource("/sounds/cool_struttin'.mp3").toString());
 	public static MediaPlayer mp = new MediaPlayer(m);
 	public GameController gc;
 

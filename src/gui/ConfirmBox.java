@@ -5,9 +5,6 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.control.*;
-
-import javafx.scene.layout.Background;
-import javafx.scene.paint.Color;
 import javafx.geometry.*;
 
 /**

@@ -1,19 +1,13 @@
 package gui;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import aiClass.Ai;
 import controller.SPController;
 import deck.Card;
-import deck.Deck;
-import filehandler.FileHandler;
 import hand.Hand;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;

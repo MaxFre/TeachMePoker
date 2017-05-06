@@ -14,14 +14,14 @@
    <children>
       <ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../resources/images/menuBackground.png" />
+            <Image url="@/images/menuBackground.png" />
          </image>
       </ImageView>
       <VBox layoutX="530.0" layoutY="350.0" prefHeight="200.0" prefWidth="300.0">
          <children>
             <ImageView fx:id="ivNewGame" fitHeight="250.0" fitWidth="290.0" onMouseClicked="#NewGameClicked" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../resources/images/newGame.png" />
+                  <Image url="@/images/newGame.png" />
                </image>
                <VBox.margin>
                   <Insets bottom="50.0" />
@@ -29,7 +29,7 @@
             </ImageView>
             <ImageView fx:id="ivLoadGame" fitHeight="250.0" fitWidth="290.0" onMouseClicked="#LoadGameClicked" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../resources/images/loadGame.png" />
+                  <Image url="@/images/loadGame.png" />
                </image>
             </ImageView>
          </children>
