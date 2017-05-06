@@ -237,11 +237,7 @@ public class SPController extends Thread {
       smallBlind = bigBlind / 2;
       blindCounter = 0;
     }
-    if (dealer < noOfPlayers) {
-      dealer++;
-    } else {
-      dealer = 0;
-    }
+    dealer = (dealer + 1) % noOfPlayers;
 
     setupPhase();
   }
@@ -273,8 +269,7 @@ public class SPController extends Thread {
           System.out.println("Player Wins " + currentPotSize);
         }
       } else {
-        System.out
-        .println(bestHandPlayer.getName() + " Wins " + currentPotSize);
+        System.out.println(bestHandPlayer.getName() + " Wins " + currentPotSize);
         bestHandPlayer.updateWinner(currentPotSize);
       }
     }
@@ -386,9 +381,9 @@ public class SPController extends Thread {
     } else if (aiDecision.contains("call")) {
 
       split = aiDecision.split(",");
-      if(Integer.parseInt(split[1]) > currentMaxBet) {
-      currentMaxBet = Integer.parseInt(split[1]);
-      currentPotSize += Integer.parseInt(split[1]);
+      if (Integer.parseInt(split[1]) > currentMaxBet) {
+        currentMaxBet = Integer.parseInt(split[1]);
+        currentPotSize += Integer.parseInt(split[1]);
       } else {
         currentPotSize += currentMaxBet;
       }
