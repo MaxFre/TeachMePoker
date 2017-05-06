@@ -248,7 +248,7 @@ public class GameController {
 
     System.out.println("Player call");
     this.playerPot -= (spController.getCurrentMaxBet() - alreadyPaid);
-    this.alreadyPaid = alreadyPaid + (spController.getCurrentMaxBet()-alreadyPaid);
+    this.alreadyPaid = alreadyPaid + (spController.getCurrentMaxBet() - alreadyPaid);
     this.decision = "call," + Integer.toString(alreadyPaid);
     playerMadeDecision = true;
     updatePlayerValues(decision);
@@ -417,6 +417,10 @@ public class GameController {
     this.card2 = card2;
     System.out.println("----------------" + card2.getCardValue());
 
+    highCard = card1.getCardValue();
+    if (card2.getCardValue() > highCard) {
+      highCard = card2.getCardValue();
+    }
     cards.add(card1);
     cards.add(card2);
     this.hand = new Hand(cards);

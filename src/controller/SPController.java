@@ -248,6 +248,9 @@ public class SPController extends Thread {
     int bestHand = 0;
     Ai bestHandPlayer = new Ai(0, "");
     for (Ai ai : aiPlayers) {
+      System.out.println(ai.getName());
+      System.out.println(ai.handStrength());
+      System.out.println(ai.getHighCard());
       if (!ai.getDecision().equals("fold")) {
         if (ai.handStrength() > bestHand) {
           bestHandPlayer = ai;
@@ -268,10 +271,14 @@ public class SPController extends Thread {
           gController.setPlayerPot(currentPotSize);
           System.out.println("Player Wins " + currentPotSize);
         }
+        //TODO make an else if for a draw (potSplit)
       } else {
         System.out.println(bestHandPlayer.getName() + " Wins " + currentPotSize);
         bestHandPlayer.updateWinner(currentPotSize);
       }
+    }else {
+      System.out.println(bestHandPlayer.getName() + " Wins " + currentPotSize);
+      bestHandPlayer.updateWinner(currentPotSize);
     }
 
   }
