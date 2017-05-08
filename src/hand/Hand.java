@@ -1,15 +1,13 @@
 package hand;
 
 import java.util.ArrayList;
-
 import deck.Card;
 
 /**
  * The hand-class that will guide and help the noob player.
  * 
  * @author Max Frennessen 17-04-12
- * @version 1.5
- * @
+ * @version 1.5 @
  */
 public class Hand {
   private HandCalculation calc;
@@ -20,8 +18,10 @@ public class Hand {
   private String advice;
   private int pwrBar;
   private int handStrenght;
+
   /**
    * Constructor
+   * 
    * @param cards gets card that are important for this turn.
    */
   public Hand(ArrayList<Card> cards) {
@@ -43,7 +43,7 @@ public class Hand {
     System.out.println("pwrBar - " + pwrBar);
     System.out.println("toHighlight - " + toHighlight);
     System.out.println("");
-   
+
   }
 
   /**
@@ -60,18 +60,34 @@ public class Hand {
 
   }
 
-  
-  public int toPowerBar(){  // 1-4 ska det va.
-	  return pwrBar;
+  public void reCalc() {
+    this.calc = new HandCalculation(aiCards);
+
+    this.toHighlight = calc.toHiglight();
   }
-  
-  public String theHelp(){
-	  return helper;
+
+  public ArrayList<String> sendToHighlightChecker() {
+    ArrayList<String> converterHighlight = new ArrayList<String>();
+    for (int i = 0; i < toHighlight.size(); i++) {
+      String[] splitter = toHighlight.get(i).split(",");
+      converterHighlight.add(splitter[0]);
+    }
+    return converterHighlight;
   }
-  
-  public String theAdvice(){
-	  return advice;
+
+
+  public int toPowerBar() { // 1-4 ska det va.
+    return pwrBar;
   }
+
+  public String theHelp() {
+    return helper;
+  }
+
+  public String theAdvice() {
+    return advice;
+  }
+
   /**
    * @return returns what is suppost to be highlighted.
    */
@@ -79,8 +95,8 @@ public class Hand {
     return toHighlight;
   }
 
-  public int getHandStrenght(){
-	  handStrenght = calc.calcHandstrenght();	  
-	  return handStrenght;
+  public int getHandStrenght() {
+    handStrenght = calc.calcHandstrenght();
+    return handStrenght;
   }
 }

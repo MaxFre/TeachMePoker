@@ -145,7 +145,6 @@ public class GameController {
                                     // controller
   private int playerPot = 0;
   private int alreadyPaid = 0;
-  private int highCard;
   private ImageView imgPowerBar = new ImageView();
   private SPController spController;
   private boolean playerMadeDecision = false;
@@ -159,7 +158,7 @@ public class GameController {
   private Label[][] collectionOfLabelsAi;
   private ImageView[] collectionOfCardsAi;
   private ImageView[] collectionOfCardsTable;
-  private int getHighCard;
+  private int highCard;
 
   public void initialize() throws Exception {
 
@@ -657,6 +656,7 @@ public class GameController {
         imgPowerBar.setY(15);
 
       }
+      this.handStrength = hand.getHandStrenght();
     });
   }
 
@@ -833,7 +833,7 @@ public class GameController {
   }
 
   public int getGetHighCard() {
-    return getHighCard;
+    return highCard;
   }
 
 }

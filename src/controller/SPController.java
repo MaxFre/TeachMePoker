@@ -248,10 +248,11 @@ public class SPController extends Thread {
     int bestHand = 0;
     Ai bestHandPlayer = new Ai(0, "");
     for (Ai ai : aiPlayers) {
-      System.out.println(ai.getName());
-      System.out.println(ai.handStrength());
-      System.out.println(ai.getHighCard());
+      
       if (!ai.getDecision().equals("fold")) {
+        System.out.println(ai.getName());
+        System.out.println(ai.handStrength());
+        System.out.println(ai.getHighCard());
         if (ai.handStrength() > bestHand) {
           bestHandPlayer = ai;
           bestHand = ai.handStrength();
@@ -262,6 +263,12 @@ public class SPController extends Thread {
         }
       }
     }
+    System.out.println("Bästa AI spelare: " + bestHandPlayer.getName());
+    System.out.println("Handstyrka: " + bestHand);
+    System.out.println("highCard: " + bestHandPlayer.getHighCard());
+    System.out.println("Player:");
+    System.out.println(gController.getHandStrength());
+    System.out.println(gController.getGetHighCard());
     if (!gController.getPlayerDecision().equals("fold")) {
       if (gController.getHandStrength() > bestHand) {
         gController.setPlayerPot(currentPotSize);
