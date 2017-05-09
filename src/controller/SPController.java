@@ -63,11 +63,6 @@ public class SPController extends Thread {
       aiPlayers.add(new Ai(potSize / (noOfPlayers), name.remove(0)));
     }
     gController.setAiPlayers(aiPlayers);
-    try {
-      SPController.sleep(1000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
 
     setupPhase();
   }
@@ -154,7 +149,6 @@ public class SPController extends Thread {
    * Method that runs the gameround itself public void playPoker() {
    */
   public void run() {
-
     Card[] turnCards = {flop[0], flop[1], flop[2], turn};
     Card[] riverCards = {flop[0], flop[1], flop[2], turn, river};
     while (playTurn < 4) {
@@ -188,6 +182,12 @@ public class SPController extends Thread {
           }
         } else {
           if (!aiPlayers.get(currentPlayer).getDecision().contains("fold")) {
+            try {
+              Thread.sleep(1000);
+              // TODO Make it obvious which player is playing?
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
             if (!(checkLivePlayers() > 1)) {
               System.out
                   .println(aiPlayers.get(currentPlayer).getName() + " Wins " + currentPotSize);
@@ -204,13 +204,8 @@ public class SPController extends Thread {
           aiPlayers.get(currentPlayer).setSameTurn(true);
         }
         currentPlayer = (currentPlayer + 1) % noOfPlayers;
-
-        try {
-          Thread.sleep(1000);
-          // TODO Make it obvious which player is playing?
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
+        //TODO insert foldcheck.
+        
       }
 
       playTurn++;

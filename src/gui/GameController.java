@@ -9,6 +9,9 @@ import deck.Card;
 import hand.Hand;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
@@ -17,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+
 
 public class GameController {
 
@@ -160,6 +164,7 @@ public class GameController {
   private ImageView[] collectionOfCardsTable;
   private int highCard;
 
+
   public void initialize() throws Exception {
 
     this.collectionOfLabelsAi =
@@ -178,7 +183,9 @@ public class GameController {
 
   }
 
+
   public void setShowUIAiBar(int position) {
+
     collectionOfLabelsAi[position][0].setVisible(true);
     collectionOfLabelsAi[position][1].setVisible(true);
     collectionOfLabelsAi[position][2].setVisible(true);
@@ -186,19 +193,27 @@ public class GameController {
     collectionOfCardsAi[position].setVisible(true);
   }
 
+
   public void setLabelUIAiBarName(int position, String name) {
+
     collectionOfLabelsAi[position][0].setText(name);
   }
 
+
   public void setLabelUIAiBarPot(int position, String pot) {
+
     collectionOfLabelsAi[position][1].setText(pot);
   }
 
+
   public void setLabelUIAiBarAction(int position, String action) {
+
     collectionOfLabelsAi[position][2].setText(action);
   }
 
+
   public void setUIAiFolded(int position, boolean folded) {
+
     String resource = "resources/images/";
 
     Image showCards = new Image(Paths.get(resource + "aiBarWithCards.png").toUri().toString(), 122,
@@ -214,16 +229,22 @@ public class GameController {
     }
   }
 
+
   public void setSPController(SPController spController) {
+
     this.spController = spController;
     spController.setGameController(this);
   }
 
+
   public void setChangeScene(ChangeScene sceneChanger) {
+
     this.changeScene = sceneChanger;
   }
 
+
   public void playerCheck() {
+
     disableButtons();
     System.out.println("Player checked");
     this.decision = "check";
@@ -232,7 +253,9 @@ public class GameController {
     updatePlayerValues(decision);
   }
 
+
   public void playerFold() {
+
     disableButtons();
     System.out.println("Player folded");
     this.decision = "fold";
@@ -241,8 +264,10 @@ public class GameController {
     updatePlayerValues(decision);
   }
 
+
   @FXML
   public void playerCall() {
+
     disableButtons();
 
     System.out.println("Player call");
@@ -253,13 +278,17 @@ public class GameController {
     updatePlayerValues(decision);
   }
 
+
   public void updatePlayerValues(String action) {
+
     lbPotValue.setText(" §" + Integer.toString(playerPot));
     lbPlayerAction.setText(action);
     setSliderValues();
   }
 
+
   public void playerRaise() {
+
     disableButtons();
 
     this.playerPot -= (int) slider.getValue();
@@ -289,12 +318,14 @@ public class GameController {
     }
   }
 
+
   // public void newGame() {
   // // TODO Necessary?
   // System.out.println("new game");
   // }
 
   public void saveGame() {
+
     System.out.println("Saved Game");
     // TODO försök lista ut hur fan den ska spara.
 
@@ -309,6 +340,7 @@ public class GameController {
 
 
   public void setSliderValues() {
+
     slider.setMax(playerPot);
     if ((spController.getCurrentMaxBet() - alreadyPaid)
         + (spController.getCurrentMaxBet() + spController.getBigBlind()) <= playerPot) {
@@ -319,7 +351,9 @@ public class GameController {
 
   }
 
+
   public void sliderChange() {
+
     int val = 0;
     val = (int) slider.getValue();
     this.sliderValue = val;
@@ -338,7 +372,9 @@ public class GameController {
     // ****************************************************************************************
   }
 
+
   public void soundSetting() {
+
     // TODO Av-mutea, lägg till effektljud. Ny ruta med settings?
     Sound.mp.setMute(true);
 
@@ -348,21 +384,28 @@ public class GameController {
     System.out.println("Sound Setting");
   }
 
+
   public void rulesState() {
+
     // TODO Rules State?
     System.out.println("Go to Rules section");
   }
 
+
   public void mainState() {
+
     // TODO Return to main menu
     System.out.println("Go to Main section");
   }
 
+
   public double getPotValue() {
+
     // TODO Find out what this is for
     System.out.println(tablePotValue);
     return tablePotValue;
   }
+
 
   // restart all the images
   // TODO behövs?
@@ -382,25 +425,38 @@ public class GameController {
   // }
 
   public void setUsername(String name) {
+
     userName.setText(name);
 
   }
 
+
   // TODO Vet inte?
   public void showAllIn() {
+
     lbAllIn.setVisible(true);
   }
+  
+  public void endOfRound() {
+    
+  }
+
 
   public void setStartingHand(Card card1, Card card2) {
+
     isReady = false;
+    
+    
     Platform.runLater(() -> {
       clearFlopTurnRiver();
       ConfirmBox newMatch = new ConfirmBox();
-      newMatch.display("NEW Match!", "Starting new match...");
-
-
+      newMatch.display("Ny Runda", "En ny runda har börjat");
+      
+      
 
     });
+
+
     Platform.runLater(() -> {
 
 
@@ -425,11 +481,11 @@ public class GameController {
     this.hand = new Hand(cards);
 
     handHelp();
-
-    checkHand();
     isReady = true;
+    checkHand();
 
   }
+
 
   public void checkHand() {
 
@@ -509,6 +565,7 @@ public class GameController {
     });
   }
 
+
   public void setFlopTurnRiver(Card[] setOfCards) {
 
     this.cards.clear();
@@ -566,16 +623,21 @@ public class GameController {
     checkHand();
   }
 
+
   public ImageView getNow(int i) {
+
     return this.collectionOfCardsTable[i];
   }
 
+
   public void clearFlopTurnRiver() {
+
     Platform.runLater(() -> {
       tabelCardArea.getChildren().clear();
     });
 
   }
+
 
   public void playerSmallBlind(int i) {
 
@@ -586,6 +648,7 @@ public class GameController {
 
   }
 
+
   public void playerBigBlind(int i) {
 
     this.alreadyPaid += i;
@@ -594,9 +657,12 @@ public class GameController {
     ivBigBlind.setLayoutY(425);
   }
 
+
   public int getPlayerAlreadyPaid() {
+
     return this.alreadyPaid;
   }
+
 
   public void playerIsDealer() {
 
@@ -604,7 +670,9 @@ public class GameController {
     ivDealer.setLayoutY(425);
   }
 
+
   public void handHelp() {
+
     String powerBarWeakHand = "resources/images/weakHand.png";
     String powerBarMediumWeakHand = "resources/images/mediumWeakHand.png";
     String powerBarMediumStrongHand = "resources/images/mediumStrongHand.png";
@@ -660,11 +728,15 @@ public class GameController {
     });
   }
 
+
   public String getPlayerDecision() {
+
     return decision;
   }
 
+
   public String askForPlayerDecision() {
+
     // TODO Fixa de buttons to be correcto
     handleButtons();
     System.out.println(spController.getCurrentMaxBet());
@@ -680,6 +752,7 @@ public class GameController {
     return decision;
   }
 
+
   public void playerReset(String resetDecision) {
 
     decision = resetDecision;
@@ -687,10 +760,12 @@ public class GameController {
     cards = new ArrayList<Card>();
   }
 
+
   public void setPlayerPot(int newValue) {
 
     this.playerPot += newValue;
   }
+
 
   public void handleButtons() {
 
@@ -723,22 +798,30 @@ public class GameController {
     }
   }
 
+
   public void disableButtons() {
+
     btCall.setVisible(false);
     btRaise.setVisible(false);
     btCheck.setVisible(false);
   }
 
+
   public int getHandStrength() {
+
     return handStrength;
 
   }
 
+
   public int getPlayerPot() {
+
     return playerPot;
   }
 
+
   public void setAiPlayers(LinkedList<Ai> aiPlayers) {
+
     this.aiPlayers = aiPlayers;
 
     int totalAI = aiPlayers.size();
@@ -757,23 +840,29 @@ public class GameController {
     }
   }
 
+
   public void setPlayerAtTable() {
 
   }
 
+
   public void aiAction(int currentAI, String decision) {
+
     Ai ai = aiPlayers.get(currentAI);
-    if (decision == "fold") {
+    if (decision.contains("fold")) {
       setUIAiFolded(currentAI, false);
     } else {
       setUIAiFolded(currentAI, true);
     }
     if ((currentAI == 0 && aiPlayers.size() == 3) || aiPlayers.size() == 5) {
       Platform.runLater(new Runnable() {
+
         private volatile boolean shutdown;
+
 
         @Override
         public void run() {
+
           while (!shutdown) {
             System.out.println("Loop... Thread!");
             setLabelUIAiBarName(currentAI, ai.getName());
@@ -789,8 +878,10 @@ public class GameController {
 
         private volatile boolean shutdown;
 
+
         @Override
         public void run() {
+
           System.out.println("Loop... Thread!");
           while (!shutdown) {
             setLabelUIAiBarName(currentAI + 1, ai.getName());
@@ -805,15 +896,21 @@ public class GameController {
     }
   }
 
+
   public void closeProgram() {
+
     System.exit(0);
   }
 
+
   public void goToMainMenu() {
+
     Main.window.setScene(changeScene.sceneMenu);
   }
 
+
   public void aboutBox() {
+
     confirmBox = new ConfirmBox();
     confirmBox.display("Om projektet",
         "Detta projekt är format och skapat av "
@@ -822,9 +919,12 @@ public class GameController {
 
   }
 
+
   public boolean getIsReady() {
+
     return isReady;
   }
+
 
   public void playerLost() {
     // TODO make player lose
@@ -832,7 +932,9 @@ public class GameController {
 
   }
 
+
   public int getGetHighCard() {
+
     return highCard;
   }
 
