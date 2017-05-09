@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import aiClass.Ai;
 import deck.Card;
@@ -38,8 +39,10 @@ public class SPController extends Thread {
   private int noOfPlayers = 0;
   private boolean allCalledorFolded = false;
   private boolean winnerDeclared = false;
+  private boolean notFirstRound = false;
   private ArrayList<String> name = new ArrayList<String>();
   private GameController gController;
+  private int deadAIIndex;
 
 
   /**
@@ -62,7 +65,7 @@ public class SPController extends Thread {
     for (int i = 0; i < noOfAi; i++) {
       aiPlayers.add(new Ai(potSize / (noOfPlayers), name.remove(0)));
     }
-    gController.setAiPlayers(aiPlayers);
+    gController.setAiPlayers(aiPlayers, false, 69);
 
     setupPhase();
   }
@@ -116,14 +119,16 @@ public class SPController extends Thread {
       card2 = deck.getCard();
       gController.setStartingHand(card1, card2);
       for (Ai ai : aiPlayers) {
-        ai.setDecision("");
-        ai.setBigBlind(0, false);
-        ai.setSmallBlind(0, false);
-        ai.setPaidThisTurn(0);
-        gController.playerReset("");
-        card1 = deck.getCard();
-        card2 = deck.getCard();
-        ai.setStartingHand(card1, card2);
+        if (!ai.getDecision().contains("Lost")) {
+          ai.setDecision("");
+          ai.setBigBlind(0, false);
+          ai.setSmallBlind(0, false);
+          ai.setPaidThisTurn(0);
+          gController.playerReset("");
+          card1 = deck.getCard();
+          card2 = deck.getCard();
+          ai.setStartingHand(card1, card2);
+        }
       }
       setBlinds(noOfPlayers);
       for (int i = 0; i < flop.length; i++) {
@@ -149,6 +154,7 @@ public class SPController extends Thread {
    * Method that runs the gameround itself public void playPoker() {
    */
   public void run() {
+
     Card[] turnCards = {flop[0], flop[1], flop[2], turn};
     Card[] riverCards = {flop[0], flop[1], flop[2], turn, river};
     while (playTurn < 4) {
@@ -181,31 +187,33 @@ public class SPController extends Thread {
             System.out.println("-----------------------------------------");
           }
         } else {
-          if (!aiPlayers.get(currentPlayer).getDecision().contains("fold")) {
-            try {
-              Thread.sleep(1000);
-              // TODO Make it obvious which player is playing?
-            } catch (InterruptedException e) {
-              e.printStackTrace();
+          if (!aiPlayers.get(currentPlayer).getDecision().contains("Lost")) {
+            if (!aiPlayers.get(currentPlayer).getDecision().contains("fold")) {
+              try {
+                Thread.sleep(1000);
+                // TODO Make it obvious which player is playing?
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              }
+              if (!(checkLivePlayers() > 1)) {
+                System.out
+                    .println(aiPlayers.get(currentPlayer).getName() + " Wins " + currentPotSize);
+                aiPlayers.get(currentPlayer).updateWinner(currentPotSize);
+                winnerDeclared = true;
+                break;
+              }
+              System.out.println(aiPlayers.get(currentPlayer).getName() + "'s turn");
+              askForAiDecision();
+              System.out.println("-----------------------------------------");
             }
-            if (!(checkLivePlayers() > 1)) {
-              System.out
-                  .println(aiPlayers.get(currentPlayer).getName() + " Wins " + currentPotSize);
-              aiPlayers.get(currentPlayer).updateWinner(currentPotSize);
-              winnerDeclared = true;
-              break;
-            }
-            System.out.println(aiPlayers.get(currentPlayer).getName() + "'s turn");
-            askForAiDecision();
-            System.out.println("-----------------------------------------");
           }
         }
+        gController.setTablePot();
         if (currentPlayer != noOfPlayers - 1) {
           aiPlayers.get(currentPlayer).setSameTurn(true);
         }
         currentPlayer = (currentPlayer + 1) % noOfPlayers;
-        //TODO insert foldcheck.
-        
+
       }
 
       playTurn++;
@@ -223,6 +231,20 @@ public class SPController extends Thread {
     if (playTurn >= 4 && !winnerDeclared) {
       checkWinner();
     }
+    for (Iterator<Ai> aiL = aiPlayers.iterator(); aiL.hasNext();) {
+      Ai currentAI = aiL.next();
+      if (currentAI.aiPot() < bigBlind) {
+        deadAIIndex = aiPlayers.indexOf(currentAI);
+        Ai deadAI = currentAI;
+        if (aiL.equals(deadAI)) {
+          aiL.remove();
+        }
+        gController.setAiPlayers(aiPlayers, notFirstRound, deadAIIndex);
+      }
+
+    }
+
+
     winnerDeclared = false;
     playTurn = 0;
     blindCounter++;
@@ -233,7 +255,7 @@ public class SPController extends Thread {
       blindCounter = 0;
     }
     dealer = (dealer + 1) % noOfPlayers;
-
+    notFirstRound = true;
     setupPhase();
   }
 
@@ -243,7 +265,7 @@ public class SPController extends Thread {
     int bestHand = 0;
     Ai bestHandPlayer = new Ai(0, "");
     for (Ai ai : aiPlayers) {
-      
+
       if (!ai.getDecision().equals("fold")) {
         System.out.println(ai.getName());
         System.out.println(ai.handStrength());
@@ -273,12 +295,12 @@ public class SPController extends Thread {
           gController.setPlayerPot(currentPotSize);
           System.out.println("Player Wins " + currentPotSize);
         }
-        //TODO make an else if for a draw (potSplit)
+        // TODO make an else if for a draw (potSplit)
       } else {
         System.out.println(bestHandPlayer.getName() + " Wins " + currentPotSize);
         bestHandPlayer.updateWinner(currentPotSize);
       }
-    }else {
+    } else {
       System.out.println(bestHandPlayer.getName() + " Wins " + currentPotSize);
       bestHandPlayer.updateWinner(currentPotSize);
     }
@@ -452,6 +474,8 @@ public class SPController extends Thread {
         // TODO set player as Dealer
       }
     }
+    System.out.println(smallBlindPlayer);
+    System.out.println(bigBlindPlayer);
     this.currentPotSize = smallBlind + bigBlind;
     // TODO gui.updateTablePot
   }
@@ -497,6 +521,7 @@ public class SPController extends Thread {
 
 
   public int getBigBlind() {
+
     return bigBlind;
   }
 

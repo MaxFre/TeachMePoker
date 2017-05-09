@@ -290,7 +290,6 @@ public class GameController {
   public void playerRaise() {
 
     disableButtons();
-
     this.playerPot -= (int) slider.getValue();
 
     this.decision = "raise," + ((int) slider.getValue() + alreadyPaid);
@@ -436,23 +435,41 @@ public class GameController {
 
     lbAllIn.setVisible(true);
   }
-  
-  public void endOfRound() {
-    
+
+
+  public void endOfRound(int ai) {
+
+    Platform.runLater(new Runnable() {
+
+      private volatile boolean shutdown;
+
+
+      @Override
+      public void run() {
+
+        while (!shutdown) {
+          setLabelUIAiBarPot(ai, Integer.toString(aiPlayers.get(ai).aiPot()));
+          setLabelUIAiBarAction(ai, "");
+          shutdown = true;
+        }
+
+      }
+
+    });
+
   }
 
 
   public void setStartingHand(Card card1, Card card2) {
 
     isReady = false;
-    
-    
+
+
     Platform.runLater(() -> {
       clearFlopTurnRiver();
       ConfirmBox newMatch = new ConfirmBox();
       newMatch.display("Ny Runda", "En ny runda har börjat");
-      
-      
+
 
     });
 
@@ -820,23 +837,39 @@ public class GameController {
   }
 
 
-  public void setAiPlayers(LinkedList<Ai> aiPlayers) {
+  public void removeAiPlayer(int AI) {
+
+    collectionOfLabelsAi[AI][0].setVisible(true);
+    collectionOfLabelsAi[AI][1].setVisible(false);
+    collectionOfLabelsAi[AI][2].setText("Lost");
+    collectionOfLabelsAi[AI][2].setVisible(true);
+
+    collectionOfCardsAi[AI].setVisible(false);
+
+  }
+
+
+  public void setAiPlayers(LinkedList<Ai> aiPlayers, boolean notFirstRound, int deadAIIndex) {
 
     this.aiPlayers = aiPlayers;
 
     int totalAI = aiPlayers.size();
-    if (totalAI == 1) {
-      setShowUIAiBar(0);
-    } else if (totalAI == 3) {
-      setShowUIAiBar(0);
-      setShowUIAiBar(2);
-      setShowUIAiBar(3);
-    } else if (totalAI == 5) {
-      setShowUIAiBar(0);
-      setShowUIAiBar(1);
-      setShowUIAiBar(2);
-      setShowUIAiBar(3);
-      setShowUIAiBar(4);
+    if (!notFirstRound) {
+      if (totalAI == 1) {
+        setShowUIAiBar(0);
+      } else if (totalAI == 3) {
+        setShowUIAiBar(0);
+        setShowUIAiBar(2);
+        setShowUIAiBar(4);
+      } else if (totalAI == 5) {
+        setShowUIAiBar(0);
+        setShowUIAiBar(1);
+        setShowUIAiBar(2);
+        setShowUIAiBar(3);
+        setShowUIAiBar(4);
+      }
+    } else if(notFirstRound){
+      endOfRound(deadAIIndex);
     }
   }
 
@@ -936,6 +969,13 @@ public class GameController {
   public int getGetHighCard() {
 
     return highCard;
+  }
+
+
+  public void setTablePot() {
+
+    // TODO Auto-generated method stub
+    
   }
 
 }

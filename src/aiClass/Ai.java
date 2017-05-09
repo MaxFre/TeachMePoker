@@ -21,7 +21,7 @@ public class Ai {
   private TurnTwo turnTwo;
   private TurnThree turnThree;
   private TurnFour turnFour;
-  private String whatToDo;
+  private String whatToDo = "";
   private ArrayList<String> aiCards = new ArrayList<String>(); // Lista som lägger till alla kort
                                                                // som kommer in och som skickas till
                                                                // turns.
