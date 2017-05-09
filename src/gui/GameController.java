@@ -290,6 +290,7 @@ public class GameController {
   public void playerRaise() {
 
     disableButtons();
+
     this.playerPot -= (int) slider.getValue();
 
     this.decision = "raise," + ((int) slider.getValue() + alreadyPaid);
@@ -302,12 +303,21 @@ public class GameController {
       if (tablePotValue >= bet) {
         lbPlayerAction.setText("" + bet + " §");
         lbPotValue.setText("" + playerPot + " §");
-        if (bet == tablePotValue) {
-          lbPlayerAction.setText("ALL IN");
-          lbPotValue.setText("" + 0 + " §");
-          slider.setMax(tablePotValue + bet);
-          showAllIn();
-        }
+      }
+      if (bet == playerPot) {
+        lbPlayerAction.setText("ALL IN");
+        lbPotValue.setText("" + 0 + " §");
+        playerPot = 0;
+        // slider.setMax(tablePotValue + bet);
+        slider.setDisable(true);
+        showAllIn();
+        disableButtons();
+      }
+      if (bet > playerPot) {
+        playerPot = 0;
+        lbPlayerAction.setText("ALL IN");
+        lbPotValue.setText("" + 0 + " §");
+        checkHand();
       } else {
         lbPotValue.setText("0.0");
         showAllIn();
@@ -909,23 +919,25 @@ public class GameController {
     } else {
       Platform.runLater(new Runnable() {
 
-  private volatile boolean shutdown;
+        private volatile boolean shutdown;
 
 
-  @Override
-  public void run() {
+        @Override
+        public void run() {
 
-    System.out.println("Loop... Thread!");
-    while (!shutdown) {
-      setLabelUIAiBarName(currentAI + 1, ai.getName());
-      setLabelUIAiBarPot(currentAI + 1, Integer.toString(ai.aiPot()));
-      setLabelUIAiBarAction(currentAI + 1, decision);
-      shutdown = true;
+          System.out.println("Loop... Thread!");
+          while (!shutdown) {
+            setLabelUIAiBarName(currentAI + 1, ai.getName());
+            setLabelUIAiBarPot(currentAI + 1, Integer.toString(ai.aiPot()));
+            setLabelUIAiBarAction(currentAI + 1, decision);
+            shutdown = true;
 
+          }
+        }
+
+      });
     }
   }
-
-  });}}
 
 
   public void closeProgram() {
