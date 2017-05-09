@@ -868,7 +868,7 @@ public class GameController {
         setShowUIAiBar(3);
         setShowUIAiBar(4);
       }
-    } else if(notFirstRound){
+    } else if (notFirstRound) {
       endOfRound(deadAIIndex);
     }
   }
@@ -909,25 +909,23 @@ public class GameController {
     } else {
       Platform.runLater(new Runnable() {
 
-        private volatile boolean shutdown;
+  private volatile boolean shutdown;
 
 
-        @Override
-        public void run() {
+  @Override
+  public void run() {
 
-          System.out.println("Loop... Thread!");
-          while (!shutdown) {
-            setLabelUIAiBarName(currentAI + 1, ai.getName());
-            setLabelUIAiBarPot(currentAI + 1, Integer.toString(ai.aiPot()));
-            setLabelUIAiBarAction(currentAI + 1, decision);
-            shutdown = true;
+    System.out.println("Loop... Thread!");
+    while (!shutdown) {
+      setLabelUIAiBarName(currentAI + 1, ai.getName());
+      setLabelUIAiBarPot(currentAI + 1, Integer.toString(ai.aiPot()));
+      setLabelUIAiBarAction(currentAI + 1, decision);
+      shutdown = true;
 
-          }
-        }
-
-      });
     }
   }
+
+  });}}
 
 
   public void closeProgram() {
@@ -975,7 +973,39 @@ public class GameController {
   public void setTablePot() {
 
     // TODO Auto-generated method stub
-    
+
   }
+
+
+  public void setBlindsMarker(int smallBlindPlayer, int bigBlindPlayer) {
+
+    if (smallBlindPlayer == 0) {
+
+      System.out.println("OKEEEEEJJJJJ 0");
+      ivSmallBlind.setLayoutX(100);
+      ivSmallBlind.setLayoutY(100);
+    } else if (smallBlindPlayer == 1) {
+      System.out.println("OKEEEEEJJJJJ 1");
+      ivSmallBlind.setLayoutX(600);
+      ivSmallBlind.setLayoutY(600);
+
+    } else if (smallBlindPlayer == 2) {
+      System.out.println("OKEEEEEJJJJJ 2");
+      ivSmallBlind.setLayoutX(800);
+      ivSmallBlind.setLayoutY(700);
+
+    } else if (aiPlayers.get(3).isSmallBlind()) {
+      System.out.println("OKEEEEEJJJJJ 3");
+      ivSmallBlind.setLayoutX(670);
+      ivSmallBlind.setLayoutY(542);
+
+    } else if (aiPlayers.get(4).isSmallBlind()) {
+      System.out.println("OKEEEEEJJJJJ 4");
+      ivSmallBlind.setLayoutX(392);
+      ivSmallBlind.setLayoutY(570);
+
+    }
+  }
+
 
 }

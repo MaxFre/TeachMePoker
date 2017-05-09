@@ -476,6 +476,7 @@ public class SPController extends Thread {
     }
     System.out.println(smallBlindPlayer);
     System.out.println(bigBlindPlayer);
+    gController.setBlindsMarker(smallBlindPlayer, bigBlindPlayer);
     this.currentPotSize = smallBlind + bigBlind;
     // TODO gui.updateTablePot
   }
