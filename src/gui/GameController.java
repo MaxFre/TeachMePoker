@@ -708,14 +708,14 @@ public class GameController {
     Platform.runLater(() -> {
       if (tableCards != null) {
         String helpText = tableCards.theHelp();
-        helpLabel.setText("Du har: " + helpText);
+        helpLabel.setText("Du har: \n" + helpText);
         String adviceText = tableCards.theAdvice();
         adviceLabel.setText("Råd: \n" + adviceText);
 
         powerBarValue = hand.toPowerBar();
       } else {
         String helpText = hand.theHelp();
-        helpLabel.setText("Du har: " + helpText);
+        helpLabel.setText("Du har: \n" + helpText);
         String adviceText = hand.theAdvice();
         adviceLabel.setText("Råd: \n" + adviceText);
 
@@ -724,27 +724,36 @@ public class GameController {
 
       powerBarValue = hand.toPowerBar();
       if (powerBarValue == 1) {
-        image = new Image(Paths.get(powerBarWeakHand).toUri().toString(), 120, 166, true, true);
+    	powerBarArea.getChildren().remove(imgPowerBar);
+        image = 
+        	new Image(Paths.get(powerBarWeakHand).toUri().toString(), 120, 166, true, true);
         imgPowerBar = new ImageView(image);
         powerBarArea.getChildren().add(imgPowerBar);
         imgPowerBar.setX(30);
         imgPowerBar.setY(15);
+
       } else if (powerBarValue == 2) {
+    	powerBarArea.getChildren().remove(imgPowerBar);
         image =
             new Image(Paths.get(powerBarMediumWeakHand).toUri().toString(), 120, 166, true, true);
         imgPowerBar = new ImageView(image);
         powerBarArea.getChildren().add(imgPowerBar);
         imgPowerBar.setX(30);
         imgPowerBar.setY(15);
+
       } else if (powerBarValue == 3) {
+    	powerBarArea.getChildren().remove(imgPowerBar);
         image =
             new Image(Paths.get(powerBarMediumStrongHand).toUri().toString(), 120, 166, true, true);
         imgPowerBar = new ImageView(image);
         powerBarArea.getChildren().add(imgPowerBar);
         imgPowerBar.setX(30);
         imgPowerBar.setY(15);
+        
       } else if (powerBarValue == 4) {
-        image = new Image(Paths.get(powerBarStrongHand).toUri().toString(), 120, 166, true, true);
+    	powerBarArea.getChildren().remove(imgPowerBar);
+        image = 
+        	new Image(Paths.get(powerBarStrongHand).toUri().toString(), 120, 166, true, true);
         imgPowerBar = new ImageView(image);
         powerBarArea.getChildren().add(imgPowerBar);
         imgPowerBar.setX(30);
@@ -752,9 +761,10 @@ public class GameController {
 
       }
       this.handStrength = hand.getHandStrenght();
+    
     });
-  }
 
+  }
 
   public String getPlayerDecision() {
 
