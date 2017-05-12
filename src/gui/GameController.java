@@ -306,7 +306,7 @@ public class GameController {
       tablePotValue = spController.getPotSize();
       bet = (int) (slider.getValue());
       if (tablePotValue >= bet) {
-        lbPlayerAction.setText("" + bet + " §");
+        lbPlayerAction.setText("Raise" + bet + " §");
         lbPotValue.setText("" + playerPot + " §");
       } else if (bet == playerPot) {
         lbPlayerAction.setText("ALL IN");
@@ -820,7 +820,7 @@ public class GameController {
       btFold.setVisible(true);
     } else {
       if (alreadyPaid < spController.getCurrentMaxBet()
-          && playerPot >= spController.getCurrentMaxBet()) {
+          && (playerPot+alreadyPaid) >= spController.getCurrentMaxBet()) {
         // hide check, show call
         btCheck.setVisible(false);
         btCall.setVisible(true);
@@ -985,6 +985,13 @@ public class GameController {
 
 
   public void playerLost() {
+    
+    try {
+      changeScene.switchToMainMenu();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     // TODO make player lose
     // TODO return to main menu
 

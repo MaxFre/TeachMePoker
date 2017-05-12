@@ -143,7 +143,7 @@ public class SPController extends Thread {
       }
     } else {
       gController.playerLost();
-      System.exit(0);
+      // System.exit(0);
       // TODO player loses
     }
 
@@ -286,7 +286,7 @@ public class SPController extends Thread {
     System.out.println("Player:");
     System.out.println(gController.getHandStrength());
     System.out.println(gController.getGetHighCard());
-    if (!gController.getPlayerDecision().equals("fold")) {
+    if (!gController.getPlayerDecision().contains("fold")) {
       if (gController.getHandStrength() > bestHand) {
         gController.setPlayerPot(currentPotSize);
         System.out.println("Player Wins " + currentPotSize);
@@ -294,15 +294,19 @@ public class SPController extends Thread {
         if (gController.getGetHighCard() > bestHandPlayer.getHighCard()) {
           gController.setPlayerPot(currentPotSize);
           System.out.println("Player Wins " + currentPotSize);
+        } else if (gController.getGetHighCard() == bestHandPlayer.getHighCard()) {
+          System.out.println("Draw, Pot Split between Player and " + bestHandPlayer.getName());
+          bestHandPlayer.updateWinner(currentPotSize / 2);
+          gController.setPlayerPot(currentPotSize / 2);
+          // TODO make an else if for a draw (potSplit)
+        } else {
+          System.out.println(bestHandPlayer.getName() + " Wins " + currentPotSize);
+          bestHandPlayer.updateWinner(currentPotSize);
         }
-        // TODO make an else if for a draw (potSplit)
       } else {
         System.out.println(bestHandPlayer.getName() + " Wins " + currentPotSize);
         bestHandPlayer.updateWinner(currentPotSize);
       }
-    } else {
-      System.out.println(bestHandPlayer.getName() + " Wins " + currentPotSize);
-      bestHandPlayer.updateWinner(currentPotSize);
     }
 
   }
@@ -350,7 +354,9 @@ public class SPController extends Thread {
       System.out.println("raise" + split[1]);
     } else if (playerDecision.contains("fold")) {
     } else if (playerDecision.contains("call")) {
-      currentPotSize += currentMaxBet;
+      split = playerDecision.split(",");
+      currentPotSize += currentMaxBet - gController.getPlayerAlreadyPaid();
+      //currentPotSize += currentMaxBet;
     } else if (playerDecision.contains("check")) {
     }
     allCallorFold();
@@ -494,7 +500,8 @@ public class SPController extends Thread {
       if (ai.getDecision().contains("fold")) {
         noOfAIFoldedorCalled++;
         // if not folded, check if checked or called.
-      } else if (ai.getDecision().contains("call") || ai.getDecision().contains("check")) {
+      } else if (ai.getDecision().contains("call") && ai.getPaidThisTurn() == currentMaxBet
+          || ai.getDecision().contains("check") && ai.getPaidThisTurn() == currentMaxBet) {
         noOfAIFoldedorCalled++;
         // if neither checked, called or folded, at least one AI is live.
       } else {
