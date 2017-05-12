@@ -91,7 +91,7 @@ public class Hand {
   /**
    * @return returns what is suppost to be highlighted.
    */
-  public ArrayList<String> sendToHighlight() {
+  public ArrayList<String> getHighlightedCards() {
     return toHighlight;
   }
 

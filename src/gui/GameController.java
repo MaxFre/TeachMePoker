@@ -10,9 +10,6 @@ import deck.Card;
 import hand.Hand;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
@@ -301,10 +298,11 @@ public class GameController {
     this.decision = "raise," + ((int) slider.getValue() + alreadyPaid);
     this.alreadyPaid = ((int) slider.getValue() + alreadyPaid);
     playerMadeDecision = true;
+    bet = (int) (slider.getValue());
     updatePlayerValues(decision);
     try {
       tablePotValue = spController.getPotSize();
-      bet = (int) (slider.getValue());
+      
       if (tablePotValue >= bet) {
         lbPlayerAction.setText("Raise" + bet + " §");
         lbPotValue.setText("" + playerPot + " §");
@@ -629,15 +627,7 @@ public class GameController {
             .contains(Integer.toString(setOfCards[i].getCardValue()))) {
           baseCard = "resources/images/" + setOfCards[i].getCardValue()
               + setOfCards[i].getCardSuit().charAt(0) + "O.png";
-          // System.out.println("TRUE!!! " +
-          // Integer.toString(setOfCards[i].getCardValue()) + " || " +
-          // tableCards.sendToHighlightChecker());
-          // System.out.println(tableCards.sendToHighlightChecker());
-          // System.out.println(tableCards.sendToHighlight());
         } else {
-          // System.out.println("FALSE!!! " +
-          // Integer.toString(setOfCards[i].getCardValue()) + " || " +
-          // tableCards.sendToHighlightChecker());
           baseCard = "resources/images/" + setOfCards[i].getCardValue()
               + setOfCards[i].getCardSuit().charAt(0) + ".png";
         }
@@ -678,8 +668,10 @@ public class GameController {
 
     this.alreadyPaid += i;
     System.out.println("Player paid small blind(" + i + ")");
+    Platform.runLater(() -> {
     ivSmallBlind.setLayoutX(520);
     ivSmallBlind.setLayoutY(425);
+    });
 
   }
 
@@ -688,8 +680,10 @@ public class GameController {
 
     this.alreadyPaid += i;
     System.out.println("Player paid big blind(" + i + ")");
-    ivBigBlind.setLayoutX(520);
-    ivBigBlind.setLayoutY(425);
+    Platform.runLater(() -> {
+      ivSmallBlind.setLayoutX(520);
+      ivSmallBlind.setLayoutY(425);
+      });
   }
 
 
@@ -1028,12 +1022,12 @@ public class GameController {
       ivSmallBlind.setLayoutX(800);
       ivSmallBlind.setLayoutY(700);
 
-    } else if (aiPlayers.get(3).isSmallBlind()) {
+    } else if (smallBlindPlayer == 3) {
       System.out.println("OKEEEEEJJJJJ 3");
       ivSmallBlind.setLayoutX(670);
       ivSmallBlind.setLayoutY(542);
 
-    } else if (aiPlayers.get(4).isSmallBlind()) {
+    } else if (smallBlindPlayer == 4) {
       System.out.println("OKEEEEEJJJJJ 4");
       ivSmallBlind.setLayoutX(392);
       ivSmallBlind.setLayoutY(570);
