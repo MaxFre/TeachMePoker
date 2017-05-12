@@ -307,8 +307,7 @@ public class GameController {
 					if (tablePotValue >= bet) {
 						lbPlayerAction.setText("" + bet + " §");
 						lbPotValue.setText("" + playerPot + " §");
-					}
-					if (bet == playerPot) {
+					} else if (bet == playerPot) {
 						lbPlayerAction.setText("ALL IN");
 						lbPotValue.setText("" + 0 + " §");
 						playerPot = 0;
@@ -316,8 +315,7 @@ public class GameController {
 						slider.setDisable(true);
 						showAllIn();
 						disableButtons();
-					}
-					if (bet > playerPot) {
+					}else if (bet > playerPot) {
 						playerPot = 0;
 						lbPlayerAction.setText("ALL IN");
 						lbPotValue.setText("" + 0 + " §");
@@ -361,6 +359,13 @@ public class GameController {
 				} else {
 					slider.setMin(0);
 				}
+				if((slider.getMax() - slider.getMin())> 4){
+				slider.setMajorTickUnit((slider.getMax() - slider.getMin())/ 4);
+				} else {
+				  slider.setMajorTickUnit(25);
+				}
+				slider.setMinorTickCount(4);
+				
 
 			}
 
@@ -815,17 +820,20 @@ public class GameController {
 					btCheck.setVisible(true);
 					btCall.setVisible(false);
 					btRaise.setVisible(true);
+					btFold.setVisible(true);
 				} else {
 					if (alreadyPaid < spController.getCurrentMaxBet()
 							&& playerPot >= spController.getCurrentMaxBet()) {
 						// hide check, show call
 						btCheck.setVisible(false);
 						btCall.setVisible(true);
+						btFold.setVisible(true);
 					} else {
 						System.out.println("how is this a thing?");
 						// hide call, hide check
 						btCheck.setVisible(false);
 						btCall.setVisible(false);
+						btFold.setVisible(true);
 
 					}
 					if ((spController.getCurrentMaxBet() - alreadyPaid)
@@ -845,6 +853,7 @@ public class GameController {
 				btCall.setVisible(false);
 				btRaise.setVisible(false);
 				btCheck.setVisible(false);
+				btFold.setVisible(false);
 			}
 
 
