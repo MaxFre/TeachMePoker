@@ -25,10 +25,20 @@ public class Sound {
 		audio.play();
 
 	}
+	
+	public void singleCard(){
+		audio = new AudioClip(Sound.class.getResource("/sounds/cardPlace8.wav").toString());
+		audio.play();
+	}
 
 	public void playBackgroundMusic(){
 		mp.play();	
 
+	}
+	
+	public void chipStack(){
+		audio = new AudioClip(Sound.class.getResource("/sounds/chipsStacksSingle.wav").toString());
+		audio.play();
 	}
 	//TODO Nya ljud, aktivering vid rätt plats. Volymkontroll för bakgrundmusik.
 

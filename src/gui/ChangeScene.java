@@ -61,6 +61,7 @@ public class ChangeScene {
   public void switchScenetoGame() throws IOException {
     Main.window.getScene().setRoot(root2);
     gameController.setUsername(settingsController.getName());
+   Sound.mp.setVolume(0.3);
    // Main.window.setScene(sceneGameState);
 
   }

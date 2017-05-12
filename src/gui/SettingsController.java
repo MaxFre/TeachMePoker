@@ -21,7 +21,6 @@ public class SettingsController {
   private SPController spController;
 
   private ChangeScene changeScene;
-  private Sound sound;
   private ConfirmBox confirmBox;
   private String name;
   private int aiValue;
@@ -53,6 +52,8 @@ public class SettingsController {
   private Label lblTutorialInfo;
   @FXML
   private ImageView ivBack;
+  
+  private Sound sound = new Sound();
 
 
   public void initialize() throws Exception {
@@ -157,6 +158,8 @@ public class SettingsController {
           cfBox.display("Game is about to start", "Are you ready to play poker?");
           if (cfBox.answer) {
             spController.startGame(aiValue, potValue, name);
+            Sound.mp.stop();
+            sound.shuffleSound();
           } else {
             changeScene.switchToMainMenu();
           }
