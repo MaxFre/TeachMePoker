@@ -7,6 +7,7 @@ import aiClass.Ai;
 import deck.Card;
 import deck.Deck;
 import gui.GameController;
+import gui.Sound;
 
 
 /**
@@ -43,6 +44,7 @@ public class SPController extends Thread {
   private ArrayList<String> name = new ArrayList<String>();
   private GameController gController;
   private int deadAIIndex;
+ 
 
 
   /**
@@ -60,8 +62,8 @@ public class SPController extends Thread {
     noOfPlayers = noOfAi + 1;
     bigBlind = (int) (potSize / noOfPlayers * 0.02);
     if(bigBlind < 2) {
-      bigBlind = 2;
-    }
+        bigBlind = 2;
+      }
     currentMaxBet = bigBlind;
     this.smallBlind = bigBlind / 2;
     gController.setPlayerPot((potSize / noOfPlayers));
@@ -146,7 +148,7 @@ public class SPController extends Thread {
       }
     } else {
       gController.playerLost();
-      // TODO player loses popup?
+   // TODO player loses popup?
     }
 
   }
@@ -164,11 +166,14 @@ public class SPController extends Thread {
       if (playTurn == 1) {
 
         gController.setFlopTurnRiver(flop);
+
       } else if (playTurn == 2) {
         gController.setFlopTurnRiver(turnCards);
 
+
       } else if (playTurn == 3) {
         gController.setFlopTurnRiver(riverCards);
+
 
       }
 
@@ -234,23 +239,22 @@ public class SPController extends Thread {
       checkWinner();
     }
     for(Ai ai : aiPlayers) {
-      if (ai.aiPot() < bigBlind) {
-        ai.setDecision("lost");
-        ai.updateWinner(-ai.aiPot());
-        gController.setUIAiFolded(aiPlayers.indexOf(ai), false);
+        if (ai.aiPot() < bigBlind) {
+          ai.setDecision("lost");
+          ai.updateWinner(-ai.aiPot());
+          gController.setUIAiFolded(aiPlayers.indexOf(ai), false);
+        }
+
       }
-    }
 //    for (Iterator<Ai> aiL = aiPlayers.iterator(); aiL.hasNext();) {
 //      Ai currentAI = aiL.next();
 //      if (currentAI.aiPot() < bigBlind) {
 //        deadAIIndex = aiPlayers.indexOf(currentAI);
 //        Ai deadAI = currentAI;
-//        if (currentAI.equals(deadAI)) {
+//        if (aiL.equals(deadAI)) {
 //          aiL.remove();
-//          System.out.println(deadAI.getName() + "removed");
 //        }
 //        gController.setAiPlayers(aiPlayers, notFirstRound, deadAIIndex);
-//
 //      }
 //
 //    }
@@ -366,7 +370,7 @@ public class SPController extends Thread {
     } else if (playerDecision.contains("call")) {
       split = playerDecision.split(",");
       currentPotSize += currentMaxBet - gController.getPlayerAlreadyPaid();
-      // currentPotSize += currentMaxBet;
+      //currentPotSize += currentMaxBet;
     } else if (playerDecision.contains("check")) {
     }
     allCallorFold();
@@ -446,11 +450,13 @@ public class SPController extends Thread {
     } else if (aiDecision.contains("check")) {
       System.out.println("AI Checks");
       gController.aiAction(currentPlayer, aiDecision);
-    } else if (aiDecision.contains("all-in")) {
-      //TODO hantera all-in
-      aiPlayers.get(currentPlayer).setDecision("fold");
-      gController.aiAction(currentPlayer, aiDecision);
-    }
+    }else if (aiDecision.contains("all-in")) {
+        //TODO hantera all-in
+        aiPlayers.get(currentPlayer).setDecision("fold");
+        gController.aiAction(currentPlayer, aiDecision);
+      } else {
+    	  System.out.println("fan");
+      }
   }
 
 
@@ -491,12 +497,13 @@ public class SPController extends Thread {
       if (dealer != noOfPlayers - 1) {
         gController.aiAction(dealer, "Dealer");
       } else {
-        // TODO set player as Dealer
+        gController.playerIsDealer(dealer);
       }
     }
-    System.out.println(smallBlindPlayer);
-    System.out.println(bigBlindPlayer);
-    gController.setBlindsMarker(smallBlindPlayer, bigBlindPlayer);
+    System.out.println("DL" + dealer);
+    System.out.println("SB" + smallBlindPlayer);
+    System.out.println("BB" + bigBlindPlayer);
+    gController.setBlindsMarker(dealer);
     this.currentPotSize = smallBlind + bigBlind;
     // TODO gui.updateTablePot
   }

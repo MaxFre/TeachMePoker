@@ -12,12 +12,14 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 
 
 public class GameController {
@@ -162,6 +164,7 @@ public class GameController {
   private ImageView[] collectionOfCardsTable;
   private int[][] aiPositions;
   private int highCard;
+  private Sound sound = new Sound();
 
 
   public void initialize() throws Exception {
@@ -627,7 +630,15 @@ public class GameController {
             .contains(Integer.toString(setOfCards[i].getCardValue()))) {
           baseCard = "resources/images/" + setOfCards[i].getCardValue()
               + setOfCards[i].getCardSuit().charAt(0) + "O.png";
+          // System.out.println("TRUE!!! " +
+          // Integer.toString(setOfCards[i].getCardValue()) + " || " +
+          // tableCards.sendToHighlightChecker());
+          // System.out.println(tableCards.sendToHighlightChecker());
+          // System.out.println(tableCards.sendToHighlight());
         } else {
+          // System.out.println("FALSE!!! " +
+          // Integer.toString(setOfCards[i].getCardValue()) + " || " +
+          // tableCards.sendToHighlightChecker());
           baseCard = "resources/images/" + setOfCards[i].getCardValue()
               + setOfCards[i].getCardSuit().charAt(0) + ".png";
         }
@@ -642,6 +653,7 @@ public class GameController {
         tabelCardArea.getChildren().add(collectionOfCardsTable[i]);
         collectionOfCardsTable[i].setX(xCord);
         collectionOfCardsTable[i].setY(0);
+       
       }
     });
     handHelp();
@@ -669,9 +681,13 @@ public class GameController {
     this.alreadyPaid += i;
     System.out.println("Player paid small blind(" + i + ")");
     Platform.runLater(() -> {
-    ivSmallBlind.setLayoutX(520);
-    ivSmallBlind.setLayoutY(425);
-    });
+        ivSmallBlind.relocate(520, 425);
+
+      });
+    
+
+//    ivSmallBlind.setLayoutX(520);
+//    ivSmallBlind.setLayoutY(425);
 
   }
 
@@ -681,9 +697,12 @@ public class GameController {
     this.alreadyPaid += i;
     System.out.println("Player paid big blind(" + i + ")");
     Platform.runLater(() -> {
-      ivSmallBlind.setLayoutX(520);
-      ivSmallBlind.setLayoutY(425);
+    	ivBigBlind.relocate(520, 425);
+
       });
+    
+//    ivBigBlind.setLayoutX(520);
+//    ivBigBlind.setLayoutY(425);
   }
 
 
@@ -693,7 +712,7 @@ public class GameController {
   }
 
 
-  public void playerIsDealer() {
+  public void playerIsDealer(int i) {
 
     ivDealer.setLayoutX(520);
     ivDealer.setLayoutY(425);
@@ -1005,33 +1024,116 @@ public class GameController {
   }
 
 
-  public void setBlindsMarker(int smallBlindPlayer, int bigBlindPlayer) {
+  public void setBlindsMarker(int dealer) {
+	  Platform.runLater(() -> {
 
-    if (smallBlindPlayer == 0) {
+	      
+		if (aiPlayers.size() == 5) {
+			if (dealer == 0) {
+				ivDealer.relocate(300, 360);
+				ivSmallBlind.relocate(375, 172);
+				ivBigBlind.relocate(745, 172);
 
-      System.out.println("OKEEEEEJJJJJ 0");
-      ivSmallBlind.setLayoutX(100);
-      ivSmallBlind.setLayoutY(100);
-    } else if (smallBlindPlayer == 1) {
-      System.out.println("OKEEEEEJJJJJ 1");
-      ivSmallBlind.setLayoutX(600);
-      ivSmallBlind.setLayoutY(600);
+			} else if (dealer == 1) {
+				ivDealer.relocate(375, 172);
+				ivSmallBlind.relocate(745, 172);
+				ivBigBlind.relocate(1010, 220);
 
-    } else if (smallBlindPlayer == 2) {
-      System.out.println("OKEEEEEJJJJJ 2");
-      ivSmallBlind.setLayoutX(800);
-      ivSmallBlind.setLayoutY(700);
+			} else if (dealer == 2) {
+				ivDealer.relocate(745, 172);
+				ivSmallBlind.relocate(1010, 220);
+				ivBigBlind.relocate(1010, 360);
 
-    } else if (smallBlindPlayer == 3) {
-      System.out.println("OKEEEEEJJJJJ 3");
-      ivSmallBlind.setLayoutX(670);
-      ivSmallBlind.setLayoutY(542);
+			} else if (dealer == 3) {
+				ivDealer.relocate(1010, 220);
+				ivSmallBlind.relocate(1010, 360);
 
-    } else if (smallBlindPlayer == 4) {
-      System.out.println("OKEEEEEJJJJJ 4");
-      ivSmallBlind.setLayoutX(392);
-      ivSmallBlind.setLayoutY(570);
+			} else if (dealer == 4) {
+				ivDealer.relocate(1010, 360);
+				ivBigBlind.relocate(300, 360);
 
-    }
+			} else {
+				ivSmallBlind.relocate(300, 360);
+				ivBigBlind.relocate(375, 172);
+			}
+		}
+
+		if (aiPlayers.size() == 3) {
+
+			if (dealer == 0) {
+				ivDealer.relocate(300, 360);
+				ivSmallBlind.relocate(745, 172);
+				ivBigBlind.relocate(1010, 360);
+
+			} else if (dealer == 1) {
+				ivDealer.relocate(745, 172);
+				ivSmallBlind.relocate(1010, 360);
+
+			} else if (dealer == 2) {
+				ivDealer.relocate(1010, 360);
+				ivBigBlind.relocate(300, 360);
+
+			} else {
+//				ivDealer.relocate(520, 425);
+				ivSmallBlind.relocate(300, 360);
+				ivBigBlind.relocate(745, 172);
+			}
+		}
+	  });
   }
+  
+public void helpRanking(){
+	TitledPane tpHand = new TitledPane();
+	Font fontName = new Font("Tw Cen Mt", 18);
+	tpHand.setAnimated(true);
+	tpHand.setText("HANDRANKNING");
+	tpHand.setPrefSize(240, 263);
+	tpHand.setLayoutX(1020);
+	tpHand.setLayoutY(466);
+	tpHand.setFont(fontName);
+	tpHand.setRotate(90);
+
+	
+	ScrollPane sc = new ScrollPane();
+	sc.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+	sc.setRotate(270);
+
+
+	tpHand.setContent(sc);
+	AnchorPaneAll.getChildren().add(tpHand);
+	
+//	
+//	<TitledPane fx:id="tpHandRanking" alignment="TOP_CENTER" animated="true" blendMode="SRC_OVER" cache="false" contentDisplay="LEFT" disable="false" expanded="true" graphicTextGap="1.0" layoutX="1027.0" layoutY="466.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" mouseTransparent="false" pickOnBounds="false" prefHeight="240.0" prefWidth="263.0" rotate="90.0" text="Handrankning" textOverrun="ELLIPSIS" underline="false">
+//    <effect>
+//    <DropShadow color="#cc9300" height="39.14285714285714" radius="19.07142857142857" width="39.14285714285714" />
+//     </effect>
+//     <font>
+//       <Font name="Tw Cen MT" size="18.0" fx:id="x2" />
+//     </font>
+//     <content>
+//    <!--  <Pane>
+//         <children> -->
+//            <ScrollPane fitToHeight="false" fitToWidth="false" hbarPolicy="NEVER" layoutX="0.0" layoutY="0.0" pannable="true" prefHeight="248.0" prefWidth="261.0" rotate="270.0">
+//             
+//                        <content>
+//               <ImageView id="handRanking11.png" fitHeight="500.0" fitWidth="259.0" preserveRatio="true">
+//                 <image>
+//                   <Image url="@images/handRanking11.png" />
+//                 </image>
+//                        <viewport>
+//                           <Rectangle2D />
+//                        </viewport>
+//               </ImageView>
+//                        </content>
+//           </ScrollPane>
+//           <!-- </children>
+//     </Pane> -->
+//     </content> 
+ 
+}
+  
+  
+  
+  
+  
 }
