@@ -896,7 +896,7 @@ public class GameController {
 
     this.aiPlayers = aiPlayers;
 
-    int totalAI = aiPlayers.size();
+    int totalAI = spController.getFixedNrOfAIs();
     if (!notFirstRound) {
       if (totalAI == 1) {
         setShowUIAiBar(2);
@@ -923,7 +923,9 @@ public class GameController {
 
 
   public void aiAction(int currentAI, String decision) {
-
+	  
+	  
+	int setAINr = spController.getFixedNrOfAIs();
     Ai ai = aiPlayers.get(currentAI);
     if (decision.contains("fold")) {
       setUIAiFolded(currentAI, false);
@@ -932,12 +934,12 @@ public class GameController {
     }
 
     int setOfPlayers = 0;
-    if (aiPlayers.size() == 1) {
+    if (setAINr == 1) {
       setOfPlayers = 0;
-    } else if (aiPlayers.size() == 3) {
+    } else if (setAINr == 3) {
 
       setOfPlayers = 1;
-    } else if (aiPlayers.size() == 5) {
+    } else if (setAINr == 5) {
       setOfPlayers = 2;
     }
 

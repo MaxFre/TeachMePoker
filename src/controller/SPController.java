@@ -44,6 +44,7 @@ public class SPController extends Thread {
   private ArrayList<String> name = new ArrayList<String>();
   private GameController gController;
   private int deadAIIndex;
+  private int fixedNrOfAIs;
  
 
 
@@ -54,7 +55,7 @@ public class SPController extends Thread {
    * @param potSize Potsize for the whole table
    */
   public void startGame(int noOfAi, int potSize, String playerName) {
-
+	this.fixedNrOfAIs = noOfAi;
     gController.disableButtons();
     this.potSize = potSize;
     this.noOfAi = noOfAi;
@@ -246,18 +247,18 @@ public class SPController extends Thread {
         }
 
       }
-//    for (Iterator<Ai> aiL = aiPlayers.iterator(); aiL.hasNext();) {
-//      Ai currentAI = aiL.next();
-//      if (currentAI.aiPot() < bigBlind) {
-//        deadAIIndex = aiPlayers.indexOf(currentAI);
-//        Ai deadAI = currentAI;
-//        if (aiL.equals(deadAI)) {
-//          aiL.remove();
-//        }
-//        gController.setAiPlayers(aiPlayers, notFirstRound, deadAIIndex);
-//      }
-//
-//    }
+    for (Iterator<Ai> aiL = aiPlayers.iterator(); aiL.hasNext();) {
+      Ai currentAI = aiL.next();
+      if (currentAI.aiPot() < bigBlind) {
+        deadAIIndex = aiPlayers.indexOf(currentAI);
+        Ai deadAI = currentAI;
+        if (aiL.equals(deadAI)) {
+          aiL.remove();
+        }
+        gController.setAiPlayers(aiPlayers, notFirstRound, deadAIIndex);
+      }
+
+    }
 
 
     winnerDeclared = false;
@@ -553,5 +554,12 @@ public class SPController extends Thread {
 
     return bigBlind;
   }
+  
+  public int getFixedNrOfAIs(){
+		return this.fixedNrOfAIs;
+	}
 
 }
+
+
+
