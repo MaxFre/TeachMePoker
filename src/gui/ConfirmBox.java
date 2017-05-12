@@ -17,46 +17,55 @@ import javafx.geometry.*;
 
 public class ConfirmBox {
 
-	public boolean answer = false;
-	public Stage window = new Stage();
-	public Font font = new Font("Tw Cen MT", 18);
+  public boolean answer = false;
+  public Stage window = new Stage();
+  public Font font = new Font("Tw Cen MT", 18);
 
-	public boolean display(String title, String message) {
+  public boolean display(String title, String message) {
 
-		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle(title);
-		window.setMinWidth(150);
-		window.setMaxWidth(600);
-		window.setHeight(200);
-		window.setOnCloseRequest(e -> closeProgram());
+    window.initModality(Modality.APPLICATION_MODAL);
+    window.setTitle(title);
+    window.setMinWidth(150);
+    window.setMaxWidth(600);
+    window.setHeight(200);
+    window.setOnCloseRequest(e -> closeProgram());
 
-		Label label = new Label();
-		label.setFont(font);
-		label.setText(message);
-		label.setWrapText(true);
+    Label label = new Label();
+    label.setFont(font);
+    label.setText(message);
+    label.setWrapText(true);
 
-		Button buttonOk = new Button("Okej");
-		buttonOk.setFont(font);
+    Button buttonOk = new Button("Yes");
+    Button buttonNotOk = new Button("No");
+    buttonOk.setFont(font);
+    buttonNotOk.setFont(font);
 
-		buttonOk.setOnAction(e -> {
-			closeProgram();
+    buttonOk.setOnAction(e -> {
+      answer = true;
+      closeProgram();
 
-		});
 
-		VBox layout = new VBox(10);
 
-		layout.getChildren().addAll(label, buttonOk);
-		layout.setAlignment(Pos.CENTER);
+    });
+    buttonNotOk.setOnAction(e -> {
+      answer = false;
+      closeProgram();
+    });
 
-		Scene scene = new Scene(layout);
-		window.setScene(scene);
-		window.showAndWait();
+    VBox layout = new VBox(10);
 
-		return answer;
-	}
+    layout.getChildren().addAll(label, buttonOk, buttonNotOk);
+    layout.setAlignment(Pos.CENTER);
 
-	public void closeProgram() {
-		window.close();
-	}
+    Scene scene = new Scene(layout);
+    window.setScene(scene);
+    window.showAndWait();
+
+    return answer;
+  }
+
+  public void closeProgram() {
+    window.close();
+  }
 
 }
