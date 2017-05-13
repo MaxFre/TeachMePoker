@@ -160,54 +160,54 @@ public class Ai {
 
 
   public void setBigBlind(int bigBlind, boolean b) {
-
+    this.isBigBlind = b;
     if (bigBlind > 0) {
       System.out.println("AI " + name + " paid the big Blind (" + bigBlind + ")");
     }
-    isBigBlind = true;
+
     aiPot -= bigBlind;
     this.paidThisTurn += bigBlind;
   }
 
 
   public void setSmallBlind(int smallBlind, boolean b) {
-
+    this.isSmallBlind = b;
     if (smallBlind > 0) {
       System.out.println("AI " + name + " paid the small Blind (" + smallBlind + ")");
     }
-    isSmallBlind = true;
+
     aiPot -= smallBlind;
     this.paidThisTurn += smallBlind;
   }
 
 
-	public boolean isSmallBlind() {
-		return isSmallBlind;
-	}
+  public boolean getIsSmallBlind() {
+    return isSmallBlind;
+  }
 
-	public boolean isBigBlind() {
-		return isBigBlind;
-	}
+  public boolean getIsBigBlind() {
+    return isBigBlind;
+  }
 
-	public int getPaidThisTurn() {
-		return paidThisTurn;
-	}
+  public int getPaidThisTurn() {
+    return paidThisTurn;
+  }
 
-	public void setPaidThisTurn(int paidThisTurn) {
-		this.paidThisTurn = paidThisTurn;
-	}
+  public void setPaidThisTurn(int paidThisTurn) {
+    this.paidThisTurn = paidThisTurn;
+  }
 
-	public void setSameTurn(boolean sameTurn) {
-		this.sameTurn = sameTurn;
-	}
+  public void setSameTurn(boolean sameTurn) {
+    this.sameTurn = sameTurn;
+  }
 
-	public int getHighCard() {
-		return highCard;
-	}
+  public int getHighCard() {
+    return highCard;
+  }
 
-	public int handStrength() {
-		return handStrength;
-	}
+  public int handStrength() {
+    return handStrength;
+  }
 
 }
 

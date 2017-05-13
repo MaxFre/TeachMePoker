@@ -305,7 +305,7 @@ public class GameController {
     updatePlayerValues(decision);
     try {
       tablePotValue = spController.getPotSize();
-      
+
       if (tablePotValue >= bet) {
         lbPlayerAction.setText("Raise" + bet + " §");
         lbPotValue.setText("" + playerPot + " §");
@@ -653,7 +653,7 @@ public class GameController {
         tabelCardArea.getChildren().add(collectionOfCardsTable[i]);
         collectionOfCardsTable[i].setX(xCord);
         collectionOfCardsTable[i].setY(0);
-       
+
       }
     });
     handHelp();
@@ -681,13 +681,13 @@ public class GameController {
     this.alreadyPaid += i;
     System.out.println("Player paid small blind(" + i + ")");
     Platform.runLater(() -> {
-        ivSmallBlind.relocate(520, 425);
+      ivSmallBlind.relocate(520, 425);
 
-      });
-    
+    });
 
-//    ivSmallBlind.setLayoutX(520);
-//    ivSmallBlind.setLayoutY(425);
+
+    // ivSmallBlind.setLayoutX(520);
+    // ivSmallBlind.setLayoutY(425);
 
   }
 
@@ -697,12 +697,12 @@ public class GameController {
     this.alreadyPaid += i;
     System.out.println("Player paid big blind(" + i + ")");
     Platform.runLater(() -> {
-    	ivBigBlind.relocate(520, 425);
+      ivBigBlind.relocate(520, 425);
 
-      });
-    
-//    ivBigBlind.setLayoutX(520);
-//    ivBigBlind.setLayoutY(425);
+    });
+
+    // ivBigBlind.setLayoutX(520);
+    // ivBigBlind.setLayoutY(425);
   }
 
 
@@ -833,7 +833,7 @@ public class GameController {
       btFold.setVisible(true);
     } else {
       if (alreadyPaid < spController.getCurrentMaxBet()
-          && (playerPot+alreadyPaid) >= spController.getCurrentMaxBet()) {
+          && (playerPot + alreadyPaid) >= spController.getCurrentMaxBet()) {
         // hide check, show call
         btCheck.setVisible(false);
         btCall.setVisible(true);
@@ -923,11 +923,11 @@ public class GameController {
 
 
   public void aiAction(int currentAI, String decision) {
-	  
-	  
-	int setAINr = spController.getFixedNrOfAIs();
+
+
+    int setAINr = spController.getFixedNrOfAIs();
     Ai ai = aiPlayers.get(currentAI);
-    if (decision.contains("fold")) {
+    if (decision.contains("fold") || decision.contains("lost")) {
       setUIAiFolded(currentAI, false);
     } else {
       setUIAiFolded(currentAI, true);
@@ -1000,7 +1000,7 @@ public class GameController {
 
 
   public void playerLost() {
-    
+
     try {
       changeScene.switchToMainMenu();
     } catch (IOException e) {
@@ -1027,115 +1027,178 @@ public class GameController {
 
 
   public void setBlindsMarker(int dealer) {
-	  Platform.runLater(() -> {
+    Platform.runLater(() -> {
+      for (Ai ai : aiPlayers) {
+        System.out.println(ai.getName() + " is small blind? " + ai.getIsSmallBlind());
+        System.out.println(ai.getName() + " is big blind? " + ai.getIsBigBlind());
+        
+      }
+      //TODO fortsätt
+      
+      if (aiPlayers.size() == 5) {
+        if (dealer == 0) {
+          ivDealer.relocate(300, 360);
+          ivSmallBlind.relocate(375, 172);
+          ivBigBlind.relocate(745, 172);
 
-	      
-		if (aiPlayers.size() == 5) {
-			if (dealer == 0) {
-				ivDealer.relocate(300, 360);
-				ivSmallBlind.relocate(375, 172);
-				ivBigBlind.relocate(745, 172);
+        } else if (dealer == 1) {
+          ivDealer.relocate(375, 172);
+          ivSmallBlind.relocate(745, 172);
+          ivBigBlind.relocate(1010, 220);
 
-			} else if (dealer == 1) {
-				ivDealer.relocate(375, 172);
-				ivSmallBlind.relocate(745, 172);
-				ivBigBlind.relocate(1010, 220);
+        } else if (dealer == 2) {
+          ivDealer.relocate(745, 172);
+          ivSmallBlind.relocate(1010, 220);
+          ivBigBlind.relocate(1010, 360);
 
-			} else if (dealer == 2) {
-				ivDealer.relocate(745, 172);
-				ivSmallBlind.relocate(1010, 220);
-				ivBigBlind.relocate(1010, 360);
+        } else if (dealer == 3) {
+          ivDealer.relocate(1010, 220);
+          ivSmallBlind.relocate(1010, 360);
 
-			} else if (dealer == 3) {
-				ivDealer.relocate(1010, 220);
-				ivSmallBlind.relocate(1010, 360);
+        } else if (dealer == 4) {
+          ivDealer.relocate(1010, 360);
+          ivBigBlind.relocate(300, 360);
 
-			} else if (dealer == 4) {
-				ivDealer.relocate(1010, 360);
-				ivBigBlind.relocate(300, 360);
+        } else {
+          ivSmallBlind.relocate(300, 360);
+          ivBigBlind.relocate(375, 172);
+        }
+      }
 
-			} else {
-				ivSmallBlind.relocate(300, 360);
-				ivBigBlind.relocate(375, 172);
-			}
-		}
+      if (aiPlayers.size() == 3) {
 
-		if (aiPlayers.size() == 3) {
+        if (dealer == 0) {
+          ivDealer.relocate(300, 360);
+          ivSmallBlind.relocate(745, 172);
+          ivBigBlind.relocate(1010, 360);
 
-			if (dealer == 0) {
-				ivDealer.relocate(300, 360);
-				ivSmallBlind.relocate(745, 172);
-				ivBigBlind.relocate(1010, 360);
+        } else if (dealer == 1) {
+          ivDealer.relocate(745, 172);
+          ivSmallBlind.relocate(1010, 360);
 
-			} else if (dealer == 1) {
-				ivDealer.relocate(745, 172);
-				ivSmallBlind.relocate(1010, 360);
+        } else if (dealer == 2) {
+          ivDealer.relocate(1010, 360);
+          ivBigBlind.relocate(300, 360);
 
-			} else if (dealer == 2) {
-				ivDealer.relocate(1010, 360);
-				ivBigBlind.relocate(300, 360);
+        } else {
+          // ivDealer.relocate(520, 425);
+          ivSmallBlind.relocate(300, 360);
+          ivBigBlind.relocate(745, 172);
+        }
+      }
+      
 
-			} else {
-//				ivDealer.relocate(520, 425);
-				ivSmallBlind.relocate(300, 360);
-				ivBigBlind.relocate(745, 172);
-			}
-		}
-	  });
+//      if (aiPlayers.size() == 5) {
+//        if (dealer == 0) {
+//          ivDealer.relocate(300, 360);
+//          ivSmallBlind.relocate(375, 172);
+//          ivBigBlind.relocate(745, 172);
+//
+//        } else if (dealer == 1) {
+//          ivDealer.relocate(375, 172);
+//          ivSmallBlind.relocate(745, 172);
+//          ivBigBlind.relocate(1010, 220);
+//
+//        } else if (dealer == 2) {
+//          ivDealer.relocate(745, 172);
+//          ivSmallBlind.relocate(1010, 220);
+//          ivBigBlind.relocate(1010, 360);
+//
+//        } else if (dealer == 3) {
+//          ivDealer.relocate(1010, 220);
+//          ivSmallBlind.relocate(1010, 360);
+//
+//        } else if (dealer == 4) {
+//          ivDealer.relocate(1010, 360);
+//          ivBigBlind.relocate(300, 360);
+//
+//        } else {
+//          ivSmallBlind.relocate(300, 360);
+//          ivBigBlind.relocate(375, 172);
+//        }
+//      }
+//
+//      if (aiPlayers.size() == 3) {
+//
+//        if (dealer == 0) {
+//          ivDealer.relocate(300, 360);
+//          ivSmallBlind.relocate(745, 172);
+//          ivBigBlind.relocate(1010, 360);
+//
+//        } else if (dealer == 1) {
+//          ivDealer.relocate(745, 172);
+//          ivSmallBlind.relocate(1010, 360);
+//
+//        } else if (dealer == 2) {
+//          ivDealer.relocate(1010, 360);
+//          ivBigBlind.relocate(300, 360);
+//
+//        } else {
+//          // ivDealer.relocate(520, 425);
+//          ivSmallBlind.relocate(300, 360);
+//          ivBigBlind.relocate(745, 172);
+//        }
+//      }
+    });
   }
-  
-public void helpRanking(){
-	TitledPane tpHand = new TitledPane();
-	Font fontName = new Font("Tw Cen Mt", 18);
-	tpHand.setAnimated(true);
-	tpHand.setText("HANDRANKNING");
-	tpHand.setPrefSize(240, 263);
-	tpHand.setLayoutX(1020);
-	tpHand.setLayoutY(466);
-	tpHand.setFont(fontName);
-	tpHand.setRotate(90);
 
-	
-	ScrollPane sc = new ScrollPane();
-	sc.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-	sc.setRotate(270);
+  public void helpRanking() {
+    TitledPane tpHand = new TitledPane();
+    Font fontName = new Font("Tw Cen Mt", 18);
+    tpHand.setAnimated(true);
+    tpHand.setText("HANDRANKNING");
+    tpHand.setPrefSize(240, 263);
+    tpHand.setLayoutX(1020);
+    tpHand.setLayoutY(466);
+    tpHand.setFont(fontName);
+    tpHand.setRotate(90);
 
 
-	tpHand.setContent(sc);
-	AnchorPaneAll.getChildren().add(tpHand);
-	
-//	
-//	<TitledPane fx:id="tpHandRanking" alignment="TOP_CENTER" animated="true" blendMode="SRC_OVER" cache="false" contentDisplay="LEFT" disable="false" expanded="true" graphicTextGap="1.0" layoutX="1027.0" layoutY="466.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" mouseTransparent="false" pickOnBounds="false" prefHeight="240.0" prefWidth="263.0" rotate="90.0" text="Handrankning" textOverrun="ELLIPSIS" underline="false">
-//    <effect>
-//    <DropShadow color="#cc9300" height="39.14285714285714" radius="19.07142857142857" width="39.14285714285714" />
-//     </effect>
-//     <font>
-//       <Font name="Tw Cen MT" size="18.0" fx:id="x2" />
-//     </font>
-//     <content>
-//    <!--  <Pane>
-//         <children> -->
-//            <ScrollPane fitToHeight="false" fitToWidth="false" hbarPolicy="NEVER" layoutX="0.0" layoutY="0.0" pannable="true" prefHeight="248.0" prefWidth="261.0" rotate="270.0">
-//             
-//                        <content>
-//               <ImageView id="handRanking11.png" fitHeight="500.0" fitWidth="259.0" preserveRatio="true">
-//                 <image>
-//                   <Image url="@images/handRanking11.png" />
-//                 </image>
-//                        <viewport>
-//                           <Rectangle2D />
-//                        </viewport>
-//               </ImageView>
-//                        </content>
-//           </ScrollPane>
-//           <!-- </children>
-//     </Pane> -->
-//     </content> 
- 
-}
-  
-  
-  
-  
-  
+    ScrollPane sc = new ScrollPane();
+    sc.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+    sc.setRotate(270);
+
+
+    tpHand.setContent(sc);
+    AnchorPaneAll.getChildren().add(tpHand);
+
+    //
+    // <TitledPane fx:id="tpHandRanking" alignment="TOP_CENTER" animated="true" blendMode="SRC_OVER"
+    // cache="false" contentDisplay="LEFT" disable="false" expanded="true" graphicTextGap="1.0"
+    // layoutX="1027.0" layoutY="466.0" maxHeight="-Infinity" maxWidth="-Infinity"
+    // minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" mouseTransparent="false"
+    // pickOnBounds="false" prefHeight="240.0" prefWidth="263.0" rotate="90.0" text="Handrankning"
+    // textOverrun="ELLIPSIS" underline="false">
+    // <effect>
+    // <DropShadow color="#cc9300" height="39.14285714285714" radius="19.07142857142857"
+    // width="39.14285714285714" />
+    // </effect>
+    // <font>
+    // <Font name="Tw Cen MT" size="18.0" fx:id="x2" />
+    // </font>
+    // <content>
+    // <!-- <Pane>
+    // <children> -->
+    // <ScrollPane fitToHeight="false" fitToWidth="false" hbarPolicy="NEVER" layoutX="0.0"
+    // layoutY="0.0" pannable="true" prefHeight="248.0" prefWidth="261.0" rotate="270.0">
+    //
+    // <content>
+    // <ImageView id="handRanking11.png" fitHeight="500.0" fitWidth="259.0" preserveRatio="true">
+    // <image>
+    // <Image url="@images/handRanking11.png" />
+    // </image>
+    // <viewport>
+    // <Rectangle2D />
+    // </viewport>
+    // </ImageView>
+    // </content>
+    // </ScrollPane>
+    // <!-- </children>
+    // </Pane> -->
+    // </content>
+
+  }
+
+
+
 }

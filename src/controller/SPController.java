@@ -247,18 +247,18 @@ public class SPController extends Thread {
         }
 
       }
-    for (Iterator<Ai> aiL = aiPlayers.iterator(); aiL.hasNext();) {
-      Ai currentAI = aiL.next();
-      if (currentAI.aiPot() < bigBlind) {
-        deadAIIndex = aiPlayers.indexOf(currentAI);
-        Ai deadAI = currentAI;
-        if (aiL.equals(deadAI)) {
-          aiL.remove();
-        }
-        gController.setAiPlayers(aiPlayers, notFirstRound, deadAIIndex);
-      }
-
-    }
+//    for (Iterator<Ai> aiL = aiPlayers.iterator(); aiL.hasNext();) {
+//      Ai currentAI = aiL.next();
+//      if (currentAI.aiPot() < bigBlind) {
+//        deadAIIndex = aiPlayers.indexOf(currentAI);
+//        Ai deadAI = currentAI;
+//        if (aiL.equals(deadAI)) {
+//          aiL.remove();
+//        }
+//        gController.setAiPlayers(aiPlayers, notFirstRound, deadAIIndex);
+//      }
+//
+//    }
 
 
     winnerDeclared = false;
@@ -467,6 +467,7 @@ public class SPController extends Thread {
    * @param noOfPlayers Number of players in the game
    */
   private void setBlinds(int noOfPlayers) {
+    
 
     currentMaxBet = bigBlind;
     smallBlind = bigBlind / 2;

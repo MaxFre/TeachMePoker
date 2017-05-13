@@ -25,8 +25,8 @@ public class TurnFour {
   private boolean sameTurn;
   private int handStrength;
   private int raiseBet = 0;
-  
-  
+
+
   /**
    * Gets value from Ai and calls on all the methods to evaluate a respond.
    * 
@@ -34,16 +34,17 @@ public class TurnFour {
    * @param aiPot - the current size of the ais pot.
    * @param toBet - how much the ai has to commit to be able to play this turn.
    */
-  public TurnFour(ArrayList<String> aiCards, int aiPot, int toBet, int alreadyPaid, boolean sameTurn) {
+  public TurnFour(ArrayList<String> aiCards, int aiPot, int toBet, int alreadyPaid,
+      boolean sameTurn) {
     this.aiPot = aiPot;
     this.toBet = toBet;
-    this.raiseBet   = toBet;
+    this.raiseBet = toBet;
     this.alreadyPaid = alreadyPaid;
     this.sameTurn = sameTurn;
-    if(toBet != 0) {
+    if (toBet != 0) {
       this.toBet -= alreadyPaid;
-      }
-    
+    }
+
     calculation = new AiCalculation(aiCards);
     highCards = calculation.checkHighCards();
     colorChance = calculation.checkSuit();
@@ -116,55 +117,56 @@ public class TurnFour {
       System.out.println("toBet - " + toBet);
       System.out.println("aiPot - " + aiPot);
 
-  	if (likelyhood < 45) {
-  		if (roll <= 15) {
-  			toDO = "call," + toBet;
-  			aiPot -= (toBet);
-  			System.out.println("Bluff");
-  		}
-  	}
+      if (likelyhood < 45) {
+        if (roll <= 15 && aiPot > toBet) {
+          toDO = "call," + toBet;
+          aiPot -= (toBet);
+          System.out.println("Bluff");
+        } else {
+          toDO = "fold";
+        }
+      }
 
-  	if (likelyhood >= 45 && likelyhood < 115) {
-  		if (aiPot == toBet) {
-  			toDO = "all-in," + aiPot;
-  			aiPot -= (aiPot);
-  		}
-  		else
-  		toDO = "call," + toBet;
-  		aiPot -= (toBet);
-  	}
+      if (likelyhood >= 45 && likelyhood < 115) {
+        if (aiPot == toBet) {
+          toDO = "all-in," + aiPot;
+          aiPot -= (aiPot);
+        } else if (aiPot > toBet) {
+          toDO = "call," + toBet;
+          aiPot -= (toBet);
+        } else {
+          toDO = "fold";
+        }
+      }
 
-  	if (likelyhood >= 115) {
-		if(sameTurn){
-			if(aiPot>toBet){
-			toDO = "call,"+toBet;
-			aiPot-=toBet;
-			}
-			else{
-				toDO="all-in,"+aiPot;
-				aiPot-=aiPot;
-			}
-		}
-		else{
-		raiseAmount = (int) (1.25 * raiseBet);
-		if (raiseAmount < 5) {
-			raiseAmount = 10;
-		}
+      if (likelyhood >= 115) {
+        if (sameTurn) {
+          if (aiPot > toBet) {
+            toDO = "call," + toBet;
+            aiPot -= toBet;
+          } else {
+            toDO = "all-in," + aiPot;
+            aiPot -= aiPot;
+          }
+        } else {
+          raiseAmount = (int) (1.25 * raiseBet);
+          if (raiseAmount < 5) {
+            raiseAmount = 10;
+          }
 
-		if (aiPot <= raiseAmount) {
-			toDO = "all-in," + aiPot;
-			aiPot -= (aiPot);
-		}
-		else
-		toDO = "raise," + raiseAmount;
-		aiPot -= (raiseAmount);
-	  }
-	}
+          if (aiPot <= raiseAmount) {
+            toDO = "all-in," + aiPot;
+            aiPot -= (aiPot);
+          } else
+            toDO = "raise," + raiseAmount;
+          aiPot -= (raiseAmount);
+        }
+      }
     }
-   }
+  }
 
-  public int gethandStrength(){
-	  return handStrength;
+  public int gethandStrength() {
+    return handStrength;
   }
 
   /**

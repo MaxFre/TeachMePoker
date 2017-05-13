@@ -24,6 +24,7 @@ public class TurnOne {
   private int alreadyPaid;
   private boolean sameTurn;
   private int raiseBet = 0;
+
   /**
    * Gets value from Ai and calls on all the methods to evaluate a respond.
    * 
@@ -31,16 +32,17 @@ public class TurnOne {
    * @param aiPot - the current size of the ais pot.
    * @param toBet - how much the ai has to commit to be able to play this turn.
    */
-  public TurnOne(ArrayList<String> aiCards, int aiPot, int toBet, int alreadyPaid, boolean sameTurn) {
+  public TurnOne(ArrayList<String> aiCards, int aiPot, int toBet, int alreadyPaid,
+      boolean sameTurn) {
     this.aiPot = aiPot;
     this.toBet = toBet;
-    this.raiseBet  = toBet;
+    this.raiseBet = toBet;
     this.alreadyPaid = alreadyPaid;
     this.sameTurn = sameTurn;
-    if(toBet != 0) {
-    this.toBet -= alreadyPaid;
+    if (toBet != 0) {
+      this.toBet -= alreadyPaid;
     }
-    
+
     calculation = new AiCalculation(aiCards);
     highCards = calculation.checkHighCards();
     colorChance = calculation.checkSuit();
@@ -55,7 +57,7 @@ public class TurnOne {
     System.out.println("colorChance - " + colorChance);
     System.out.println("straightChance - " + straightChance);
     System.out.println("pairs - " + pairs);
-    
+
   }
 
   /**
@@ -63,7 +65,7 @@ public class TurnOne {
    */
   public void decide() {
 
-    if (straightChance==2) {
+    if (straightChance == 2) {
       likelyhood += 25;
     }
 
@@ -83,92 +85,88 @@ public class TurnOne {
     }
 
     System.out.println("likelyhood - " + likelyhood);
-   
-//    if (toBet == 0) {
-//      toDO = "check";
-//
-//      if (likelyhood - 35 > roll) {
-//        toDO = "raise," + aiPot * 0.07;
-//
-//      }
-//    } else {
-//      int aipotChance = (int) (aiPot * 0.025);
-//      int toBetChance = (int) (toBet * 0.030 * 2);
 
-    //  int diff = aipotChance - toBetChance;
+    // if (toBet == 0) {
+    // toDO = "check";
+    //
+    // if (likelyhood - 35 > roll) {
+    // toDO = "raise," + aiPot * 0.07;
+    //
+    // }
+    // } else {
+    // int aipotChance = (int) (aiPot * 0.025);
+    // int toBetChance = (int) (toBet * 0.030 * 2);
 
-      
-      
-//      likelyhood = likelyhood + diff;
-      System.out.println("likelyhood efter toBet - " + likelyhood);
-      System.out.println("toBet - " + toBet);
-      System.out.println("AlreadyPaid - " + alreadyPaid);
-      System.out.println("aiPot - " + aiPot);
+    // int diff = aipotChance - toBetChance;
 
-  	if (likelyhood < 45) {   	//Less than 45 = fold.
-  	    Random rand = new Random();
-  	    int roll = rand.nextInt(100);
-  	    System.out.println("roll - " + roll);
-		if (roll <= 15) {		//if roll is less than 15 (15%) Ai bluffs.
-			if(toBet<aiPot){
-			toDO = "call," + toBet;
-			aiPot -= (toBet);
-			System.out.println("Bluff");
-			}
-			else if(toBet>aiPot){
-				toDO = "all-in," + aiPot;
-				aiPot -= aiPot;
-				System.out.println("Bluff");
-			}
-		}
-	}
 
-	if (likelyhood >= 45 && likelyhood < 115) {
-		if (aiPot == toBet) {
-			toDO = "all-in," + aiPot;
-			aiPot -= (aiPot);
-		}
-		
-		else if(aiPot>toBet){
-		  System.out.println("What AI should pay = " +  (toBet));
-		toDO = "call," + toBet;
-		System.out.println("What AI claimed to pay = " + toBet);
-		aiPot -= (toBet);
-		}
-		
-		else if(aiPot<toBet){
-			toDO = "all-in," + aiPot;
-			aiPot-=aiPot;
-		}
-	}
 
-	if (likelyhood >= 115) {
-		if(sameTurn){
-			if(aiPot>toBet){
-			toDO = "call,"+toBet;
-			aiPot-=toBet;
-			}
-			else{
-				toDO="all-in,"+aiPot;
-				aiPot-=aiPot;
-			}
-		}
-		else{
-		raiseAmount = (int) (1.25 * raiseBet);
-		if (raiseAmount < 5) {
-			raiseAmount = 10;
-		}
+    // likelyhood = likelyhood + diff;
+    System.out.println("likelyhood efter toBet - " + likelyhood);
+    System.out.println("toBet - " + toBet);
+    System.out.println("AlreadyPaid - " + alreadyPaid);
+    System.out.println("aiPot - " + aiPot);
 
-		if (aiPot <= raiseAmount) {
-			toDO = "all-in," + aiPot;
-			aiPot -= (aiPot);
-		}
-		else
-		toDO = "raise," + raiseAmount;
-		aiPot -= (raiseAmount);
-	  }
-	}
-}
+    if (likelyhood < 45) { // Less than 45 = fold.
+      Random rand = new Random();
+      int roll = rand.nextInt(100);
+      System.out.println("roll - " + roll);
+      if (roll <= 15) { // if roll is less than 15 (15%) Ai bluffs.
+        if (toBet < aiPot) {
+          toDO = "call," + toBet;
+          aiPot -= (toBet);
+          System.out.println("Bluff");
+        } else if (toBet > aiPot) {
+          toDO = "all-in," + aiPot;
+          aiPot -= aiPot;
+          System.out.println("Bluff");
+        }
+      }
+    }
+
+    if (likelyhood >= 45 && likelyhood < 115) {
+      if (aiPot == toBet) {
+        toDO = "all-in," + aiPot;
+        aiPot -= (aiPot);
+      }
+
+      else if (aiPot > toBet) {
+        System.out.println("What AI should pay = " + (toBet));
+        toDO = "call," + toBet;
+        System.out.println("What AI claimed to pay = " + toBet);
+        aiPot -= (toBet);
+      }
+
+      else if (aiPot < toBet) {
+        toDO = "all-in," + aiPot;
+        aiPot -= aiPot;
+      }
+    }
+
+    if (likelyhood >= 115) {
+      if (sameTurn) {
+        if (aiPot > toBet) {
+          toDO = "call," + toBet;
+          aiPot -= toBet;
+        } else {
+          toDO = "all-in," + aiPot;
+          aiPot -= aiPot;
+        }
+      } else {
+        raiseAmount = (int) (1.25 * raiseBet);
+        if (raiseAmount < 5) {
+          raiseAmount = 10;
+        }
+
+        if (aiPot <= raiseAmount) {
+          toDO = "all-in," + aiPot;
+          aiPot -= (aiPot);
+        } else
+          toDO = "raise," + raiseAmount;
+        aiPot -= (raiseAmount);
+      }
+    }
+  }
 
 
   /**

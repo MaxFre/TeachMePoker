@@ -24,7 +24,7 @@ public class TurnTwo {
   private int alreadyPaid;
   private boolean sameTurn;
   private int raiseBet = 0;
-  
+
   /**
    * Gets value from Ai and calls on all the methods to evaluate a respond.
    * 
@@ -32,16 +32,17 @@ public class TurnTwo {
    * @param aiPot - the current size of the ais pot.
    * @param toBet - how much the ai has to commit to be able to play this turn.
    */
-  public TurnTwo(ArrayList<String> aiCards, int aiPot, int toBet, int alreadyPaid, boolean sameTurn) {
+  public TurnTwo(ArrayList<String> aiCards, int aiPot, int toBet, int alreadyPaid,
+      boolean sameTurn) {
     this.aiPot = aiPot;
     this.toBet = toBet;
-    this.raiseBet   = toBet;
+    this.raiseBet = toBet;
     this.alreadyPaid = alreadyPaid;
     this.sameTurn = sameTurn;
-    if(toBet != 0) {
+    if (toBet != 0) {
       this.toBet -= alreadyPaid;
-      }
-    
+    }
+
     calculation = new AiCalculation(aiCards);
     highCards = calculation.checkHighCards();
     colorChance = calculation.checkSuit();
@@ -141,9 +142,12 @@ public class TurnTwo {
   			toDO = "all-in," + aiPot;
   			aiPot -= (aiPot);
   		}
-  		else
+  		else if(aiPot>toBet) {
   		toDO = "call," + toBet;
   		aiPot -= (toBet);
+  		} else {
+  		  toDO = "fold";
+  		}
   	}
 
 	if (likelyhood >= 115) {
