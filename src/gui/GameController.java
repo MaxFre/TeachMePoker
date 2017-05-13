@@ -137,6 +137,7 @@ public class GameController {
   @FXML
   public MenuItem miAbout;
 
+
   private ConfirmBox confirmBox;
   private ChangeScene changeScene;
   private int powerBarValue = 0;
@@ -749,8 +750,8 @@ public class GameController {
         image = new Image(Paths.get(powerBarWeakHand).toUri().toString(), 120, 166, true, true);
         imgPowerBar = new ImageView(image);
         powerBarArea.getChildren().add(imgPowerBar);
-        imgPowerBar.setX(30);
-        imgPowerBar.setY(15);
+        imgPowerBar.setX(15);
+        imgPowerBar.setY(0);
 
       } else if (powerBarValue == 2) {
         powerBarArea.getChildren().remove(imgPowerBar);
@@ -758,8 +759,8 @@ public class GameController {
             new Image(Paths.get(powerBarMediumWeakHand).toUri().toString(), 120, 166, true, true);
         imgPowerBar = new ImageView(image);
         powerBarArea.getChildren().add(imgPowerBar);
-        imgPowerBar.setX(30);
-        imgPowerBar.setY(15);
+        imgPowerBar.setX(15);
+        imgPowerBar.setY(0);
 
       } else if (powerBarValue == 3) {
         powerBarArea.getChildren().remove(imgPowerBar);
@@ -767,16 +768,16 @@ public class GameController {
             new Image(Paths.get(powerBarMediumStrongHand).toUri().toString(), 120, 166, true, true);
         imgPowerBar = new ImageView(image);
         powerBarArea.getChildren().add(imgPowerBar);
-        imgPowerBar.setX(30);
-        imgPowerBar.setY(15);
+        imgPowerBar.setX(15);
+        imgPowerBar.setY(0);
 
       } else if (powerBarValue == 4) {
         powerBarArea.getChildren().remove(imgPowerBar);
         image = new Image(Paths.get(powerBarStrongHand).toUri().toString(), 120, 166, true, true);
         imgPowerBar = new ImageView(image);
         powerBarArea.getChildren().add(imgPowerBar);
-        imgPowerBar.setX(30);
-        imgPowerBar.setY(15);
+        imgPowerBar.setX(15);
+        imgPowerBar.setY(0);
 
       }
       this.handStrength = hand.getHandStrenght();
@@ -1140,63 +1141,6 @@ public class GameController {
 //        }
 //      }
     });
-  }
-
-  public void helpRanking() {
-    TitledPane tpHand = new TitledPane();
-    Font fontName = new Font("Tw Cen Mt", 18);
-    tpHand.setAnimated(true);
-    tpHand.setText("HANDRANKNING");
-    tpHand.setPrefSize(240, 263);
-    tpHand.setLayoutX(1020);
-    tpHand.setLayoutY(466);
-    tpHand.setFont(fontName);
-    tpHand.setRotate(90);
-
-
-    ScrollPane sc = new ScrollPane();
-    sc.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-    sc.setRotate(270);
-
-
-    tpHand.setContent(sc);
-    AnchorPaneAll.getChildren().add(tpHand);
-
-    //
-    // <TitledPane fx:id="tpHandRanking" alignment="TOP_CENTER" animated="true" blendMode="SRC_OVER"
-    // cache="false" contentDisplay="LEFT" disable="false" expanded="true" graphicTextGap="1.0"
-    // layoutX="1027.0" layoutY="466.0" maxHeight="-Infinity" maxWidth="-Infinity"
-    // minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" mouseTransparent="false"
-    // pickOnBounds="false" prefHeight="240.0" prefWidth="263.0" rotate="90.0" text="Handrankning"
-    // textOverrun="ELLIPSIS" underline="false">
-    // <effect>
-    // <DropShadow color="#cc9300" height="39.14285714285714" radius="19.07142857142857"
-    // width="39.14285714285714" />
-    // </effect>
-    // <font>
-    // <Font name="Tw Cen MT" size="18.0" fx:id="x2" />
-    // </font>
-    // <content>
-    // <!-- <Pane>
-    // <children> -->
-    // <ScrollPane fitToHeight="false" fitToWidth="false" hbarPolicy="NEVER" layoutX="0.0"
-    // layoutY="0.0" pannable="true" prefHeight="248.0" prefWidth="261.0" rotate="270.0">
-    //
-    // <content>
-    // <ImageView id="handRanking11.png" fitHeight="500.0" fitWidth="259.0" preserveRatio="true">
-    // <image>
-    // <Image url="@images/handRanking11.png" />
-    // </image>
-    // <viewport>
-    // <Rectangle2D />
-    // </viewport>
-    // </ImageView>
-    // </content>
-    // </ScrollPane>
-    // <!-- </children>
-    // </Pane> -->
-    // </content>
-
   }
 
 

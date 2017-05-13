@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -103,16 +104,16 @@
         <content>
           <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="180.0">
             <children>
-                 <Label fx:id="helpLabel" layoutX="29.0" layoutY="149.0" prefHeight="37.0" prefWidth="302.0" rotate="90.0" text="">
+                 <Label fx:id="helpLabel" layoutX="40.0" layoutY="139.0" prefHeight="37.0" prefWidth="302.0" rotate="90.0" text="">
                 <font>
                   <Font name="Tw Cen MT" size="15.0" fx:id="x1" />
                 </font>
               </Label>
-<Label id="adviseLabel" fx:id="adviceLabel" layoutX="-60.0" layoutY="107.0" maxWidth="-Infinity" prefHeight="119.0" prefWidth="300.0" rotate="90.0" text="" wrapText="true">
+<Label id="adviseLabel" fx:id="adviceLabel" layoutX="-50.0" layoutY="107.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="117.0" prefWidth="318.0" rotate="90.0" text="" wrapText="true">
                            <font>
                               <Font name="Tw Cen MT" size="15.0" />
                            </font></Label>
-              <Pane id="powerBar" fx:id="powerBarArea" layoutX="60.0" layoutY="253.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="187.0" prefWidth="114.0" rotate="90.0">
+              <Pane id="powerBar" fx:id="powerBarArea" layoutX="53.0" layoutY="259.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="108.0" rotate="90.0">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets></Pane>
@@ -230,10 +231,26 @@
         
               <ImageView id="img7Table.png" fx:id="imgCard7" fitHeight="166.0" fitWidth="120.0" layoutX="525" layoutY="0.0" visible="true">
               </ImageView>
-            <TitledPane layoutX="1005.0" layoutY="445.0" prefHeight="234.0" prefWidth="227.0" rotate="90.0">
+            <TitledPane alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="1005.0" layoutY="448.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="318.0" prefWidth="224.0" rotate="90.0" text="Handrankning" textOverrun="CLIP">
                <content>
-                  <ScrollPane centerShape="false" layoutX="1020.0" layoutY="465.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pannable="true" prefHeight="290.0" prefWidth="227.0" scaleShape="false" vbarPolicy="NEVER" />
+                  <ScrollPane centerShape="false" fitToHeight="true" fitToWidth="true" hvalue="1.0" layoutX="1020.0" layoutY="465.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="222.0" rotate="180.0" scaleShape="false" vbarPolicy="NEVER" vvalue="0.59">
+                     <content>
+                        <ImageView cache="true" fitHeight="299.0" fitWidth="297.0" nodeOrientation="INHERIT" pickOnBounds="true" rotate="90.0">
+                           <image>
+                              <Image url="@images/handRanking11.png" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D />
+                           </viewport>
+                        </ImageView>
+                     </content>
+                     <opaqueInsets>
+                        <Insets right="10.0" />
+                     </opaqueInsets></ScrollPane>
                </content>
+               <font>
+                  <Font name="Tw Cen MT" size="18.0" />
+               </font>
             </TitledPane>
         
           </children>
