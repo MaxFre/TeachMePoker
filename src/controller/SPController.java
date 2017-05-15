@@ -573,9 +573,20 @@ public class SPController extends Thread {
 		System.out.println(allCalledorFolded);
 	}
 
-
+	
+	/**
+	 * 
+	 * @return Current small blind
+	 */
+	public int getSmallBlind() {
+		return smallBlind;
+	}
+	
+	/**
+	 * 
+	 * @return Current big blind
+	 */
 	public int getBigBlind() {
-
 		return bigBlind;
 	}
 

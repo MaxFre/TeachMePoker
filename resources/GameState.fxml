@@ -135,9 +135,10 @@
 						<Image url="@images/userBar.png" />
 					</image>
 				</ImageView>
-				<Label id="label" fx:id="lbPlayerAction" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="4.0" layoutX="535.0" layoutY="620.0" text="Your bet">
+				<Label id="label" fx:id="lbPlayerAction" font="$x3" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="4.0" layoutX="535.0" layoutY="620.0" text="Your bet">
 					<font>
 						<Font name="Tw Cen MT" size="15.0" fx:id="x3" />
+						<Font name="Tw Cen MT" size="10.0" fx:id="decisionFont"/>
 					</font>
 					<labelFor>
 						<TextField fx:id="field" editable="false" layoutX="972.0" layoutY="379.0" prefWidth="75.0" />
@@ -171,7 +172,7 @@
 						<Image preserveRatio="true" smooth="true" url="@/images/aiBarWithCards.png" />
 					</image>
 				</ImageView>
-				<Pane id="paneRounds.png" fx:id="paneRounds" layoutX="10.0" layoutY="33.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="56.0" prefWidth="175.0">
+				<Pane id="paneRounds.png" fx:id="paneRounds" layoutX="10.0" layoutY="33.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="56.0" prefWidth="108.0">
 					<opaqueInsets>
 					<Insets />
 					</opaqueInsets>
@@ -198,11 +199,11 @@
 				<Label fx:id="labelPlayerOnePot" font="$x3" layoutX="193.0" layoutY="392.0" text="PlayerOnePot" visible="false" />
 				<Label fx:id="labelPlayerTwoPot" font="$x3" layoutX="280.0" layoutY="143.0" text="PlayerTwoPot" visible="false" />
 
-				<Label fx:id="labelPlayerThreeAction" font="$x3" layoutX="653.0" layoutY="160.0" text="PlayerThreeAction" visible="false" />
-				<Label fx:id="labelPlayerFourAction" font="$x3" layoutX="1005.0" layoutY="169.0" text="PlayerFourAction" visible="false" />
-				<Label fx:id="labelPlayerFiveAction" font="$x3" layoutX="1118.0" layoutY="413.0" text="PlayerFiveAction" visible="false" />
-				<Label fx:id="labelPlayerOneAction" font="$x3" layoutX="193.0" layoutY="413.0" text="PlayerOneAction" visible="false" />
-				<Label fx:id="labelPlayerTwoAction" font="$x3" layoutX="280.0" layoutY="169.0" text="PlayerTwoAction" visible="false" />
+				<Label fx:id="labelPlayerThreeAction" font="$decisionFont" layoutX="653.0" layoutY="160.0" text="PlayerThreeAction" visible="false" />
+				<Label fx:id="labelPlayerFourAction" font="$decisionFont" layoutX="1005.0" layoutY="169.0" text="PlayerFourAction" visible="false" />
+				<Label fx:id="labelPlayerFiveAction" font="$decisionFont" layoutX="1118.0" layoutY="413.0" text="PlayerFiveAction" visible="false" />
+				<Label fx:id="labelPlayerOneAction" font="$decisionFont" layoutX="193.0" layoutY="413.0" text="PlayerOneAction" visible="false" />
+				<Label fx:id="labelPlayerTwoAction" font="$decisionFont" layoutX="280.0" layoutY="169.0" text="PlayerTwoAction" visible="false" />
 
 				<ImageView id="checkButton.png" fx:id="btCheck" fitHeight="44.0" fitWidth="101.0" layoutX="693.0" layoutY="550.0" onMouseReleased="#playerCheck">
 					<image>

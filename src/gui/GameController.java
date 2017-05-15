@@ -175,12 +175,12 @@ public class GameController {
 
 		//Groups together labels for each AI-position.
 		this.collectionOfLabelsAi =
-				new Label[][] {
-			{labelPlayerOneName, labelPlayerOnePot, labelPlayerOneAction},
-			{labelPlayerTwoName, labelPlayerTwoPot, labelPlayerTwoAction},
-			{labelPlayerThreeName, labelPlayerThreePot, labelPlayerThreeAction},
-			{labelPlayerFourName, labelPlayerFourPot, labelPlayerFourAction},
-			{labelPlayerFiveName, labelPlayerFivePot, labelPlayerFiveAction}};
+			new Label[][] {
+				{labelPlayerOneName, labelPlayerOnePot, labelPlayerOneAction},
+				{labelPlayerTwoName, labelPlayerTwoPot, labelPlayerTwoAction},
+				{labelPlayerThreeName, labelPlayerThreePot, labelPlayerThreeAction},
+				{labelPlayerFourName, labelPlayerFourPot, labelPlayerFourAction},
+				{labelPlayerFiveName, labelPlayerFivePot, labelPlayerFiveAction}};
 
 			//Placeholders for the AI (based on their position). Shows their cardbacks/no cards or highlighted cards (AI-frame). 
 			this.collectionOfCardsAi = new ImageView[] {
@@ -253,7 +253,7 @@ public class GameController {
 	 */
 	public void setUIAiStatus(int position, String state) {
 
-		String resource = "resources/images/";
+		String resource = "resources/images/";	//122, 158
 		Image hideCards = new Image(Paths.get(resource + "aiBarWithoutCards.png").toUri().toString(), 122, 158, true, true);
 		Image showCards = new Image(Paths.get(resource + "aiBarWithCards.png").toUri().toString(), 122, 158, true, true);
 		Image showActiveCards = new Image(Paths.get(resource + "aiBarWithCardsCurrentPlayer.png").toUri().toString(), 122, 158, true, true);
@@ -290,7 +290,7 @@ public class GameController {
 		this.decision = "check";
 		lbPlayerAction.setText("check");
 		playerMadeDecision = true;
-		updatePlayerValues(decision);
+		updatePlayerValues("Check");
 	}
 
 
@@ -304,7 +304,7 @@ public class GameController {
 		this.decision = "fold";
 		lbPlayerAction.setText("fold");
 		playerMadeDecision = true;
-		updatePlayerValues(decision);
+		updatePlayerValues("Fold");
 	}
 
 
@@ -319,7 +319,7 @@ public class GameController {
 		this.alreadyPaid += (spController.getCurrentMaxBet() - alreadyPaid); // Already paid + (Current maxbet - already paid) = WHAT THE PLAYER HAS ALREADY PAID
 		this.decision = "call," + Integer.toString(alreadyPaid);
 		playerMadeDecision = true;
-		updatePlayerValues(decision);
+		updatePlayerValues("Call, §" + Integer.toString(alreadyPaid));
 	}
 
 
@@ -334,23 +334,23 @@ public class GameController {
 		if(spController.getCurrentMaxBet() != alreadyPaid){ // If the player hasn't matched the current maxbet
 			calcWithdraw = spController.getCurrentMaxBet() - alreadyPaid; // Calculates how much the player has to pay to match it
 		}
-
-		this.playerPot -= (int) slider.getValue() + calcWithdraw; // The player's pot - (raised amount + the amount the player has to match(if the player has to match)) = THE PLAYER'S POT
-		this.decision = "raise," + (int) slider.getValue(); // Chosen raised amount
-		this.alreadyPaid += (int) slider.getValue() + calcWithdraw; // Already paid + (raised amount + the amount the player has to match(if the player has to match)) = WHAT THE PLAYER HAS ALREADY PAID
-		playerMadeDecision = true;
+		
 		int raisedBet = (int) (slider.getValue());
-		updatePlayerValues(decision);
+		this.playerPot -= raisedBet + calcWithdraw; // The player's pot - (raised amount + the amount the player has to match(if the player has to match)) = THE PLAYER'S POT
+		this.decision = "raise," + (raisedBet + spController.getCurrentMaxBet()); // Chosen raised amount
+		this.alreadyPaid += raisedBet + calcWithdraw; // Already paid + (raised amount + the amount the player has to match(if the player has to match)) = WHAT THE PLAYER HAS ALREADY PAID
+		playerMadeDecision = true;
+
+		updatePlayerValues("Raise, §" + raisedBet);
+		
 		try {
 			if (playerPot == 0){ // Checks if the player has gone all in.
-				
-				updatePlayerValues("All in, § " + (int) slider.getValue());
+				updatePlayerValues("All-In, §" + raisedBet);
 				slider.setDisable(true);
 				showAllIn();
 				disableButtons();
-			} else{
-				
-				updatePlayerValues("raise," + raisedBet);
+			} else{	
+				updatePlayerValues("Raise, §" + raisedBet);
 			} 
 		} catch (Exception e) {
 		}
@@ -363,7 +363,7 @@ public class GameController {
 	 */
 	public void updatePlayerValues(String action) {
 
-		lbPotValue.setText("§ " + Integer.toString(playerPot));
+		lbPotValue.setText("§" + Integer.toString(playerPot));
 		lbPlayerAction.setText(action);
 		setSliderValues();
 	}
@@ -803,20 +803,25 @@ public class GameController {
 	 * Shows/hides player-buttons based on allowed actions.
 	 */
 	public void handleButtons() {
+		
 		if (alreadyPaid == spController.getCurrentMaxBet()) {
 			// show check, hide all other
+			System.out.println("show check, hide all other,         1");
 			btCheck.setVisible(true);
 			btCall.setVisible(false);
 			btRaise.setVisible(true);
-			btFold.setVisible(true);
+			btFold.setVisible(true);	
 		} else {
 			if (alreadyPaid < spController.getCurrentMaxBet() && (playerPot + alreadyPaid) >= spController.getCurrentMaxBet()) {
+				// 10 < max && playerPot + paid >= max
+				System.out.println("hide check, show call,         2");
 				// hide check, show call
 				btCheck.setVisible(false);
 				btCall.setVisible(true);
 				btFold.setVisible(true);
 			} else {
-				System.out.println("how is this a thing?");
+				//System.out.println("how is this a thing?");
+				System.out.println("hide call, hide check,         3");
 				// hide call, hide check
 				btCheck.setVisible(false);
 				btCall.setVisible(false);
@@ -826,12 +831,15 @@ public class GameController {
 
 			if ((spController.getCurrentMaxBet() - alreadyPaid) + spController.getBigBlind() <= playerPot && playerPot!= 0 ) {
 				// show raise
+				System.out.println("show raise,         4");
 				btRaise.setVisible(true);
 			} else {
 				// hide raise
+				System.out.println("hide raise,         5");
 				btRaise.setVisible(false);
 			}
 		}
+		System.out.println(alreadyPaid + "{ " + spController.getCurrentMaxBet());
 		inactivateAllAiCardGlows();
 	}
 
@@ -944,13 +952,46 @@ public class GameController {
 					System.out.println("Loop... Thread!");
 					setLabelUIAiBarName(currentAIPosition, ai.getName());
 					setLabelUIAiBarPot(currentAIPosition, Integer.toString(ai.aiPot()));
-					setLabelUIAiBarAction(currentAIPosition, decision);
+					setLabelUIAiBarAction(currentAIPosition, getFormattedDecision(decision));
 					shutdown = true;
 				}
 			}
 		});
 	}
-
+	
+	
+	/**
+	 * Formats action label for AI.
+	 * @param decision fold/lost/check/call/raise/all-in/Dealer/SmallBlind/BigBlind
+	 * @return Formatted decision
+	 */
+	public String getFormattedDecision(String decision){
+		
+		String actionText = "Error";
+		
+		if(decision.contains("fold")){
+			actionText = "Fold";
+		}else if(decision.contains("lost")){
+			actionText = "Lost";
+		}else if(decision.contains("check")){
+			actionText = "Check";
+		}else if (decision.contains("call")){
+			actionText = "Call";
+		}else if (decision.contains("raise")){
+			String[] decisionAi = decision.split(",");
+			actionText = "Raise, §" + decisionAi[1];
+		}else if (decision.contains("all-in")){
+			actionText = "All-In";
+		}else if (decision.contains("Dealer")){
+			actionText = "Dealer";
+		}else if (decision.contains("SmallBlind")){
+			actionText = "Small Blind, §" + spController.getSmallBlind();
+		}else if (decision.contains("BigBlind")){
+			actionText = "Big Blind, §" + spController.getBigBlind();
+		}
+		
+		return actionText;
+	}
 
 	/**
 	 * This metod makes sure that during the players turn, the previous AI is considered idle
