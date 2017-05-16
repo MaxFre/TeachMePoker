@@ -172,10 +172,10 @@ public class SettingsController {
 
 
     } else if (tfNameInput.getText().isEmpty()) {
+    	 sound.wrongSound();
       confirmBox = new ConfirmBox();
       boolean result =
           confirmBox.display("Varning", "Du måste välja ett användarnamn för att starta spelet");
-
       System.out.println("Du måste välja ett användarnamn");
       System.out.println(result);
 

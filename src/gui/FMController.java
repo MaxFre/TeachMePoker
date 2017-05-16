@@ -52,7 +52,7 @@ public class FMController {
 
 		System.out.println("LoadGame");
 		sound = new Sound();
-		sound.shuffleSound();
+		sound.wrongSound();
 
 	}
 

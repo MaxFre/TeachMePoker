@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.text.Font;
 
 
@@ -291,6 +292,8 @@ public class GameController {
 		lbPlayerAction.setText("check");
 		playerMadeDecision = true;
 		updatePlayerValues("Check");
+		sound.checkSound.play();
+		
 	}
 
 
@@ -305,6 +308,7 @@ public class GameController {
 		lbPlayerAction.setText("fold");
 		playerMadeDecision = true;
 		updatePlayerValues("Fold");
+		sound.cardFold();
 	}
 
 
@@ -319,7 +323,9 @@ public class GameController {
 		this.alreadyPaid += (spController.getCurrentMaxBet() - alreadyPaid); // Already paid + (Current maxbet - already paid) = WHAT THE PLAYER HAS ALREADY PAID
 		this.decision = "call," + Integer.toString(alreadyPaid);
 		playerMadeDecision = true;
+		sound.chipSingle();
 		updatePlayerValues("Call, §" + Integer.toString(alreadyPaid));
+
 	}
 
 
@@ -340,6 +346,7 @@ public class GameController {
 		this.decision = "raise," + (raisedBet + spController.getCurrentMaxBet()); // Chosen raised amount
 		this.alreadyPaid += raisedBet + calcWithdraw; // Already paid + (raised amount + the amount the player has to match(if the player has to match)) = WHAT THE PLAYER HAS ALREADY PAID
 		playerMadeDecision = true;
+		sound.chipMulti();
 
 		updatePlayerValues("Raise, §" + raisedBet);
 		
@@ -432,11 +439,18 @@ public class GameController {
 	public void soundSetting() {
 
 		// TODO Av-mutea, lägg till effektljud. Ny ruta med settings?
-		Sound.mp.setMute(true);
-
-		if (Sound.mp.isMute() == true) {
-			Sound.mp.play();
+		if(sound.audio.getVolume()==1.0){
+		sound.audio.setVolume(0);
+		System.out.println("Volym : 0");
 		}
+		else if (sound.audio.getVolume()==0.0){
+			sound.audio.setVolume(1);
+		System.out.println("Volym : 1");
+		}
+//		sound.stopSound();
+
+
+	
 		System.out.println("Sound Setting");
 	}
 
@@ -1010,10 +1024,11 @@ public class GameController {
 	}
 
 
-	public void goToMainMenu() {
+	public void goToMainMenu() throws InstantiationException, IllegalAccessException {
 
 		try {
 			changeScene.switchToMainMenu();
+			changeScene.prepGame();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
