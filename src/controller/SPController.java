@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import aiClass.Ai;
 import deck.Card;
@@ -9,6 +10,7 @@ import gui.GameController;
 
 
 /**
+ * TODO update shit
  * 
  * @author Rikard Almgren
  * @version 0.6
@@ -45,12 +47,16 @@ public class SPController extends Thread {
 
 
   /**
-   * Method which prepares the whole Session
+   * TODO
    * 
-   * @param noOfAi Number of AI players
-   * @param potSize Potsize for the whole table
+   * @param noOfAi
+   * @param potSize
+   * @param playerName
+   * @throws IllegalAccessException
+   * @throws InstantiationException
    */
-  public void startGame(int noOfAi, int potSize, String playerName) {
+  public void startGame(int noOfAi, int potSize, String playerName)
+      throws InstantiationException, IllegalAccessException {
     this.fixedNrOfAIs = noOfAi;
     gController.disableButtons();
     this.potSize = potSize;
@@ -72,7 +78,11 @@ public class SPController extends Thread {
     setupPhase();
   }
 
-
+  /**
+   * TODO
+   * 
+   * @param gController
+   */
   public void setGameController(GameController gController) {
 
     this.gController = gController;
@@ -80,12 +90,20 @@ public class SPController extends Thread {
 
   }
 
-
+  /**
+   * TODO
+   * 
+   * @return
+   */
   public int getCurrentMaxBet() {
     return currentMaxBet;
   }
 
-
+  /**
+   * TODO
+   * 
+   * @return
+   */
   public int getPotSize() {
     return potSize;
   }
@@ -103,14 +121,17 @@ public class SPController extends Thread {
     name.add("Rikard");
     name.add("Kristina");
     name.add("Rolf");
-    // Collections.shuffle(name);
+    Collections.shuffle(name);
   }
 
 
   /**
    * Method which prepares a new gameround.
+   * 
+   * @throws IllegalAccessException
+   * @throws InstantiationException
    */
-  private void setupPhase() {
+  private void setupPhase() throws InstantiationException, IllegalAccessException {
 
     if (gController.getPlayerPot() > bigBlind) {
       deck = new Deck();
@@ -150,7 +171,7 @@ public class SPController extends Thread {
 
 
   /**
-   * Method that runs the gameround itself public void playPoker() {
+   * Method that runs the gameround itself
    */
   public void run() {
 
@@ -282,11 +303,21 @@ public class SPController extends Thread {
     }
     dealer = (dealer + 1) % noOfPlayers;
 
-    setupPhase();
+    try {
+      setupPhase();
+    } catch (InstantiationException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
 
   }
 
-
+  /**
+   * //TODO
+   */
   private void checkWinner() {
 
     int bestHand = 0;
@@ -583,6 +614,7 @@ public class SPController extends Thread {
 
 
   /**
+   * TODO
    * 
    * @return Current small blind
    */
@@ -591,6 +623,7 @@ public class SPController extends Thread {
   }
 
   /**
+   * TODO
    * 
    * @return Current big blind
    */

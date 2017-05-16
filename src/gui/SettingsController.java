@@ -52,7 +52,7 @@ public class SettingsController {
   private Label lblTutorialInfo;
   @FXML
   private ImageView ivBack;
-  
+
   private Sound sound = new Sound();
 
 
@@ -155,15 +155,15 @@ public class SettingsController {
         try {
           changeScene.switchScenetoGame();
           ConfirmBox cfBox = new ConfirmBox();
-          cfBox.display("Game is about to start", "Are you ready to play poker?");
-          if (cfBox.answer) {
+
+          if (cfBox.display("Game is about to start", "Are you ready to play poker?")) {
             spController.startGame(aiValue, potValue, name);
             Sound.mp.stop();
             sound.shuffleSound();
           } else {
             changeScene.switchToMainMenu();
           }
-        } catch (IOException e) {
+        } catch (IOException | InstantiationException | IllegalAccessException e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
         }
@@ -172,7 +172,7 @@ public class SettingsController {
 
 
     } else if (tfNameInput.getText().isEmpty()) {
-    	 sound.wrongSound();
+      sound.wrongSound();
       confirmBox = new ConfirmBox();
       boolean result =
           confirmBox.display("Varning", "Du måste välja ett användarnamn för att starta spelet");
@@ -203,7 +203,7 @@ public class SettingsController {
     ivQuestionTutorial.setOnMouseExited(e -> lblTutorialInfo.setVisible(false));
   }
 
-  public void back() {
+  public void back() throws InstantiationException, IllegalAccessException {
     try {
       changeScene.switchToMainMenu();
     } catch (IOException e) {

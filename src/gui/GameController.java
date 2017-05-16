@@ -1111,7 +1111,7 @@ public class GameController {
   }
 
 
-  public void playerLost() {
+  public void playerLost() throws InstantiationException, IllegalAccessException {
 
     try {
       changeScene.switchToMainMenu();

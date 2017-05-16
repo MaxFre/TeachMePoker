@@ -29,18 +29,18 @@ public class ChangeScene {
   public void prepGame() throws IOException, InstantiationException, IllegalAccessException {
     Sound.class.newInstance().playBackgroundMusic();
     FXMLLoader loaderFM = new FXMLLoader(FMController.class.getResource("/FirstMenu.fxml"));
-    rootMenu = loaderFM.load();
-    fmController = loaderFM.getController();
+    this.rootMenu = loaderFM.load();
+    this.fmController = loaderFM.getController();
     FXMLLoader loaderSS =
         new FXMLLoader(SettingsController.class.getResource("/GameSettingMenu.fxml"));
-    rootNewGame = loaderSS.load();
-    settingsController = loaderSS.getController();
+    this.rootNewGame = loaderSS.load();
+    this.settingsController = loaderSS.getController();
 
     FXMLLoader loaderGS = new FXMLLoader(GameController.class.getResource("/GameState.fxml"));
-    root2 = loaderGS.load();
-    gameController = loaderGS.getController();
+    this.root2 = loaderGS.load();
+    this.gameController = loaderGS.getController();
 
-    bestScene = new Scene(rootMenu);
+    this.bestScene = new Scene(rootMenu);
 
     gameController.setChangeScene(this);
     settingsController.setChangeScene(this);
@@ -53,6 +53,7 @@ public class ChangeScene {
   }
 
   public void switchScenetoGame() throws IOException {
+    
     Main.window.getScene().setRoot(root2);
     gameController.setUsername(settingsController.getName());
     Sound.mp.setVolume(0.3);
@@ -63,9 +64,9 @@ public class ChangeScene {
     return bestScene;
   }
 
-  public void switchToMainMenu() throws IOException {
-    Main.window.getScene().setRoot(new Region());
-    Main.window.getScene().setRoot(rootMenu);
+  public void switchToMainMenu() throws IOException, InstantiationException, IllegalAccessException {
+    prepGame();
+    Main.window.setScene(bestScene);
   }
 
   public void setSPController(SPController spController) {
