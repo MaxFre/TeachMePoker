@@ -7,7 +7,6 @@ public class test {
 
 	private String[] fromCards = new String[10];
 	private String whatToDo;
-	private TurnTwo turnTwo;
 	private ArrayList<String> temphihglightForStasdraight = new ArrayList<String>();
 	private ArrayList<String> temphihglightForStraight = new ArrayList<String>();
 	private ArrayList<String> currentHighlightForStraight = new ArrayList<String>();

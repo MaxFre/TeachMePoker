@@ -30,8 +30,6 @@ public class AiCalculation {
 		checkSuit();
 		checkPairAndMore();
 		checkStraight();
-		System.out.println(aiCards);
-		System.out.println(calcHandstrenght());
 	}
 	
 	/**
@@ -80,13 +78,12 @@ public class AiCalculation {
  * 
  * @return returns if the AI has a chance or has a flush
  */
-	public int checkSuit() {
+	public boolean checkSuit() {
 		int C = 0;
 		int S = 0;
 		int H = 0;
 		int D = 0;
-		int color = 0;
-
+		boolean Color = false;
 		for (String x : cardClr) {
 			if (x.equals("S")) {
 				S++;
@@ -101,32 +98,30 @@ public class AiCalculation {
 				H++;
 			}
 		}
-
-		if (S > color) {
-
-			color = S;
-
+		if (cardClr.size() == 2) {
+			if (S == 2 || C == 2 || D == 2 || H == 2) {
+				Color = true;
+			}
 		}
-
-		if (H > color) {
-
-			color = H;
-
+		if (cardClr.size() == 5) {
+			if (S >= 3 || C >= 3 || D >= 3 || H >= 3) {
+				Color = true;
+			}
 		}
-		if (D > color) {
-
-			color = D;
-
+		if (cardClr.size() == 6) {
+			if (S >= 4 || C >= 4 || D >= 4 || H >= 4) {
+				Color = true;
+			}
 		}
-		if (C > color) {
-
-			color = C;
-
+		if (cardClr.size() == 7) {
+			if (S == 5 || C == 5 || D == 5 || H == 5) {
+				Color = true;
+				flush = true;
+			}
 		}
-
-		return color;
+		return Color;
 	}
-
+	
 /**
  * 
  * @return returns how main pairs or more that the ai has.
@@ -270,60 +265,6 @@ public class AiCalculation {
 	
 		return handStrenght;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-//	public int checkSuit() {
-//		int C = 0;
-//		int S = 0;
-//		int H = 0;
-//		int D = 0;
-//		int color = 0;
-//
-//		for (String x : cardClr) {
-//			if (x.equals("S")) {
-//				S++;
-//			}
-//			if (x.equals("C")) {
-//				C++;
-//			}
-//			if (x.equals("D")) {
-//				D++;
-//			}
-//			if (x.equals("H")) {
-//				H++;
-//			}
-//		}
-//
-//		if (S > color) {
-//
-//			color = S;
-//
-//		}
-//
-//		if (H > color) {
-//
-//			color = H;
-//
-//		}
-//		if (D > color) {
-//
-//			color = D;
-//
-//		}
-//		if (C > color) {
-//
-//			color = C;
-//
-//		}
-//
-//		return color;
-//	}
 	
 
 

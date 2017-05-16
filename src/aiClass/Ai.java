@@ -11,16 +11,12 @@ import deck.Card;
  */
 
 public class Ai {
-
+  private AiDecide aiDecide;
   private boolean isSmallBlind = false;
   private boolean isBigBlind = false;
   private boolean sameTurn = false;
   private int paidThisTurn = 0;
   private String name;
-  private TurnOne turnOne;
-  private TurnTwo turnTwo;
-  private TurnThree turnThree;
-  private TurnFour turnFour;
   private String whatToDo = "";
   private ArrayList<String> aiCards = new ArrayList<String>(); // Lista som lägger till alla kort
                                                                // som kommer in och som skickas till
@@ -55,12 +51,13 @@ public class Ai {
 
   public void makeDecision(int currentBet) { // Make decision for the starting hand
 
-    turnOne = new TurnOne(aiCards, aiPot, currentBet, paidThisTurn, sameTurn);
-    whatToDo = turnOne.decision(); // TurnOne respond.
+//    turnOne = new TurnOne(aiCards, aiPot, currentBet, paidThisTurn, sameTurn);
+    aiDecide = new AiDecide(aiCards, aiPot, currentBet, paidThisTurn, sameTurn);
+//    whatToDo = turnOne.decision(); // TurnOne respond.
+    whatToDo = aiDecide.decision();
     // System.out.println("PaidBeforeThisTurn: " + this.paidThisTurn);
-    this.paidThisTurn += aiPot - turnOne.updateAiPot();
-
-    aiPot = turnOne.updateAiPot();
+    this.paidThisTurn += aiPot - aiDecide.updateAiPot();    
+    aiPot = aiDecide.updateAiPot();
     // System.out.println("PaidThisTurn(including what was paid before): " + this.paidThisTurn);
     System.out.println("AiPot after round: " + aiPot);
   }
@@ -75,12 +72,14 @@ public class Ai {
       }
     }
 
-    turnTwo = new TurnTwo(aiCards, aiPot, currentBet, paidThisTurn, sameTurn);
-    whatToDo = turnTwo.decision(); // TurnTwo respond.
+//    turnTwo = new TurnTwo(aiCards, aiPot, currentBet, paidThisTurn, sameTurn);
+    aiDecide = new AiDecide(aiCards, aiPot, currentBet, paidThisTurn, sameTurn);
+//    whatToDo = turnTwo.decision(); // TurnTwo respond.
+    whatToDo = aiDecide.decision();
     System.out.println("PaidBeforeThisTurn: " + this.paidThisTurn);
-    this.paidThisTurn += aiPot - turnTwo.updateAiPot();
+    this.paidThisTurn += aiPot - aiDecide.updateAiPot();
 
-    aiPot = turnTwo.updateAiPot();
+    aiPot = aiDecide.updateAiPot();
     System.out.println("PaidThisTurn(including what was paid before): " + this.paidThisTurn);
     System.out.println("AiPot after round: " + aiPot);
   }
@@ -95,21 +94,25 @@ public class Ai {
       aiCards.add(turn.getCardValue() + "," + String.valueOf(A));
     }
     if (aiCards.size() < 7) {
-      turnThree = new TurnThree(aiCards, aiPot, currentBet, paidThisTurn, sameTurn);
-      whatToDo = turnThree.decision(); // TurnThree respond.
+      aiDecide = new AiDecide(aiCards, aiPot, currentBet, paidThisTurn, sameTurn);
+//      turnThree = new TurnThree(aiCards, aiPot, currentBet, paidThisTurn, sameTurn);
+//      whatToDo = turnThree.decision(); // TurnThree respond.
+      whatToDo = aiDecide.decision(); // TurnThree respond.
       System.out.println("PaidBeforeThisTurn: " + this.paidThisTurn);
-      this.paidThisTurn += aiPot - turnThree.updateAiPot();
-      aiPot = turnThree.updateAiPot();
+      this.paidThisTurn += aiPot - aiDecide.updateAiPot();
+      aiPot = aiDecide.updateAiPot();
       System.out.println("PaidThisTurn(including what was paid before): " + this.paidThisTurn);
       System.out.println("AiPot after round: " + aiPot);
 
     } else if (aiCards.size() == 7) {
-      turnFour = new TurnFour(aiCards, aiPot, currentBet, paidThisTurn, sameTurn);
-      whatToDo = turnFour.decision(); // TurnFour respond.
+    	aiDecide = new AiDecide(aiCards, aiPot, currentBet, paidThisTurn, sameTurn);
+//      turnFour = new TurnFour(aiCards, aiPot, currentBet, paidThisTurn, sameTurn);
+//      whatToDo = turnFour.decision(); // TurnFour respond.
+    	 whatToDo = aiDecide.decision(); // TurnFour respond.
       System.out.println("PaidBeforeThisTurn: " + this.paidThisTurn);
-      this.paidThisTurn += aiPot - turnFour.updateAiPot();
-      aiPot = turnFour.updateAiPot();
-      handStrength = turnFour.gethandStrength();
+      this.paidThisTurn += aiPot - aiDecide.updateAiPot();
+      aiPot = aiDecide.updateAiPot();
+      handStrength = aiDecide.gethandStrength();
       System.out.println("PaidThisTurn(including what was paid before): " + this.paidThisTurn);
       System.out.println("AiPot after round: " + aiPot);
     }

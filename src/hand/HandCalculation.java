@@ -700,8 +700,10 @@ public class HandCalculation {
 		if(straightChance==5){		
 			helper = "En 'STRAIGHT'!! Du har 5/5.\n";
 			advice = "En 'STRAIGHT' är en riktigt bra hand. Kör på! \nFundera även på att höja!\n";
-			// writes the active cards to hihglight
+			toHighlight.clear();
 			toHighlight = getToHighlight();		
+			
+			
 		}
 		
 		//FLUSH
@@ -709,6 +711,8 @@ public class HandCalculation {
 			helper = "En 'FLUSH' i " + theColor + "!! Du har 5/5!!\n";
 			advice = "Du har en 'FLUSH'! Kör på, din hand är svår att slå!\n";
 			//To HIHGLIGHT IS IN checkSuit Method.
+			toHighlight.clear();
+			checkSuit();
 		}
 	
 			
