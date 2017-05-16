@@ -135,17 +135,20 @@
 						<Image url="@images/userBar.png" />
 					</image>
 				</ImageView>
-				<Label id="label" fx:id="lbPlayerAction" font="$x3" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="4.0" layoutX="535.0" layoutY="620.0" text="Your bet">
+				<Label id="label" fx:id="lbPlayerAction" alignment="CENTER" contentDisplay="CENTER" font="$x3" graphicTextGap="4.0" layoutX="474.0" layoutY="662.0" prefHeight="18.0" prefWidth="184.0" text="Your bet" textAlignment="CENTER" textOverrun="CLIP">
 					<font>
 						<Font name="Tw Cen MT" size="15.0" fx:id="x3" />
-						<Font name="Tw Cen MT" size="10.0" fx:id="decisionFont"/>
+						<Font fx:id="decisionFont" name="Tw Cen MT" size="10.0" />
 					</font>
 					<labelFor>
 						<TextField fx:id="field" editable="false" layoutX="972.0" layoutY="379.0" prefWidth="75.0" />
 					</labelFor>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
 				</Label>
-				<Label fx:id="userName" alignment="CENTER" contentDisplay="CENTER" font="$x3" layoutX="475.0" layoutY="572.0" prefHeight="18.0" prefWidth="184.0" text="Vedrana" />
-				<Label id="potValueLabel" fx:id="lbPotValue" alignment="CENTER" contentDisplay="CENTER" font="$x3" graphicTextGap="4.0" layoutX="535.0" layoutY="660.0" text="Your pot" />
+				<Label fx:id="userName" alignment="CENTER" contentDisplay="CENTER" font="$x3" layoutX="474.0" layoutY="572.0" prefHeight="18.0" prefWidth="184.0" text="Vedrana" textAlignment="CENTER" />
+				<Label id="potValueLabel" fx:id="lbPotValue" alignment="CENTER" contentDisplay="CENTER" font="$x3" graphicTextGap="4.0" layoutX="474.0" layoutY="618.0" prefHeight="18.0" prefWidth="184.0" text="Your pot" textAlignment="CENTER" />
 				<Label fx:id="raiseLabel" layoutX="918.0" layoutY="612.0" textFill="#e8dbdb" />
 				<ImageView id="aiBarWithCards.png" fx:id="imgPlayerOneCards" fitHeight="148.0" fitWidth="114.0" layoutX="170.0" layoutY="290.0" visible="false">
 					<image>
@@ -225,7 +228,7 @@
 						<Image url="@images/raiseButton.png" />
 					</image>
 				</ImageView>
-				<Label fx:id="lbAllIn" disable="false" focusTraversable="false" font="$x3" labelFor="$slider" layoutX="932.0" layoutY="614.0" prefHeight="28.0" prefWidth="49.0" text="All IN" textFill="WHITE" visible="false" />
+				<Label fx:id="lbAllIn" disable="false" focusTraversable="false" font="$x3" labelFor="$slider" layoutX="870.0" layoutY="650.0" prefHeight="28.0" prefWidth="49.0" text="ALL IN" textFill="WHITE" visible="false" />
 				<Pane fx:id="tabelCardArea" layoutX="435.0" layoutY="231.0" prefHeight="164.0" prefWidth="471.0" />
 				<!-- <ImageView id="img1Table.png" fx:id="imgCard1" fitHeight="166.0" 
 					fitWidth="120.0" layoutX="0.0" layoutY="0.0" visible="false"> </ImageView> 
