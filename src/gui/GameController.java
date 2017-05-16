@@ -486,11 +486,26 @@ public class GameController {
 	}
 
 
-	// TODO Felplacerad??? Ser konstigt ut.
+	/**
+	 * Set Allin label visible  
+	 */
 	public void showAllIn() {
 		lbAllIn.setVisible(true);
 	}
-
+	
+	/**
+	 * Set Allin label deactive
+	 */
+	public void hideAllIn() {
+		lbAllIn.setVisible(false);
+	}
+	
+	/**
+	 * Set slider active
+	 */
+	public void activeSlider(){
+		slider.setDisable(false);
+	}
 
 	/**
 	 * Clears AI action and updates the new and current AI-pot at the end of the round.

@@ -158,6 +158,8 @@ public class SPController extends Thread {
    */
   public void run() {
 
+	gController.hideAllIn();
+	gController.activeSlider();
     Card[] turnCards = {flop[0], flop[1], flop[2], turn};
     Card[] riverCards = {flop[0], flop[1], flop[2], turn, river};
     while (playTurn < 4) {
