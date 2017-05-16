@@ -507,6 +507,7 @@ public class GameController {
 		slider.setDisable(false);
 	}
 
+
 	/**
 	 * Clears AI action and updates the new and current AI-pot at the end of the round.
 	 * @param ai Which AI to update values for.
