@@ -16,7 +16,6 @@ public class AiDecide {
   private int aiPot;
   private int toBet;
   private int raiseAmount;
-  private int alreadyPaid;
   private boolean sameTurn;
   private int raiseBet = 0;
   private int turn;
@@ -29,7 +28,6 @@ public class AiDecide {
     this.aiPot = aiPot;
     this.toBet = toBet;
     this.raiseBet = toBet;
-    this.alreadyPaid = alreadyPaid;
     this.sameTurn = sameTurn;
     System.out.println("toBet: " + toBet);
     if (toBet != 0) {

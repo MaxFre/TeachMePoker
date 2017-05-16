@@ -1,22 +1,9 @@
 package aiClass;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-
 import deck.Card;
-import deck.CardValue;
 import deck.Deck;
-import deck.Suit;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 /**
  * Class that is for testing of the AI.
  * 

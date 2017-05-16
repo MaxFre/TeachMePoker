@@ -1,13 +1,11 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import aiClass.Ai;
 import deck.Card;
 import deck.Deck;
 import gui.GameController;
-import gui.Sound;
 
 
 /**
@@ -40,10 +38,8 @@ public class SPController extends Thread {
   private int noOfPlayers = 0;
   private boolean allCalledorFolded = false;
   private boolean winnerDeclared = false;
-  private boolean notFirstRound = false;
   private ArrayList<String> name = new ArrayList<String>();
   private GameController gController;
-  private int deadAIIndex;
   private int fixedNrOfAIs;
 
 
@@ -157,9 +153,9 @@ public class SPController extends Thread {
    * Method that runs the gameround itself public void playPoker() {
    */
   public void run() {
-    
-//    gController.hideAllIn();
-//    gController.activeSlider();
+
+    gController.hideAllIn();
+    gController.activeSlider();
 
     Card[] turnCards = {flop[0], flop[1], flop[2], turn};
     Card[] riverCards = {flop[0], flop[1], flop[2], turn, river};
@@ -224,7 +220,6 @@ public class SPController extends Thread {
             if (!aiPlayers.get(currentPlayer).getDecision().contains("fold")) {
               try {
                 Thread.sleep(1000);
-                // TODO Make it obvious which player is playing?
               } catch (InterruptedException e) {
                 e.printStackTrace();
               }
@@ -274,18 +269,6 @@ public class SPController extends Thread {
       }
 
     }
-    // for (Iterator<Ai> aiL = aiPlayers.iterator(); aiL.hasNext();) {
-    // Ai currentAI = aiL.next();
-    // if (currentAI.aiPot() < bigBlind) {
-    // deadAIIndex = aiPlayers.indexOf(currentAI);
-    // Ai deadAI = currentAI;
-    // if (aiL.equals(deadAI)) {
-    // aiL.remove();
-    // }
-    // gController.setAiPlayers(aiPlayers, notFirstRound, deadAIIndex);
-    // }
-    //
-    // }
 
 
     winnerDeclared = false;
@@ -298,7 +281,6 @@ public class SPController extends Thread {
       blindCounter = 0;
     }
     dealer = (dealer + 1) % noOfPlayers;
-    notFirstRound = true;
 
     setupPhase();
 
@@ -481,13 +463,13 @@ public class SPController extends Thread {
     } else if (aiDecision.contains("all-in")) {
       // TODO hantera all-in
       split = aiDecision.split(",");
-      
-      if(currentMaxBet < Integer.parseInt(split[1])) {
+
+      if (currentMaxBet < Integer.parseInt(split[1])) {
         currentPotSize += Integer.parseInt(split[1]);
         currentMaxBet = Integer.parseInt(split[1]);
       } else {
-        
-        //TODO potSplit
+
+        // TODO potSplit
       }
       gController.aiAction(currentPlayer, aiDecision);
     } else {
