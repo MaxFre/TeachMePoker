@@ -5,6 +5,7 @@ import controller.SPController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 
 /**
  * Class that handles the switching of scenes in the main window and the gui controll class that
@@ -16,10 +17,7 @@ import javafx.scene.layout.Pane;
  */
 
 public class ChangeScene {
-
-  // Scene sceneNewGame;
-  // Scene sceneGameState;
-  // Scene sceneMenu;
+  
   Pane rootMenu;
   Pane rootNewGame;
   Pane root2;
@@ -43,9 +41,6 @@ public class ChangeScene {
     gameController = loaderGS.getController();
 
     bestScene = new Scene(rootMenu);
-//    sceneMenu = new Scene(rootMenu);
-//    sceneNewGame = new Scene(rootNewGame);
-//    sceneGameState = new Scene(root2);
 
     gameController.setChangeScene(this);
     settingsController.setChangeScene(this);
@@ -54,24 +49,22 @@ public class ChangeScene {
   }
 
   public void switchScenetoSetting() throws IOException {
-  //  Main.window.setScene(sceneNewGame);
     Main.window.getScene().setRoot(rootNewGame);
   }
 
   public void switchScenetoGame() throws IOException {
     Main.window.getScene().setRoot(root2);
     gameController.setUsername(settingsController.getName());
-   Sound.mp.setVolume(0.3);
-   // Main.window.setScene(sceneGameState);
+    Sound.mp.setVolume(0.3);
 
   }
 
   public Scene firstScene() throws IOException {
-   // return sceneMenu;
     return bestScene;
   }
-  
-  public void switchToMainMenu() throws IOException{
+
+  public void switchToMainMenu() throws IOException {
+    Main.window.getScene().setRoot(new Region());
     Main.window.getScene().setRoot(rootMenu);
   }
 
