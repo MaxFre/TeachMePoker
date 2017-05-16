@@ -157,9 +157,9 @@ public class SPController extends Thread {
    * Method that runs the gameround itself public void playPoker() {
    */
   public void run() {
-	  
-	gController.hideAllIn();
-	gController.activeSlider();
+    
+//    gController.hideAllIn();
+//    gController.activeSlider();
 
     Card[] turnCards = {flop[0], flop[1], flop[2], turn};
     Card[] riverCards = {flop[0], flop[1], flop[2], turn, river};
@@ -246,7 +246,7 @@ public class SPController extends Thread {
           aiPlayers.get(currentPlayer).setSameTurn(true);
         }
         currentPlayer = (currentPlayer + 1) % noOfPlayers;
-
+        System.out.println("current Pot: " + currentPotSize);
       }
 
       playTurn++;
@@ -379,7 +379,7 @@ public class SPController extends Thread {
 
 
   private void askForPlayerDecision(int currentMaxBet2) {
-
+    System.out.println("To pay if call: " + currentMaxBet);
     gController.askForPlayerDecision();
     playerAction();
   }
@@ -399,8 +399,7 @@ public class SPController extends Thread {
     } else if (playerDecision.contains("fold")) {
     } else if (playerDecision.contains("call")) {
       split = playerDecision.split(",");
-      currentPotSize += currentMaxBet - gController.getPlayerAlreadyPaid();
-      // currentPotSize += currentMaxBet;
+      currentPotSize += currentMaxBet;
     } else if (playerDecision.contains("check")) {
     }
     allCallorFold();
@@ -465,7 +464,7 @@ public class SPController extends Thread {
         currentMaxBet = Integer.parseInt(split[1]);
         currentPotSize += Integer.parseInt(split[1]);
       } else {
-        currentPotSize += currentMaxBet;
+        currentPotSize += Integer.parseInt(split[1]);
       }
 
       if (Integer.parseInt(split[1]) <= 0) {
@@ -473,7 +472,7 @@ public class SPController extends Thread {
         System.out.println("AI Checks");
       } else {
         gController.aiAction(currentPlayer, split[0]);
-        System.out.println("AI Calls");
+        System.out.println("AI Calls " + split[1]);
       }
 
     } else if (aiDecision.contains("check")) {
@@ -481,7 +480,15 @@ public class SPController extends Thread {
       gController.aiAction(currentPlayer, aiDecision);
     } else if (aiDecision.contains("all-in")) {
       // TODO hantera all-in
-      aiPlayers.get(currentPlayer).setDecision("fold");
+      split = aiDecision.split(",");
+      
+      if(currentMaxBet < Integer.parseInt(split[1])) {
+        currentPotSize += Integer.parseInt(split[1]);
+        currentMaxBet = Integer.parseInt(split[1]);
+      } else {
+        
+        //TODO potSplit
+      }
       gController.aiAction(currentPlayer, aiDecision);
     } else {
       System.out.println("fan");
@@ -509,7 +516,7 @@ public class SPController extends Thread {
       bigBlindPlayer = (dealer + 2) % noOfPlayers;
     }
     while (dealer != noOfPlayers - 1 && aiPlayers.get(dealer).getDecision().contains("lost")) {
-      dealer = (dealer + 1) % dealer;
+      dealer = (dealer + 1) % noOfPlayers;
       smallBlindPlayer = (smallBlindPlayer + 1) % noOfPlayers;
       bigBlindPlayer = (bigBlindPlayer + 1) % noOfPlayers;
     }
