@@ -696,10 +696,14 @@ public class GameController {
 
   public void playerSmallBlind(int i) {
     this.alreadyPaid += i;
+    this.playerPot -= i;
     System.out.println("Player paid small blind(" + i + ")");
     Platform.runLater(() -> {
+
       ivSmallBlind.relocate(520, 425);
+
     });
+
     // ivSmallBlind.setLayoutX(520);
     // ivSmallBlind.setLayoutY(425);
 
@@ -709,9 +713,11 @@ public class GameController {
   public void playerBigBlind(int i) {
 
     this.alreadyPaid += i;
+    this.playerPot -= i;
     System.out.println("Player paid big blind(" + i + ")");
     Platform.runLater(() -> {
       ivBigBlind.relocate(520, 425);
+
 
     });
 
@@ -730,8 +736,15 @@ public class GameController {
 
 
   public void playerIsDealer(int i) {
-    ivDealer.setLayoutX(520);
-    ivDealer.setLayoutY(425);
+    System.out.println(ivBigBlind.getLayoutX());
+    System.out.println(ivSmallBlind.getLayoutX());
+    if ((int) ivBigBlind.getLayoutX() == 520 || (int) ivSmallBlind.getLayoutX() == 520) {
+      ivDealer.setLayoutX(500);
+      ivDealer.setLayoutY(425);
+    } else {
+      ivDealer.setLayoutX(520);
+      ivDealer.setLayoutY(425);
+    }
   }
 
 
@@ -1195,6 +1208,16 @@ public class GameController {
           // ivDealer.relocate(520, 425);
           ivSmallBlind.relocate(300, 360);
           ivBigBlind.relocate(745, 172);
+        }
+      }
+      if (aiPlayers.size() == 1) {
+        if (dealer == 0) {
+          ivDealer.relocate(745, 172);
+          ivSmallBlind.relocate(725, 172);
+
+        } else {
+          ivBigBlind.relocate(745, 172);
+
         }
       }
 

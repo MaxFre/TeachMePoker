@@ -43,6 +43,8 @@ public class SPController extends Thread {
   private ArrayList<String> name = new ArrayList<String>();
   private GameController gController;
   private int fixedNrOfAIs;
+  private int[] potSplits;
+  private boolean doAllInCheck;
 
 
 
@@ -74,6 +76,7 @@ public class SPController extends Thread {
       aiPlayers.add(new Ai(potSize / (noOfPlayers), name.remove(0)));
     }
     gController.setAiPlayers(aiPlayers, false, 69);
+    potSplits = new int[noOfPlayers];
 
     setupPhase();
   }
@@ -494,12 +497,12 @@ public class SPController extends Thread {
     } else if (aiDecision.contains("all-in")) {
       // TODO hantera all-in
       split = aiDecision.split(",");
-
-      if (currentMaxBet < Integer.parseInt(split[1])) {
-        currentPotSize += Integer.parseInt(split[1]);
-        currentMaxBet = Integer.parseInt(split[1]);
+      int allin = Integer.parseInt(split[1]);
+      if (currentMaxBet < allin) {
+        currentPotSize += allin;
+        currentMaxBet = allin;
       } else {
-
+        doAllInCheck = true;
         // TODO potSplit
       }
       gController.aiAction(currentPlayer, aiDecision);
@@ -558,11 +561,12 @@ public class SPController extends Thread {
       // gController.aiAction(smallBlindPlayer, "SmallBlind");
       // gController.aiAction(bigBlindPlayer, "BigBlind");
       // sets dealer as well
-      if (dealer != noOfPlayers - 1) {
-        // gController.aiAction(dealer, "Dealer");
-      } else {
-        gController.playerIsDealer(dealer);
-      }
+    }
+    if (dealer != noOfPlayers - 1) {
+      System.out.println("test");
+    } else {
+      System.out.println("test2");
+      gController.playerIsDealer(dealer);
     }
     System.out.println("DL" + dealer);
     System.out.println("SB" + smallBlindPlayer);
