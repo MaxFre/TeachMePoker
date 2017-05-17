@@ -1,0 +1,31 @@
+Round1:
+Each player has 
+Player 1: 8
+Player 2: 16
+Player 3: 24
+Player 4: 30
+
+Player 1 bets 2: -> CurrentMaxBet = 2, totalpotsize = 2
+Player 2 All-ins: 16. -> currentMaxBet = 16, totalpotSize 18.
+Stuff happens:
+Player 3 All-ins: 24. -> currentMaxBet = 24, totalpotSize 42.
+Stuff happens:
+Player 4 All-ins: 30, totalpotsize 72.
+Stuff happens:
+
+Player 1 All ins: 6, currentMaxBet = 24. totalpotSize 78.
+Stuff happens:
+
+Now I need:
+pot1 with 32.
+Everyone is part of this.
+
+pot2 with 24
+Player 2-3-4 is part of this.
+
+pot3 with 16
+Player 3-4 is part of this.
+
+pot4 with 6
+Player 4 is part of this.
+
