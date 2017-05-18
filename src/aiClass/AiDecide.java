@@ -112,7 +112,10 @@ public class AiDecide {
       if (raiseAmount < aiPot && !(sameTurn)) {
         toDo = "raise," + raiseAmount;
         howMuchToTakeAwayFromAiPot = raiseAmount;
-      } else if (aiPot > toBet) {
+      } 
+      else if(aiPot > toBet && check){
+    	  toDo = "check" + toBet;
+      }else if (aiPot > toBet) {
         toDo = "call," + toBet;
       } else if (toBet >= aiPot) {
         toDo = "all-in," + aiPot;
@@ -179,7 +182,10 @@ public class AiDecide {
       if (raiseAmount < aiPot && !(sameTurn)) {
         toDo = "raise," + raiseAmount;
         howMuchToTakeAwayFromAiPot = raiseAmount;
-      } else if (aiPot > toBet) {
+      } else if(aiPot > toBet && check){
+    	  toDo = "check" + toBet;
+      }
+      else if (aiPot > toBet) {
         toDo = "call," + toBet;
         howMuchToTakeAwayFromAiPot = toBet;
       } else if (toBet >= aiPot) {
@@ -252,7 +258,10 @@ public class AiDecide {
       if (raiseAmount < aiPot && !(sameTurn)) {
         toDo = "raise," + raiseAmount;
         howMuchToTakeAwayFromAiPot = raiseAmount;
-      } else if (aiPot > toBet) {
+      } 
+      else if(aiPot > toBet && check){
+    	  toDo = "check" + toBet;
+      }else if (aiPot > toBet) {
         toDo = "call," + toBet;
         howMuchToTakeAwayFromAiPot = toBet;
       } else if (toBet >= aiPot) {
@@ -322,7 +331,11 @@ public class AiDecide {
       if (raiseAmount < aiPot && !(sameTurn)) {
         toDo = "raise," + raiseAmount;
         howMuchToTakeAwayFromAiPot = raiseAmount;
-      } else if (aiPot > toBet) {
+      } 
+      else if(aiPot > toBet && check){
+    	  toDo = "check" + toBet;
+      }
+      else if (aiPot > toBet) {
         toDo = "call," + toBet;
         howMuchToTakeAwayFromAiPot = toBet;
       } else if (toBet >= aiPot) {
