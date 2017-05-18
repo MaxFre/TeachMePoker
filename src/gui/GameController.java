@@ -1303,29 +1303,23 @@ public class GameController {
     });
   }
   
-  //Lykke, det borde väl vara så att AI-spelaren vinner mer ofta?! 
-public void setWinnerLabel(String winner){
-	String winnerOfRound = winner;
-	if(winnerOfRound.equals(getUsername())){
-	Platform.runLater(() -> {
-		sound.coinSound();
-		winnerBox = new WinnerBox();
-		winnerBox.displayPlayerWinner("Rundans vinnare", winnerOfRound);
-	
-	  });
+ 
+  public void setWinnerLabel(String winner){
+		String winnerOfRound = winner;
+		if(!winnerOfRound.equals(getUsername())){
+			Platform.runLater(() -> {
+				winnerBox = new WinnerBox();
+				winnerBox.displayWinner("Rundans vinnare", winnerOfRound, 2);
+		  });
+		}
+		else if(winnerOfRound.equals(getUsername())){
+			Platform.runLater(() -> {
+				sound.coinSound();
+				winnerBox = new WinnerBox();
+				winnerBox.displayWinner("Rundans vinnare", winnerOfRound, 1);
+				
+			});
+		}
 	}
-	else if(!winnerOfRound.equals(getUsername())){
-		Platform.runLater(() -> {
-		winnerBox = new WinnerBox();
-			try {
-				winnerBox.displayAIWinner("Rundans vinnare", winnerOfRound);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
-		});
-	}
-}
   
 }
