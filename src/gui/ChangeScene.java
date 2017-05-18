@@ -17,7 +17,7 @@ import javafx.scene.layout.Region;
  */
 
 public class ChangeScene {
-  
+
   Pane rootMenu;
   Pane rootNewGame;
   Pane root2;
@@ -26,6 +26,13 @@ public class ChangeScene {
   private SettingsController settingsController;
   private GameController gameController;
 
+  /**
+   * Method which prepares the FXMLs and by extension the game itself.
+   * 
+   * @throws IOException
+   * @throws InstantiationException
+   * @throws IllegalAccessException
+   */
   public void prepGame() throws IOException, InstantiationException, IllegalAccessException {
     Sound.class.newInstance().playBackgroundMusic();
     FXMLLoader loaderFM = new FXMLLoader(FMController.class.getResource("/FirstMenu.fxml"));
@@ -48,27 +55,57 @@ public class ChangeScene {
 
   }
 
+  /**
+   * Method which switches the scene to the settings menu.
+   * 
+   * @throws IOException
+   */
   public void switchScenetoSetting() throws IOException {
     Main.window.getScene().setRoot(rootNewGame);
   }
 
+  /**
+   * Method which switches the scene to the GameState.
+   * 
+   * @throws IOException
+   */
   public void switchScenetoGame() throws IOException {
-    
+
     Main.window.getScene().setRoot(root2);
     gameController.setUsername(settingsController.getName());
     Sound.mp.setVolume(0.3);
 
   }
 
+  /**
+   * Method which returns the Scene(and First/main menu).
+   * 
+   * @return bestScene the scene for the game.
+   * @throws IOException
+   */
   public Scene firstScene() throws IOException {
     return bestScene;
   }
 
-  public void switchToMainMenu() throws IOException, InstantiationException, IllegalAccessException {
+  /**
+   * Method which switches to the main menu.
+   * 
+   * @throws IOException
+   * @throws InstantiationException
+   * @throws IllegalAccessException
+   */
+  public void switchToMainMenu()
+      throws IOException, InstantiationException, IllegalAccessException {
     prepGame();
     Main.window.setScene(bestScene);
   }
 
+  /**
+   * Method which sets the SPController (the controller that runs the actual game behind the
+   * scenes).
+   * 
+   * @param spController
+   */
   public void setSPController(SPController spController) {
     gameController.setSPController(spController);
   }

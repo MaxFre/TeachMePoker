@@ -10,10 +10,10 @@ import gui.GameController;
 
 
 /**
- * TODO update shit
+ *
  * 
  * @author Rikard Almgren
- * @version 0.6
+ * @version 0.9
  *
  */
 public class SPController extends Thread {
@@ -49,16 +49,13 @@ public class SPController extends Thread {
 
 
   /**
-   * TODO
+   * Method which receives and sets a number of starting variables and for the game to be set up.
    * 
-   * @param noOfAi
-   * @param potSize
-   * @param playerName
-   * @throws IllegalAccessException
-   * @throws InstantiationException
+   * @param noOfAi Number of AI-players
+   * @param potSize The potsize for the table(game).
+   * @param playerName The players' name.
    */
-  public void startGame(int noOfAi, int potSize, String playerName)
-      throws InstantiationException, IllegalAccessException {
+  public void startGame(int noOfAi, int potSize, String playerName) {
     this.fixedNrOfAIs = noOfAi;
     gController.disableButtons();
     this.potSize = potSize;
@@ -78,34 +75,38 @@ public class SPController extends Thread {
     gController.setAiPlayers(aiPlayers, false, 69);
     potSplits = new int[noOfPlayers];
 
-    setupPhase();
+    try {
+      setupPhase();
+    } catch (InstantiationException | IllegalAccessException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
-   * TODO
+   * Method which sets a GameController, the controller that controls the GUI while the game is
+   * running.
    * 
-   * @param gController
+   * @param gController An instance of GameController
    */
   public void setGameController(GameController gController) {
 
     this.gController = gController;
-    System.out.println("This happens");
 
   }
 
   /**
-   * TODO
+   * Method which returns the current max bet for the table.
    * 
-   * @return
+   * @return currentMaxbet the current max bet.
    */
   public int getCurrentMaxBet() {
     return currentMaxBet;
   }
 
   /**
-   * TODO
+   * Method which returns the current potsize.
    * 
-   * @return
+   * @return potSize The pot.
    */
   public int getPotSize() {
     return potSize;
@@ -233,7 +234,6 @@ public class SPController extends Thread {
             try {
               Thread.sleep(1000);
             } catch (InterruptedException e) {
-              // TODO Auto-generated catch block
               e.printStackTrace();
             }
             askForPlayerDecision(currentMaxBet);
@@ -309,17 +309,15 @@ public class SPController extends Thread {
     try {
       setupPhase();
     } catch (InstantiationException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     } catch (IllegalAccessException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
   }
 
   /**
-   * //TODO
+   * Method which checks who the winner is.
    */
   private void checkWinner() {
 
@@ -328,9 +326,6 @@ public class SPController extends Thread {
     for (Ai ai : aiPlayers) {
 
       if (!ai.getDecision().equals("fold")) {
-        System.out.println(ai.getName());
-        System.out.println(ai.handStrength());
-        System.out.println(ai.getHighCard());
         if (ai.handStrength() > bestHand) {
           bestHandPlayer = ai;
           bestHand = ai.handStrength();
@@ -341,12 +336,6 @@ public class SPController extends Thread {
         }
       }
     }
-    System.out.println("Bästa AI spelare: " + bestHandPlayer.getName());
-    System.out.println("Handstyrka: " + bestHand);
-    System.out.println("highCard: " + bestHandPlayer.getHighCard());
-    System.out.println("Player:");
-    System.out.println(gController.getHandStrength());
-    System.out.println(gController.getGetHighCard());
     if (!gController.getPlayerDecision().contains("fold")) {
       if (gController.getHandStrength() > bestHand) {
         gController.setPlayerPot(currentPotSize);
@@ -393,14 +382,21 @@ public class SPController extends Thread {
     return livePlayers;
   }
 
-
+  /**
+   * Method which asks the GUi to give the player a choice and calls an action when a decision has
+   * been made.
+   * 
+   * @param currentMaxBet2 the currentmaxbet.
+   */
   private void askForPlayerDecision(int currentMaxBet2) {
     System.out.println("To pay if call: " + currentMaxBet);
     gController.askForPlayerDecision();
     playerAction();
   }
 
-
+  /**
+   * A method which controls what to do depending on the players' action.
+   */
   private void playerAction() {
 
     String playerDecision = gController.getPlayerDecision();
@@ -418,6 +414,7 @@ public class SPController extends Thread {
       currentPotSize += currentMaxBet;
     } else if (playerDecision.contains("check")) {
     }
+    // Check all call or fold
     allCallorFold();
   }
 
@@ -451,8 +448,7 @@ public class SPController extends Thread {
 
 
   /**
-   * TestMethod, Maybe used to update GUI in the future? Prints what the AI player decided to do in
-   * the console
+   * Method which controls what to do depending on the Ai players' action.
    * 
    * @param currentPlayer current AI player
    */
@@ -513,7 +509,7 @@ public class SPController extends Thread {
 
 
   /**
-   * Method which sets who the small and big blind players are dependant on who the dealer is.
+   * Method which sets who the small and big blind players are. Depending on who the dealer is.
    * 
    * @param noOfPlayers Number of players in the game
    */
@@ -618,7 +614,7 @@ public class SPController extends Thread {
 
 
   /**
-   * TODO
+   * Method which returns the small blind value.
    * 
    * @return Current small blind
    */
@@ -627,7 +623,7 @@ public class SPController extends Thread {
   }
 
   /**
-   * TODO
+   * Method which returns the big blind value.
    * 
    * @return Current big blind
    */
@@ -637,7 +633,7 @@ public class SPController extends Thread {
 
 
   /**
-   * Saves chosen number of AIs
+   * Method which Saves chosen number of AIs
    * 
    * @return Number of chosen AIs as int
    */
