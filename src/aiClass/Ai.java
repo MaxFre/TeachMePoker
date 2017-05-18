@@ -58,6 +58,7 @@ public class Ai {
     whatToDo = aiDecide.decision();
     System.out.println("PaidBeforeThisTurn: " + this.paidThisTurn);
     this.paidThisTurn += aiPot - aiDecide.updateAiPot();
+    handStrength = aiDecide.gethandStrength();
     aiPot = aiDecide.updateAiPot();
     System.out.println("PaidThisTurn(including what was paid before): " + this.paidThisTurn);
     System.out.println("Decision: " + whatToDo);
@@ -80,6 +81,7 @@ public class Ai {
     System.out.println("PaidBeforeThisTurn: " + this.paidThisTurn);
     this.paidThisTurn += aiPot - aiDecide.updateAiPot();
     aiPot = aiDecide.updateAiPot();
+    handStrength = aiDecide.gethandStrength();
     System.out.println("PaidThisTurn(including what was paid before): " + this.paidThisTurn);
     System.out.println("Decision: " + whatToDo);
     System.out.println("AiPot after round: " + aiPot);
@@ -102,6 +104,7 @@ public class Ai {
       System.out.println("PaidBeforeThisTurn: " + this.paidThisTurn);
       this.paidThisTurn += aiPot - aiDecide.updateAiPot();
       aiPot = aiDecide.updateAiPot();
+      handStrength = aiDecide.gethandStrength();
       System.out.println("PaidThisTurn(including what was paid before): " + this.paidThisTurn);
       System.out.println("Decision: " + whatToDo);
       System.out.println("AiPot after round: " + aiPot);
@@ -114,6 +117,7 @@ public class Ai {
       System.out.println("PaidBeforeThisTurn: " + this.paidThisTurn);
       this.paidThisTurn += aiPot - aiDecide.updateAiPot();
       aiPot = aiDecide.updateAiPot();
+      handStrength = aiDecide.gethandStrength();
       System.out.println("PaidThisTurn(including what was paid before): " + this.paidThisTurn);
       System.out.println("Decision: " + whatToDo);
       System.out.println("AiPot after round: " + aiPot);
@@ -225,7 +229,6 @@ public class Ai {
 
 
   public int handStrength() {
-
     return handStrength;
   }
 
