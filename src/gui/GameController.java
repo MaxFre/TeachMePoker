@@ -140,6 +140,7 @@ public class GameController {
   public MenuItem miAbout;
 
 
+  private WinnerBox winnerBox;
   private ConfirmBox confirmBox;
   private ChangeScene changeScene;
   private int powerBarValue = 0;
@@ -290,8 +291,8 @@ public class GameController {
     this.decision = "check";
     lbPlayerAction.setText("check");
     playerMadeDecision = true;
-    updatePlayerValues("Check");
-    sound.checkSound.play();
+    updatePlayerValues("Check");  
+    sound.checkSound();
 
   }
 
@@ -498,6 +499,10 @@ public class GameController {
    */
   public void setUsername(String name) {
     userName.setText(name);
+  }
+  
+  public String getUsername(){
+	  return userName.getText();
   }
 
 
@@ -763,6 +768,7 @@ public class GameController {
       adviceLabel.setText("Råd: \n" + adviceText);
 
       powerBarValue = hand.toPowerBar();
+      
 
       if (powerBarValue == 1) {
         powerBarArea.getChildren().remove(imgPowerBar);
@@ -1296,5 +1302,30 @@ public class GameController {
       paneRounds.getChildren().add(imgRoundStatus);
     });
   }
-
+  
+  //Lykke, det borde väl vara så att AI-spelaren vinner mer ofta?! 
+public void setWinnerLabel(String winner){
+	String winnerOfRound = winner;
+	if(winnerOfRound.equals(getUsername())){
+	Platform.runLater(() -> {
+		sound.coinSound();
+		winnerBox = new WinnerBox();
+		winnerBox.displayPlayerWinner("Rundans vinnare", winnerOfRound);
+	
+	  });
+	}
+	else if(!winnerOfRound.equals(getUsername())){
+		Platform.runLater(() -> {
+		winnerBox = new WinnerBox();
+			try {
+				winnerBox.displayAIWinner("Rundans vinnare", winnerOfRound);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		});
+	}
+}
+  
 }

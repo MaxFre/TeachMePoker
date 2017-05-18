@@ -21,7 +21,7 @@ public class Main extends Application {
     cs.prepGame();
 
     window = primaryStage;
-    window.setTitle("TeachMePoker");
+    window.setTitle("TeachMePooker");
     window.setResizable(true);
     window.setOnCloseRequest(e -> closeProgram());
 
