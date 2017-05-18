@@ -48,7 +48,7 @@ public class SPController extends Thread {
 
 
   /**
-   * Method which receives and sets a number of starting variables and for the game to be set up.
+   * Method which receives and sets a number of starting variables and prepares for the game to be set up.
    * 
    * @param noOfAi Number of AI-players
    * @param potSize The potsize for the table(game).
