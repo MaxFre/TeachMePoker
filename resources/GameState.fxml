@@ -249,13 +249,13 @@
 				<ImageView id="img7Table.png" fx:id="imgCard7" fitHeight="166.0" fitWidth="120.0" layoutX="525" layoutY="0.0" visible="true">
 				</ImageView>
 
-				<TitledPane alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="1005.0" layoutY="448.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="318.0" prefWidth="224.0" rotate="90.0" text="Handrankning" textOverrun="CLIP">
+				<TitledPane alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="1008.0" layoutY="448.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="318.0" prefWidth="224.0" rotate="90.0" text="Handrankning" textOverrun="CLIP">
 					<content>
 						<ScrollPane centerShape="false" fitToHeight="true" fitToWidth="true" hvalue="1.0" layoutX="1020.0" layoutY="465.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="222.0" rotate="180.0" scaleShape="false" vbarPolicy="NEVER" vvalue="0.59">
 							<content>
-								<ImageView cache="true" fitHeight="299.0" fitWidth="297.0" nodeOrientation="INHERIT" pickOnBounds="true" rotate="90.0">
+								<ImageView cache="true" fitHeight="268.0" fitWidth="975.0" pickOnBounds="true" >
 									<image>
-										<Image url="@images/handRanking11.png" />
+										<Image url="@images/handRanking.png" />
 									</image>
 									<viewport>
 										<Rectangle2D />
