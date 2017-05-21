@@ -48,7 +48,7 @@ public class SPController extends Thread {
 
 
   /**
-   * Method which receives and sets a number of starting variables and prepares for the game to be set up.
+   * Method which receives and sets a number of starting variables and for the game to be set up.
    * 
    * @param noOfAi Number of AI-players
    * @param potSize The potsize for the table(game).
@@ -358,37 +358,37 @@ public class SPController extends Thread {
       if (gController.getHandStrength() > bestHand) {
         gController.setPlayerPot(currentPotSize);
         winner = gController.getUsername();
-        gController.setWinnerLabel(winner);
+        gController.setWinnerLabel(winner, gController.getHandStrength());
         System.out.println("Player Wins " + currentPotSize);
       } else if (gController.getHandStrength() == bestHand) {
         if (gController.getGetHighCard() > bestHandPlayer.getHighCard()) {
           gController.setPlayerPot(currentPotSize);
           winner = gController.getUsername();
-          gController.setWinnerLabel(winner);
+          gController.setWinnerLabel(winner, gController.getHandStrength());
           System.out.println("Player Wins " + currentPotSize);
         } else if (gController.getGetHighCard() == bestHandPlayer.getHighCard()) {
           System.out.println("Draw, Pot Split between Player and " + bestHandPlayer.getName());
           bestHandPlayer.updateWinner(currentPotSize / 2);
           gController.setPlayerPot(currentPotSize / 2);
           winner = gController.getUsername() + " och " + bestHandPlayer.getName();
-          gController.setWinnerLabel(winner);
+          gController.setWinnerLabel(winner, bestHand);
         } else {
           System.out.println(bestHandPlayer.getName() + " Wins " + currentPotSize);
           bestHandPlayer.updateWinner(currentPotSize);
           winner = bestHandPlayer.getName();
-          gController.setWinnerLabel(winner);
+          gController.setWinnerLabel(winner, bestHand);
         }
       } else {
         System.out.println(bestHandPlayer.getName() + " Wins " + currentPotSize);
         bestHandPlayer.updateWinner(currentPotSize);
         winner = bestHandPlayer.getName();
-        gController.setWinnerLabel(winner);
+        gController.setWinnerLabel(winner, bestHand);
       }
     } else {
       System.out.println(bestHandPlayer.getName() + " Wins " + currentPotSize);
       bestHandPlayer.updateWinner(currentPotSize);
       winner = bestHandPlayer.getName();
-      gController.setWinnerLabel(winner);
+      gController.setWinnerLabel(winner, bestHand);
     }
 
   }

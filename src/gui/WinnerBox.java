@@ -25,12 +25,12 @@ public class WinnerBox {
 	public Stage window = new Stage();
 	public Font font = new Font("Tw Cen MT", 18);
 	private ImageView back = new ImageView(Paths.get("resources/images/background.png").toUri().toString());
+	private ImageView btnOk = new ImageView(Paths.get("resources/images/okButton.png").toUri().toString());
 	
-	
-	public boolean displayWinner(String title, String message, int nr) {
+	public boolean displayWinner(String title, String message, int nr, String handStrength) {
 		
-		String aiWin = new String("Rundan vanns av " + message);
-		String playerWin = new String("Grattis " + message + ", du vann den här rundan!");
+		String aiWin = new String("Rundan vanns av " + message + " som hade " + handStrength);
+		String playerWin = new String("Grattis " + message + ", du vann den här rundan! Du vann med " + handStrength);
 		
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle(title);
@@ -53,10 +53,8 @@ public class WinnerBox {
 			System.out.println("*******LYKKE AI WIN********");
 		}
 
-		Button buttonOk = new Button("Okidoki");
-		buttonOk.setFont(font);
-
-		buttonOk.setOnAction(e -> {
+		
+		btnOk.setOnMouseReleased(e -> {
 			answer = true;
 			closeProgram();
 		});
@@ -66,10 +64,15 @@ public class WinnerBox {
 		messageText.setPrefSize(200, 100);
 		messageText.setLayoutX(100);
 		messageText.setLayoutY(10);
-		buttonOk.setLayoutX(171);
-		buttonOk.setLayoutY(123);
+//		buttonOk.setLayoutX(171);
+//		buttonOk.setLayoutY(123);
+		btnOk.setFitHeight(35);
+		btnOk.setFitWidth(35);
+		btnOk.setLayoutX(175);
+		btnOk.setLayoutY(110);
 
-		pane.getChildren().addAll(back, messageText, buttonOk);
+
+		pane.getChildren().addAll(back, messageText, btnOk);
 
 		Scene scene = new Scene(pane);
 		window.setScene(scene);
