@@ -228,7 +228,7 @@ public class GameController {
 	 *            The label for the AI's pot.
 	 */
 	public void setLabelUIAiBarPot(int position, String pot) {
-		collectionOfLabelsAi[position][1].setText(pot);
+		collectionOfLabelsAi[position][1].setText("§" + pot);
 	}
 
 	/**
@@ -985,11 +985,14 @@ public class GameController {
 	}
 
 	public void removeAiPlayer(int AI) {
-		collectionOfLabelsAi[AI][0].setVisible(true);
+		Platform.runLater(() -> {
+		collectionOfLabelsAi[AI][0].setVisible(false);
 		collectionOfLabelsAi[AI][1].setVisible(false);
-		collectionOfLabelsAi[AI][2].setText("Lost");
-		collectionOfLabelsAi[AI][2].setVisible(true);
-		collectionOfCardsAi[AI].setVisible(false);
+		collectionOfLabelsAi[AI][2].setVisible(false);
+		//collectionOfLabelsAi[AI][2].setText("Lost");
+		//collectionOfLabelsAi[AI][2].setVisible(true);
+		//collectionOfCardsAi[AI].setVisible(false);
+		});
 	}
 
 	/**
@@ -1066,7 +1069,7 @@ public class GameController {
 
 		Ai ai = aiPlayers.get(currentAI);
 
-		if (decision.contains("fold") || decision.contains("lost")) {
+		if (decision.contains("fold") || decision.contains("lost") || decision.isEmpty()) {
 			setUIAiStatus(currentAIPosition, "inactive");
 		} else {
 			setUIAiStatus(currentAIPosition, "active");
@@ -1172,16 +1175,19 @@ public class GameController {
 	}
 
 	public void playerLost() throws InstantiationException, IllegalAccessException {
+		Platform.runLater(() -> {
 
 		try {
+
 			changeScene.switchToMainMenu();
-		} catch (IOException e) {
+			
+		} catch (IOException | InstantiationException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}	});
 		// TODO make player lose
 		// TODO return to main menu
-
+	
 	}
 
 	public int getGetHighCard() {
