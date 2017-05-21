@@ -138,7 +138,7 @@ public class SettingsController {
 				Platform.runLater(() -> {
 
 				try {
-					this.tutorialWindow = new TutorialController(this);
+					this.tutorialWindow = new TutorialController(this, 1);
 					tutorialWindow.setupUI();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

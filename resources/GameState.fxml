@@ -90,7 +90,8 @@
 						</Menu>
 						<Menu mnemonicParsing="false" text="Hjälp">
 							<items>
-								<MenuItem fx:id="miSettings" mnemonicParsing="false" text="Inställningar" />
+								<MenuItem fx:id="miSettings" mnemonicParsing="false" onAction="#goToTutorial" text="Tutorial" />
+                        <MenuItem fx:id="miRules" mnemonicParsing="false" onAction="#rulesState" text="Regler" />
 							</items>
 						</Menu>
 						<Menu mnemonicParsing="false" text="Om">
@@ -253,7 +254,7 @@
 					<content>
 						<ScrollPane centerShape="false" fitToHeight="true" fitToWidth="true" hvalue="1.0" layoutX="1020.0" layoutY="465.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="222.0" rotate="180.0" scaleShape="false" vbarPolicy="NEVER" vvalue="0.59">
 							<content>
-								<ImageView cache="true" fitHeight="268.0" fitWidth="975.0" pickOnBounds="true" >
+								<ImageView cache="true" fitHeight="268.0" fitWidth="975.0" pickOnBounds="true">
 									<image>
 										<Image url="@images/handRanking.png" />
 									</image>

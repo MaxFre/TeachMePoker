@@ -30,14 +30,26 @@ public class TutorialController {
 
 	public int tutorialProgress;
 	public SettingsController settingsController;
+	public GameController gameController;
 	public Stage window = new Stage();
+	public int gc;
 
 	/**
 	 * Creates the tutorial window object, does not show the window.
 	 * @param settingsController settingsController-object (self)
 	 */
-	public TutorialController(SettingsController settingsController){
+	public TutorialController(SettingsController settingsController, int nr){
+		gc = nr;
 		this.settingsController = settingsController;
+	}
+	
+	/**
+	 * Creates the tutorial window object, does not show the window.
+	 * @param gameController gameController-object (self)
+	 */
+	public TutorialController(GameController gameController){
+		
+		this.gameController = gameController;
 	}
 
 	/**
@@ -66,7 +78,26 @@ public class TutorialController {
 		placeImg();
 
 	}
+	/**
+	 * Initializes the tutorial window and all UI objects. Loads tutorial.fxml and starts the "button-listener" for next.
+	 * If the user cancels the tutorial mid-way, the window closes and the user is sent back to the game.
+	 * @throws IOException
+	 */
+	public void setupUIinGame() throws IOException {
+	window.initModality(Modality.APPLICATION_MODAL);
+	window.setTitle("Tutorial");
+	window.setWidth(1285);
+	window.setHeight(730);
+	window.setOnCloseRequest(e -> closeProgram());
+	this.tutorialPane = (Pane) FXMLLoader.load(RuleController.class.getResource("/Tutorial.fxml"));
+	Scene scene = new Scene(tutorialPane);
+	window.setScene(scene);
+	window.show();
 
+	this.tutorialProgress = 0;
+	placeImg();
+	}
+	
 	/**
 	 * Activates correct listener based on tutorialProgress. There are 17 steps, the last step launches the game.
 	 */
@@ -113,7 +144,10 @@ public class TutorialController {
 	public void addButtonListenerPlay(){
 		btnNext.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			@Override public void handle(MouseEvent event) {
-				settingsController.startGameWindow();
+				
+				if(gc==1){
+					settingsController.startGameWindow();
+				}
 				closeProgram();
 			}
 		});

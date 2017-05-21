@@ -138,6 +138,8 @@ public class GameController {
 	public MenuItem miSettings;
 	@FXML
 	public MenuItem miAbout;
+	@FXML
+	public MenuItem miTutorial;
 
 	private WinnerBox winnerBox;
 	private ConfirmBox confirmBox;
@@ -165,8 +167,9 @@ public class GameController {
 	private int[][] aiPositions;
 	private int highCard;
 	private int prevPlayerActive;
-	String winnerHand = " ";
+	private String winnerHand = " ";
 	private Sound sound = new Sound();
+	private TutorialController tutorialWindow;
 
 	public void initialize() throws Exception {
 
@@ -1364,7 +1367,7 @@ public class GameController {
 		} if (hand == 2) {
 			winnerHand = "två par";
 		} if (hand == 3) {
-			winnerHand = "tre par";
+			winnerHand = "triss";
 		} if (hand == 4) {
 			winnerHand = "straight";
 		} if (hand == 5) {
@@ -1384,6 +1387,19 @@ public class GameController {
 
 			});
 		}
+	}
+	
+	public void goToTutorial() throws IOException{
+		Platform.runLater(() -> {
+				this.tutorialWindow = new TutorialController(this);
+				try {
+					tutorialWindow.setupUIinGame();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		});
+			
 	}
 
 }
