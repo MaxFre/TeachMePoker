@@ -327,6 +327,7 @@ public class SPController extends Thread {
    * Method which checks who the winner is.
    */
   private void checkWinner() {
+    ArrayList<Integer> secWin = new ArrayList<Integer>();
 
     String winner = "";
     int bestHand = 0;
@@ -336,11 +337,14 @@ public class SPController extends Thread {
         if (ai.handStrength() > bestHand) {
           bestHandPlayer = ai;
           bestHand = ai.handStrength();
+          secWin.clear();
         } else if (ai.handStrength() == bestHand) {
           if (ai.getHighCard() > bestHandPlayer.getHighCard()) {
             bestHandPlayer = ai;
-          } else if (true) {
-            // TODO
+            bestHand = ai.handStrength();
+            secWin.clear();
+          } else if (ai.getHighCard() == bestHandPlayer.getHighCard()) {
+            secWin.add(aiPlayers.indexOf((ai)));
           }
         }
       }
@@ -373,22 +377,55 @@ public class SPController extends Thread {
           winner = gController.getUsername() + " och " + bestHandPlayer.getName();
           gController.setWinnerLabel(winner, bestHand);
         } else {
+          if (!secWin.isEmpty()) {
+            int divBy = currentPotSize = secWin.size();
+            System.out.println("AI " + bestHandPlayer.getName() + " and ");
+            for (int i : secWin) {
+              System.out.println(aiPlayers.get(i).getName() + ", ");
+              aiPlayers.get(i).updateWinner(divBy);
+            }
+            System.out.println(" Wins");
+
+          } else {
+            System.out.println(bestHandPlayer.getName() + " Wins " + currentPotSize);
+            bestHandPlayer.updateWinner(currentPotSize);
+            winner = bestHandPlayer.getName();
+            gController.setWinnerLabel(winner, bestHand);
+          }
+        }
+      } else {
+        if (!secWin.isEmpty()) {
+          int divBy = currentPotSize = secWin.size();
+          System.out.println("AI " + bestHandPlayer.getName() + " and ");
+          for (int i : secWin) {
+            System.out.println(aiPlayers.get(i).getName() + ", ");
+            aiPlayers.get(i).updateWinner(divBy);
+          }
+          System.out.println(" Wins");
+
+        } else {
           System.out.println(bestHandPlayer.getName() + " Wins " + currentPotSize);
           bestHandPlayer.updateWinner(currentPotSize);
           winner = bestHandPlayer.getName();
           gController.setWinnerLabel(winner, bestHand);
         }
+      }
+    } else {
+      if (!secWin.isEmpty()) {
+        int divBy = currentPotSize = secWin.size();
+        System.out.println("AI " + bestHandPlayer.getName() + " and ");
+        for (int i : secWin) {
+          System.out.println(aiPlayers.get(i).getName() + ", ");
+          aiPlayers.get(i).updateWinner(divBy);
+        }
+        System.out.println(" Wins");
+
       } else {
         System.out.println(bestHandPlayer.getName() + " Wins " + currentPotSize);
         bestHandPlayer.updateWinner(currentPotSize);
         winner = bestHandPlayer.getName();
         gController.setWinnerLabel(winner, bestHand);
       }
-    } else {
-      System.out.println(bestHandPlayer.getName() + " Wins " + currentPotSize);
-      bestHandPlayer.updateWinner(currentPotSize);
-      winner = bestHandPlayer.getName();
-      gController.setWinnerLabel(winner, bestHand);
     }
 
   }
