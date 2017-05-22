@@ -798,7 +798,6 @@ public class GameController {
 
     });
     updatePots(new int[0][0], spController.getPotSize());
-
     // ivSmallBlind.setLayoutX(520);
     // ivSmallBlind.setLayoutY(425);
 
@@ -814,7 +813,6 @@ public class GameController {
 
     });
     updatePots(new int[0][0], spController.getPotSize());
-
     // ivBigBlind.setLayoutX(520);
     // ivBigBlind.setLayoutY(425);
   }
@@ -1429,19 +1427,41 @@ public class GameController {
     if (hand == 5) {
       winnerHand = "flush";
     }
+    if (hand == 99) {
+    	winnerHand = "Du vann när resten av spelarna foldade!";
+    }
+    if (hand == 98) {
+    	winnerHand = "när resterande spelare foldade.";
+    }
+    if (hand == 97) {
+    	winnerHand = "Du förlorade!";
+    }
 
-    if (!winnerOfRound.equals(getUsername())) {
+    if (!winnerOfRound.equals(getUsername())&&(hand<10)) {
       Platform.runLater(() -> {
         winnerBox = new WinnerBox();
         winnerBox.displayWinner("Rundans vinnare", winnerOfRound, 2, winnerHand);
       });
-    } else if (winnerOfRound.equals(getUsername())) {
+    } else if (winnerOfRound.equals(getUsername())&&(hand<10)) {
       Platform.runLater(() -> {
     	sound.playSound("coinSound");
         winnerBox = new WinnerBox();
         winnerBox.displayWinner("Rundans vinnare", winnerOfRound, 1, winnerHand);
 
       });
+    } else if (winnerOfRound.equals(getUsername())&&(hand>10)) {
+        Platform.runLater(() -> {
+      	sound.playSound("coinSound");
+          winnerBox = new WinnerBox();
+          winnerBox.displayWinner("Rundans vinnare", winnerOfRound, 3, winnerHand);
+
+        });
+    } else if (!winnerOfRound.equals(getUsername())&&(hand>10)) {
+        Platform.runLater(() -> {
+          winnerBox = new WinnerBox();
+          winnerBox.displayWinner("Rundans vinnare", winnerOfRound, 4, winnerHand);
+
+        });
     }
   }
 

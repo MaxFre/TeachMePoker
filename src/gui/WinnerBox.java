@@ -31,6 +31,8 @@ public class WinnerBox {
 		
 		String aiWin = new String("Rundan vanns av " + message + " som hade " + handStrength);
 		String playerWin = new String("Grattis " + message + ", du vann den här rundan! Du vann med " + handStrength);
+		String playerWinAIFold = new String("Grattis " + message + ". " + handStrength);
+		String aiWinOthersFold = new String("Rundan vanns av " + message + " " + handStrength);
 		
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle(title);
@@ -47,12 +49,17 @@ public class WinnerBox {
 //		messageText.setTextAlignment(TextAlignment.CENTER);
 		if(nr == 1){
 			messageText.setText(playerWin);
-			System.out.println("*******LYKKE PLAYER WIN********");
+			System.out.println("*******WINNERBOX PLAYER WIN********");
 		} else if(nr == 2){
 			messageText.setText(aiWin);
-			System.out.println("*******LYKKE AI WIN********");
+			System.out.println("*******WINNERBOX AI WIN********");
+		} else if(nr == 3){
+			messageText.setText(playerWinAIFold);
+		System.out.println("*******WINNERBOX PLAYER WIN AI FOLDS********");
+		} else if(nr == 4){
+		messageText.setText(aiWinOthersFold);
+		System.out.println("*******WINNERBOX AI WIN PLAYER/AI FOLDS********");
 		}
-
 		
 		btnOk.setOnMouseReleased(e -> {
 			answer = true;

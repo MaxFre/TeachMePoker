@@ -191,6 +191,7 @@ public class SPController extends Thread {
 
     gController.hideAllIn();
     gController.activeSlider();
+    String winner = "";
 
     Card[] turnCards = {flop[0], flop[1], flop[2], turn};
     Card[] riverCards = {flop[0], flop[1], flop[2], turn, river};
@@ -236,6 +237,8 @@ public class SPController extends Thread {
             if (!(checkLivePlayers() > 1)) {
               System.out.println("Player Wins " + currentPotSize);
               gController.setPlayerPot(currentPotSize);
+              winner = gController.getUsername();
+              gController.setWinnerLabel(winner, 99);
               winnerDeclared = true;
               break;
             }
@@ -263,6 +266,8 @@ public class SPController extends Thread {
                 System.out
                     .println(aiPlayers.get(currentPlayer).getName() + " Wins " + currentPotSize);
                 aiPlayers.get(currentPlayer).updateWinner(currentPotSize);
+                winner = aiPlayers.get(currentPlayer).getName();
+                gController.setWinnerLabel(winner, 98);
                 winnerDeclared = true;
                 break;
               }
@@ -915,6 +920,7 @@ public class SPController extends Thread {
     }
     gController.setBlindsMarker(dealer, smallBlindPlayer, bigBlindPlayer);
     this.currentPotSize = smallBlind + bigBlind;
+    gController.updatePots(potSplits, currentPotSize);
   }
 
 
