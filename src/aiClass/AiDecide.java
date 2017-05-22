@@ -107,7 +107,9 @@ public class AiDecide {
     } else if (likelyhood >= 35 && aiPot > toBet && !(check)) {
       toDo = "call," + toBet;
       howMuchToTakeAwayFromAiPot = toBet;
-    } else if (handStrenght == 1) {
+    } 
+    
+     if (handStrenght == 1) {
 
       if (raiseAmount < aiPot && !(sameTurn)) {
         toDo = "raise," + raiseAmount;
@@ -117,6 +119,7 @@ public class AiDecide {
     	  toDo = "check" + toBet;
       }else if (aiPot > toBet && !check) {
         toDo = "call," + toBet;
+        howMuchToTakeAwayFromAiPot = toBet;
       } else if (toBet >= aiPot) {
         toDo = "all-in," + aiPot;
         howMuchToTakeAwayFromAiPot = aiPot;
@@ -177,7 +180,9 @@ public class AiDecide {
     } else if (likelyhood >= 35 && aiPot > toBet && !(check)) {
       toDo = "call," + toBet;
       howMuchToTakeAwayFromAiPot = toBet;
-    } else if (handStrenght >= 1) {
+    } 
+
+    if (handStrenght >= 1) {
 
       if (raiseAmount < aiPot && !(sameTurn)) {
         toDo = "raise," + raiseAmount;
@@ -253,7 +258,9 @@ public class AiDecide {
     } else if (likelyhood >= 35 && aiPot > toBet && !(check)) {
       toDo = "call," + toBet;
       howMuchToTakeAwayFromAiPot = toBet;
-    } else if (handStrenght > 1) {
+    } 
+
+    if (handStrenght > 1) {
 
       if (raiseAmount < aiPot && !(sameTurn)) {
         toDo = "raise," + raiseAmount;
@@ -326,7 +333,9 @@ public class AiDecide {
     } else if (likelyhood >= 35 && aiPot > toBet && !(check)) {
       toDo = "call," + toBet;
       howMuchToTakeAwayFromAiPot = toBet;
-    } else if (handStrenght > 1) {
+    } 
+
+    if (handStrenght > 1) {
 
       if (raiseAmount < aiPot && !(sameTurn)) {
         toDo = "raise," + raiseAmount;
