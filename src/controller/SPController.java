@@ -281,7 +281,7 @@ public class SPController extends Thread {
       playTurn++;
       allCalledorFolded = false;
       for (Ai ai : aiPlayers) {
-        if (!ai.getDecision().contains("fold") && !ai.getDecision().contains("lost")) {
+        if (!ai.getDecision().contains("fold") && !ai.getDecision().contains("lost") && !ai.getDecision().contains("all-in")) {
           ai.setDecision("");
           ai.setSameTurn(false);
         }
@@ -630,21 +630,23 @@ public class SPController extends Thread {
       split = playerDecision.split(",");
       int allin = Integer.parseInt(split[1]);
       if (currentMaxBet < allin) {
-        System.out.println("CPS: " + currentPotSize);
+        System.out.println("CPS1: " + currentPotSize);
 
 
-        currentMaxBet = allin;
-        
+        currentMaxBet = Integer.parseInt(split[1]) + Integer.parseInt(split[2]);
+        System.out.println("CMB: " + currentMaxBet);
+
         currentPotSize += allin;
-        System.out.println("CPS: " + currentPotSize);
-        if (!doAllInCheck) {
-          allin += currentPotSize;
-
-        }
+        allin = currentPotSize;
+        System.out.println("CPS1: " + currentPotSize);
+        // if (!doAllInCheck) {
+        // allin += currentPotSize;
+        //
+        // }
         doAllInCheck = true;
-        System.out.println("PS0: " + potSplits[psCounter][0]);
+        System.out.println("PS01-" + psCounter + " : " + potSplits[psCounter][0]);
         potSplits[psCounter][0] = allin;
-        System.out.println("PS0: " + potSplits[psCounter][0]);
+        System.out.println("PS01-" + psCounter + " : " + potSplits[psCounter][0]);
         gController.setAllInViability(psCounter);
         for (Ai aips : aiPlayers) {
           if ((aips.getPaidThisTurn() + aips.aiPot()) > allin) {
@@ -653,17 +655,19 @@ public class SPController extends Thread {
         }
         psCounter++;
       } else {
-        System.out.println("CPS: " + currentPotSize);
-        
+        currentMaxBet = Integer.parseInt(split[1]) + Integer.parseInt(split[2]);
+        System.out.println("CPS2: " + currentPotSize);
+
         currentPotSize += allin;
-        System.out.println("CPS: " + currentPotSize);
-        if (!doAllInCheck) {
-          allin += currentPotSize;
-        }
+        allin = currentPotSize;
+        System.out.println("CPS2: " + currentPotSize);
+        // if (!doAllInCheck) {
+        // allin += currentPotSize;
+        // }
         doAllInCheck = true;
-        System.out.println("PS0: " + potSplits[psCounter][0]);
+        System.out.println("PS02-" + psCounter + " : " + potSplits[psCounter][0]);
         potSplits[psCounter][0] = allin;
-        System.out.println("PS0: " + potSplits[psCounter][0]);
+        System.out.println("PS02-" + psCounter + " : " + potSplits[psCounter][0]);
         gController.setAllInViability(psCounter);
         for (Ai aips : aiPlayers) {
           if ((aips.getPaidThisTurn() + aips.aiPot()) > allin) {
@@ -751,16 +755,39 @@ public class SPController extends Thread {
       gController.aiAction(currentPlayer, aiDecision);
     } else if (aiDecision.contains("all-in")) {
       split = aiDecision.split(",");
-      int allin = Integer.parseInt(split[1]);
-      if (currentMaxBet < allin) {
-        currentPotSize += allin;
-        currentMaxBet = allin;
+      int allin;
+      if (playTurn > 0) {
         if (!doAllInCheck) {
-          allin += currentPotSize;
+          allin = Integer.parseInt(split[1]) + currentMaxBet;
+          System.out.println("Claimed all-in1: " + allin);
+        } else {
+          allin =
+              Integer.parseInt(split[1]) + (ai.getPaidThisTurn() - (Integer.parseInt(split[1])));
+          System.out.println("Claimed all-in2: " + allin);
         }
+      } else {
+        allin = Integer.parseInt(split[1]);
+        System.out.println("Claimed all-in3: " + allin);
+      }
+      if (currentMaxBet < allin) {
+        System.out.println("CPS1: " + currentPotSize);
+
+
+        currentMaxBet = allin;
+
+        currentPotSize += allin;
+        System.out.println("CPS1: " + currentPotSize);
+        // if (!doAllInCheck) {
+        // allin += currentPotSize;
+        //
+        // }
         doAllInCheck = true;
+        System.out.println("PS01-" + psCounter + " : " + potSplits[psCounter][0]);
         potSplits[psCounter][0] = allin;
-        gController.setAllInViability(psCounter);
+        System.out.println("PS01-" + psCounter + " : " + potSplits[psCounter][0]);
+        if (gController.getPlayerPot() + gController.getPlayerAlreadyPaid() > allin) {
+          gController.setAllInViability(psCounter);
+        }
         for (Ai aips : aiPlayers) {
           if ((aips.getPaidThisTurn() + aips.aiPot()) > allin) {
             aips.setAllInViability(psCounter);
@@ -768,22 +795,61 @@ public class SPController extends Thread {
         }
         psCounter++;
       } else {
-        if (!doAllInCheck) {
-          allin += currentPotSize;
-        }
+        currentMaxBet = allin;
+        System.out.println("CPS2: " + currentPotSize);
+
         currentPotSize += allin;
+        System.out.println("CPS2: " + currentPotSize);
+        // if (!doAllInCheck) {
+        // allin += currentPotSize;
+        // }
         doAllInCheck = true;
+        System.out.println("PS02-" + psCounter + " : " + potSplits[psCounter][0]);
         potSplits[psCounter][0] = allin;
+        System.out.println("PS02-" + psCounter + " : " + potSplits[psCounter][0]);
+        if (gController.getPlayerPot() + gController.getPlayerAlreadyPaid() > allin) {
+          gController.setAllInViability(psCounter);
+        }
         for (Ai aips : aiPlayers) {
           if ((aips.getPaidThisTurn() + aips.aiPot()) > allin) {
             aips.setAllInViability(psCounter);
           }
         }
-        if ((gController.getPlayerAlreadyPaid() + gController.getPlayerPot()) > allin) {
-          gController.setAllInViability(psCounter);
-        }
         psCounter++;
       }
+
+      // if (currentMaxBet < allin) {
+      // currentPotSize += allin;
+      // currentMaxBet = allin;
+      // if (!doAllInCheck) {
+      // allin += currentPotSize;
+      // }
+      // doAllInCheck = true;
+      // potSplits[psCounter][0] = allin;
+      // gController.setAllInViability(psCounter);
+      // for (Ai aips : aiPlayers) {
+      // if ((aips.getPaidThisTurn() + aips.aiPot()) > allin) {
+      // aips.setAllInViability(psCounter);
+      // }
+      // }
+      // psCounter++;
+      // } else {
+      // if (!doAllInCheck) {
+      // allin += currentPotSize;
+      // }
+      // currentPotSize += allin;
+      // doAllInCheck = true;
+      // potSplits[psCounter][0] = allin;
+      // for (Ai aips : aiPlayers) {
+      // if ((aips.getPaidThisTurn() + aips.aiPot()) > allin) {
+      // aips.setAllInViability(psCounter);
+      // }
+      // }
+      // if ((gController.getPlayerAlreadyPaid() + gController.getPlayerPot()) > allin) {
+      // gController.setAllInViability(psCounter);
+      // }
+      // psCounter++;
+      // }
       gController.aiAction(currentPlayer, aiDecision);
     } else {
       System.out.println("fan");
