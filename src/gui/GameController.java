@@ -745,7 +745,7 @@ public class GameController {
                                            // the table (UI)
       tabelCardArea.requestLayout();
 
-      int xCord = 100;
+      int xCord = 0;
       for (int i = 0; i < setOfCards.length; i++) { // Loops through all
                                                     // cards and
                                                     // highlights the
@@ -763,7 +763,7 @@ public class GameController {
               + setOfCards[i].getCardSuit().charAt(0) + ".png";
         }
         if (i == 1) {
-          xCord = 205; // First card
+          xCord = 110; // First card
         } else if (i > 1) {
           xCord += 105;
         }

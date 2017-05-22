@@ -211,7 +211,7 @@
             	<Label fx:id="subPotSix" alignment="TOP_CENTER" layoutX="0" layoutY="0" text="pot1" textFill="#ffffff" visible="false" />
             	<Label fx:id="mainPot" alignment="TOP_CENTER" layoutX="0" layoutY="0" text="potMain" textFill="#ffffff" visible="false">
             	            	               <font>
-                  <Font name="System Bold" size="28.0" />
+                  <Font name="System Bold" size="18.0" />
                </font></Label>
             	
             	
