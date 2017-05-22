@@ -151,6 +151,9 @@ public class SPController extends Thread {
       card1 = deck.getCard();
       card2 = deck.getCard();
       gController.setStartingHand(card1, card2);
+      this.currentPotSize = 0;
+      potSplits = new int[noOfPlayers][1];
+      gController.updatePots(potSplits, currentPotSize);
       for (Ai ai : aiPlayers) {
         ai.setBigBlind(0, false);
         ai.setSmallBlind(0, false);
