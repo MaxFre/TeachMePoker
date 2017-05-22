@@ -359,14 +359,14 @@ public class GameController {
   public void playerRaise() {
 
     disableButtons();
-    int calcWithdraw = 0;
+    //int calcWithdraw = 0;
 
     if (spController.getCurrentMaxBet() != alreadyPaid) { // If the player
                                                           // hasn't
                                                           // matched the
                                                           // current
                                                           // maxbet
-      calcWithdraw = spController.getCurrentMaxBet() - alreadyPaid; // Calculates
+     // calcWithdraw = spController.getCurrentMaxBet() - alreadyPaid; // Calculates
                                                                     // how
                                                                     // much
                                                                     // the
@@ -1194,11 +1194,6 @@ public class GameController {
     return highCard;
   }
 
-  public void setTablePot() {
-
-    // TODO Auto-generated method stub
-
-  }
 
   public void setBlindsMarker(int dealer, int smallBlindPlayer, int bigBlindPlayer) {
     int[][] markerPos = new int[5][2];
@@ -1439,5 +1434,22 @@ public class GameController {
       System.out.println("Player was already viable");
     }
   }
+  
+  public void updatePots(int[][] potSplits, int tablePot) {
+    /*
+     * potSplits.length ger antal pots som finns(borde stämma överens med antal spelare.
+     * potSplits[x][0] ger hur mycket pengar som det finns i den potten.
+     * om värdet är noll så kan du gömma labeln.
+     * 
+     * tablePot är värdet på hela potten
+     * 
+     * Namn på pots:
+     * Total table pot:
+     * Subpot 1:
+     * subpot 2:
+     * etc
+     */
+  }
+    
 
 }

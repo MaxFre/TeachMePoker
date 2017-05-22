@@ -269,7 +269,7 @@ public class SPController extends Thread {
             }
           }
         }
-        gController.setTablePot();
+        gController.updatePots(potSplits, currentPotSize);
         if (currentPlayer != noOfPlayers - 1) {
           aiPlayers.get(currentPlayer).setSameTurn(true);
         }
