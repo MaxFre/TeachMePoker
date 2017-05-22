@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -140,6 +141,23 @@ public class GameController {
   public MenuItem miAbout;
   @FXML
   public MenuItem miTutorial;
+  
+  @FXML
+  public Pane panePot;
+  @FXML 
+  public Label subPotOne;
+  @FXML 
+  public Label subPotTwo;
+  @FXML 
+  public Label subPotThree;
+  @FXML 
+  public Label subPotFour;
+  @FXML 
+  public Label subPotFive;
+  @FXML 
+  public Label subPotSix;
+  @FXML 
+  public Label mainPot;
 
   private WinnerBox winnerBox;
   private ConfirmBox confirmBox;
@@ -171,6 +189,7 @@ public class GameController {
   private Sound sound = new Sound();
   private TutorialController tutorialWindow;
   private int AllInViability = 0;
+  private Label[] collectionOfPots;
 
   public void initialize() throws Exception {
 
@@ -181,10 +200,13 @@ public class GameController {
             {labelPlayerThreeName, labelPlayerThreePot, labelPlayerThreeAction},
             {labelPlayerFourName, labelPlayerFourPot, labelPlayerFourAction},
             {labelPlayerFiveName, labelPlayerFivePot, labelPlayerFiveAction}};
-
     // Placeholders for the AI (based on their position). Shows their
     // cardbacks/no cards or
     // highlighted cards (AI-frame).
+         
+            
+   this.collectionOfPots = new Label[] { subPotOne, subPotTwo, subPotThree, subPotFour, subPotFive, subPotSix};
+            
     this.collectionOfCardsAi = new ImageView[] {imgPlayerOneCards, imgPlayerTwoCards,
         imgPlayerThreeCards, imgPlayerFourCards, imgPlayerFiveCards};
 
@@ -712,7 +734,7 @@ public class GameController {
                                            // the table (UI)
       tabelCardArea.requestLayout();
 
-      int xCord = 0;
+      int xCord = 100;
       for (int i = 0; i < setOfCards.length; i++) { // Loops through all
                                                     // cards and
                                                     // highlights the
@@ -730,7 +752,7 @@ public class GameController {
               + setOfCards[i].getCardSuit().charAt(0) + ".png";
         }
         if (i == 1) {
-          xCord = 105; // First card
+          xCord = 205; // First card
         } else if (i > 1) {
           xCord += 105;
         }
@@ -1436,20 +1458,23 @@ public class GameController {
   }
   
   public void updatePots(int[][] potSplits, int tablePot) {
-    /*
-     * potSplits.length ger antal pots som finns(borde stämma överens med antal spelare.
-     * potSplits[x][0] ger hur mycket pengar som det finns i den potten.
-     * om värdet är noll så kan du gömma labeln.
-     * 
-     * tablePot är värdet på hela potten
-     * 
-     * Namn på pots:
-     * Total table pot:
-     * Subpot 1:
-     * subpot 2:
-     * etc
-     */
-  }
-    
-
+		Platform.runLater(() -> {
+			String[] potOrder = {"Sub-Pot One: ", "Sub-Pot Two: ","Sub-Pot Three: ","Sub-Pot Four: ","Sub-Pot Five: ", "Sub-Pot Six: " };
+			for(int i = 0; i<collectionOfPots.length;i++){
+				if(potSplits[i][0] > 0){
+					collectionOfPots[i].setText(potOrder[i] + "§" + potSplits[i][0]);
+					collectionOfPots[i].setVisible(true);
+					collectionOfPots[i].setLayoutX(10);
+					collectionOfPots[i].setLayoutY(30*(i+1) + 70);
+				}else{
+					collectionOfPots[i].setVisible(false);
+					System.out.println("Less than 0, " + i);
+				}	
+			}
+			mainPot.setText("Table Pot: §" + tablePot);
+			mainPot.setLayoutX(295.0);
+			mainPot.setLayoutY(290.0);
+			mainPot.setVisible(true);
+		});
+	}
 }
