@@ -620,7 +620,6 @@ public class SPController extends Thread {
       currentPotSize += currentMaxBet;
     } else if (playerDecision.contains("check")) {
     } else if (playerDecision.contains("allin")) {
-      // TODO hantera all-in
       split = playerDecision.split(",");
       int allin = Integer.parseInt(split[1]);
       if (currentMaxBet < allin) {
@@ -731,7 +730,6 @@ public class SPController extends Thread {
       System.out.println("AI Checks");
       gController.aiAction(currentPlayer, aiDecision);
     } else if (aiDecision.contains("all-in")) {
-      // TODO hantera all-in
       split = aiDecision.split(",");
       int allin = Integer.parseInt(split[1]);
       if (currentMaxBet < allin) {
