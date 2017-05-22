@@ -484,7 +484,9 @@ public class GameController {
 
     // slider.setMax(playerPot - calcWithdraw);
     slider.setMax(playerPot);
-    if (spController.getBigBlind() <= playerPot) { // Sets minimum value
+    if(calcWithdraw > spController.getBigBlind()) {
+      slider.setMin(calcWithdraw);
+    } else if (spController.getBigBlind() <= playerPot) { // Sets minimum value
                                                    // required in order to
                                                    // raise.
       slider.setMin(spController.getBigBlind());
