@@ -298,7 +298,7 @@ public class SPController extends Thread {
       checkWinner();
     }
     for (Ai ai : aiPlayers) {
-      if (ai.aiPot() < bigBlind) {
+      if (ai.aiPot() < bigBlind && !ai.getDecision().contains("lost")) {
         System.out
             .println(ai.getName() + "\naiPot: " + ai.aiPot() + "\n" + (ai.aiPot() < bigBlind));
         ai.setDecision("lost");
