@@ -797,6 +797,7 @@ public class GameController {
       ivSmallBlind.relocate(520, 425);
 
     });
+    updatePots(new int[0][0], spController.getPotSize());
 
     // ivSmallBlind.setLayoutX(520);
     // ivSmallBlind.setLayoutY(425);
@@ -812,6 +813,7 @@ public class GameController {
       ivBigBlind.relocate(520, 425);
 
     });
+    updatePots(new int[0][0], spController.getPotSize());
 
     // ivBigBlind.setLayoutX(520);
     // ivBigBlind.setLayoutY(425);
