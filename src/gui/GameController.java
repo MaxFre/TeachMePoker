@@ -1481,7 +1481,7 @@ public class GameController {
 					collectionOfPots[i].setLayoutY(30*(i+1) + 70);
 				}else{
 					collectionOfPots[i].setVisible(false);
-					System.out.println("Less than 0, " + i);
+					//System.out.println("Less than 0, " + i);
 				}	
 			}
 			mainPot.setText("Table Pot: §" + tablePot);

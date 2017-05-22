@@ -580,7 +580,7 @@ public class SPController extends Thread {
 
     int livePlayers = 0;
     for (Ai ai : aiPlayers) {
-      if (!ai.getDecision().equals("fold")) {
+      if (!ai.getDecision().equals("fold") && !ai.getDecision().contains("lost")) {
         livePlayers++;
       }
     }
