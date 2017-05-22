@@ -21,18 +21,21 @@ public class AiDecide {
   private int turn;
   private int handStrenght;
   private int howMuchToTakeAwayFromAiPot = 0;
+  private int alreadyPaid;
 
 
   public AiDecide(ArrayList<String> aiCards, int aiPot, int toBet, int alreadyPaid,
       boolean sameTurn) {
     this.aiPot = aiPot;
     this.toBet = toBet;
-    this.raiseBet = toBet;
+    this.alreadyPaid = alreadyPaid;
     this.sameTurn = sameTurn;
     System.out.println("toBet: " + toBet);
     if (toBet != 0) {
       this.toBet = this.toBet - alreadyPaid;
     }
+     this.raiseBet = toBet;
+    
     System.out.println("toBet after removing what AI has paid: " + this.toBet);
 
     this.raiseAmount = (int) (1.25 * raiseBet);
@@ -113,7 +116,7 @@ public class AiDecide {
 
       if (raiseAmount < aiPot && !(sameTurn)) {
         toDo = "raise," + raiseAmount;
-        howMuchToTakeAwayFromAiPot = raiseAmount;
+        howMuchToTakeAwayFromAiPot = raiseAmount-alreadyPaid;
       } 
       else if(aiPot > toBet && check){
     	  toDo = "check" + toBet;
@@ -136,7 +139,7 @@ public class AiDecide {
     if (toBet == 0) {
       check = true;
     }
-    if (straightChance == 3) {
+    if (straightChance >= 3) {
       likelyhood += 25;
     }
 
@@ -186,7 +189,7 @@ public class AiDecide {
 
       if (raiseAmount < aiPot && !(sameTurn)) {
         toDo = "raise," + raiseAmount;
-        howMuchToTakeAwayFromAiPot = raiseAmount;
+        howMuchToTakeAwayFromAiPot = raiseAmount-alreadyPaid;
       } else if(aiPot > toBet && check){
     	  toDo = "check" + toBet;
       }
@@ -214,7 +217,7 @@ public class AiDecide {
     if (toBet == 0) {
       check = true;
     }
-    if (straightChance == 2) {
+    if (straightChance >= 4) {
       likelyhood += 25;
     }
 
@@ -264,7 +267,7 @@ public class AiDecide {
 
       if (raiseAmount < aiPot && !(sameTurn)) {
         toDo = "raise," + raiseAmount;
-        howMuchToTakeAwayFromAiPot = raiseAmount;
+        howMuchToTakeAwayFromAiPot = raiseAmount-alreadyPaid;
       } 
       else if(aiPot > toBet && check){
     	  toDo = "check" + toBet;
@@ -339,7 +342,7 @@ public class AiDecide {
 
       if (raiseAmount < aiPot && !(sameTurn)) {
         toDo = "raise," + raiseAmount;
-        howMuchToTakeAwayFromAiPot = raiseAmount;
+        howMuchToTakeAwayFromAiPot = raiseAmount-alreadyPaid;
       } 
       else if(aiPot > toBet && check){
     	  toDo = "check" + toBet;
