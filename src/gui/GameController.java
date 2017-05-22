@@ -380,14 +380,14 @@ public class GameController {
     }
 
     int raisedBet = (int) (slider.getValue());
-    //this.playerPot -= raisedBet + calcWithdraw; // The player's pot -
-    this.playerPot -= raisedBet;                                           // (raised amount + the
-                                                // amount
-                                                // the player has to
-                                                // match(if the player has
-                                                // to
-                                                // match)) = THE PLAYER'S
-                                                // POT
+    // this.playerPot -= raisedBet + calcWithdraw; // The player's pot -
+    this.playerPot -= raisedBet; // (raised amount + the
+    // amount
+    // the player has to
+    // match(if the player has
+    // to
+    // match)) = THE PLAYER'S
+    // POT
     this.decision = "raise," + (raisedBet + spController.getCurrentMaxBet()); // Chosen
                                                                               // raised
                                                                               // amount
@@ -408,7 +408,7 @@ public class GameController {
     try {
       if (playerPot == 0) { // Checks if the player has gone all in.
         updatePlayerValues("All-In, §" + raisedBet);
-        this.decision = "allin," + (raisedBet+alreadyPaid);
+        this.decision = "allin," + (raisedBet + alreadyPaid);
         slider.setDisable(true);
         showAllIn();
         disableButtons();
@@ -475,7 +475,7 @@ public class GameController {
                                                                     // it
     }
 
-    //slider.setMax(playerPot - calcWithdraw);
+    // slider.setMax(playerPot - calcWithdraw);
     slider.setMax(playerPot);
     if (spController.getBigBlind() <= playerPot) { // Sets minimum value
                                                    // required in order to
