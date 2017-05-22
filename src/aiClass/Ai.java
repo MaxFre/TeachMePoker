@@ -25,6 +25,7 @@ public class Ai {
   private int aiPot; // AIPOT - KOMMER IN VIA CONTROLLER.
   private int highCard;
   private int handStrength;
+  private int AllInViability = 0;
 
 
   public Ai(int aiPot, String name) {
@@ -230,6 +231,20 @@ public class Ai {
 
   public int handStrength() {
     return handStrength;
+  }
+
+
+  public int getAllInViability() {
+    return AllInViability;
+  }
+
+
+  public void setAllInViability(int allInViability) {
+    if(allInViability > AllInViability) {
+    AllInViability = allInViability;
+    }else {
+      System.out.println("AI was already viable");
+    }
   }
 
 }
