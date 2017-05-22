@@ -391,15 +391,7 @@ public class GameController {
     this.decision = "raise," + (raisedBet + spController.getCurrentMaxBet()); // Chosen
                                                                               // raised
                                                                               // amount
-    this.alreadyPaid += raisedBet + calcWithdraw; // Already paid + (raised
-                                                  // amount + the amount
-                                                  // the
-                                                  // player has to
-                                                  // match(if the player
-                                                  // has to
-                                                  // match)) = WHAT THE
-                                                  // PLAYER HAS ALREADY
-                                                  // PAID
+    
     playerMadeDecision = true;
     sound.chipMulti();
 
@@ -417,6 +409,15 @@ public class GameController {
       }
     } catch (Exception e) {
     }
+    this.alreadyPaid += raisedBet + calcWithdraw; // Already paid + (raised
+    // amount + the amount
+    // the
+    // player has to
+    // match(if the player
+    // has to
+    // match)) = WHAT THE
+    // PLAYER HAS ALREADY
+    // PAID
   }
 
   /**
@@ -1191,71 +1192,103 @@ public class GameController {
 
   }
 
-  public void setBlindsMarker(int dealer) {
+  public void setBlindsMarker(int dealer, int smallBlindPlayer, int bigBlindPlayer) {
+    int[][] markerPos = new int[5][2];
     Platform.runLater(() -> {
       // TODO sätt blinds på rätt ställe om någon förlorar.
 
-      if (aiPlayers.size() == 5) {
-        if (dealer == 0) {
-          ivDealer.relocate(300, 360);
-          ivSmallBlind.relocate(375, 172);
-          ivBigBlind.relocate(745, 172);
+      // set MarkerPos TEST
+      markerPos[0][0] = 300;
+      markerPos[0][1] = 360;
 
-        } else if (dealer == 1) {
-          ivDealer.relocate(375, 172);
-          ivSmallBlind.relocate(745, 172);
-          ivBigBlind.relocate(1010, 220);
+      markerPos[1][0] = 375;
+      markerPos[1][1] = 172;
 
-        } else if (dealer == 2) {
-          ivDealer.relocate(745, 172);
-          ivSmallBlind.relocate(1010, 220);
-          ivBigBlind.relocate(1010, 360);
+      markerPos[2][0] = 745;
+      markerPos[2][1] = 172;
 
-        } else if (dealer == 3) {
-          ivDealer.relocate(1010, 220);
-          ivSmallBlind.relocate(1010, 360);
+      markerPos[3][0] = 1010;
+      markerPos[3][1] = 220;
 
-        } else if (dealer == 4) {
-          ivDealer.relocate(1010, 360);
-          ivBigBlind.relocate(300, 360);
-
-        } else {
-          ivSmallBlind.relocate(300, 360);
-          ivBigBlind.relocate(375, 172);
-        }
+      markerPos[4][0] = 1010;
+      markerPos[4][1] = 360;
+      
+      if (dealer <= 4) {
+        ivDealer.relocate(markerPos[dealer][0], markerPos[dealer][1]);
+      }
+      if (smallBlindPlayer <= 4) {
+        ivSmallBlind.relocate(markerPos[smallBlindPlayer][0], markerPos[smallBlindPlayer][1]);
+      }
+      if (bigBlindPlayer <= 4) {
+        ivBigBlind.relocate(markerPos[bigBlindPlayer][0], markerPos[bigBlindPlayer][1]);
       }
 
-      if (aiPlayers.size() == 3) {
 
-        if (dealer == 0) {
-          ivDealer.relocate(300, 360);
-          ivSmallBlind.relocate(745, 172);
-          ivBigBlind.relocate(1010, 360);
+//OLD
+//      if (aiPlayers.size() == 5) {
+//        if (dealer == 0) {
+//          ivDealer.relocate(300, 360);
+//          ivSmallBlind.relocate(375, 172);
+//          ivBigBlind.relocate(745, 172);
+//
+//        } else if (dealer == 1) {
+//          ivDealer.relocate(375, 172);
+//          ivSmallBlind.relocate(745, 172);
+//          ivBigBlind.relocate(1010, 220);
+//
+//        } else if (dealer == 2) {
+//          ivDealer.relocate(745, 172);
+//          ivSmallBlind.relocate(1010, 220);
+//          ivBigBlind.relocate(1010, 360);
+//
+//        } else if (dealer == 3) {
+//          ivDealer.relocate(1010, 220);
+//          ivSmallBlind.relocate(1010, 360);
+//
+//        } else if (dealer == 4) {
+//          ivDealer.relocate(1010, 360);
+//          ivBigBlind.relocate(300, 360);
+//
+//        } else {
+//          ivSmallBlind.relocate(300, 360);
+//          ivBigBlind.relocate(375, 172);
+//        }
+//      }
+//
+//      if (aiPlayers.size() == 3) {
+//
+//        if (dealer == 0) {
+//          ivDealer.relocate(300, 360);
+//          ivSmallBlind.relocate(745, 172);
+//          ivBigBlind.relocate(1010, 360);
+//
+//        } else if (dealer == 1) {
+//          ivDealer.relocate(745, 172);
+//          ivSmallBlind.relocate(1010, 360);
+//
+//        } else if (dealer == 2) {
+//          ivDealer.relocate(1010, 360);
+//          ivBigBlind.relocate(300, 360);
+//
+//        } else {
+//          ivSmallBlind.relocate(300, 360);
+//          ivBigBlind.relocate(745, 172);
+//        }
+//      }
+//      if (aiPlayers.size() == 1) {
+//        if (dealer == 0) {
+//          ivDealer.relocate(745, 172);
+//          ivSmallBlind.relocate(725, 172);
+//
+//        } else {
+//          ivBigBlind.relocate(745, 172);
+//
+//        }
+//      }
 
-        } else if (dealer == 1) {
-          ivDealer.relocate(745, 172);
-          ivSmallBlind.relocate(1010, 360);
-
-        } else if (dealer == 2) {
-          ivDealer.relocate(1010, 360);
-          ivBigBlind.relocate(300, 360);
-
-        } else {
-          ivSmallBlind.relocate(300, 360);
-          ivBigBlind.relocate(745, 172);
-        }
-      }
-      if (aiPlayers.size() == 1) {
-        if (dealer == 0) {
-          ivDealer.relocate(745, 172);
-          ivSmallBlind.relocate(725, 172);
-
-        } else {
-          ivBigBlind.relocate(745, 172);
-
-        }
-      }
-
+      
+      //DEPRECATED
+      //
       // if (aiPlayers.size() == 5) {
       // if (dealer == 0) {
       // ivDealer.relocate(300, 360);

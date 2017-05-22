@@ -13,7 +13,7 @@ import gui.GameController;
  *
  * 
  * @author Rikard Almgren
- * @version 0.9
+ * @version 0.95
  *
  */
 public class SPController extends Thread {
@@ -794,7 +794,7 @@ public class SPController extends Thread {
     } else {
       gController.playerIsDealer(dealer);
     }
-    gController.setBlindsMarker(dealer);
+    gController.setBlindsMarker(dealer, smallBlindPlayer, bigBlindPlayer);
     this.currentPotSize = smallBlind + bigBlind;
   }
 
