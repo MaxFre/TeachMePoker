@@ -443,16 +443,19 @@ public class SPController extends Thread {
     System.out.println("Checking All in Winners");
     int allInPotSize;
     for (int i = potSplits.length - 1; i >= 0; i--) {
-      System.out.println("pot" + i + "contains " + potSplits[1][0]);
+      System.out.println("pot " + i + " contains " + potSplits[i][0]);
       if (potSplits[i][0] > 0) {
         allInPotSize = potSplits[i][0];
         for (Ai test : aiPlayers) {
-          if (test.getAllInViability() >= i && !test.getDecision().contains("fold")) {
+          if (test.getAllInViability() <= i && !test.getDecision().contains("fold")) {
             System.out.println(test.getName() + "is viable for pot" + i);
-            currentPotSize -= potSplits[i][0];
+            potSplits[i][0] += potSplits[i][0];
+
           }
         }
-        // TODO
+        currentPotSize -= potSplits[i][0];
+        System.out.println("CPS: " + currentPotSize);
+        // TODO check who gets the overflow?
         ArrayList<Integer> secWin = new ArrayList<Integer>();
 
         String winner = "";
@@ -474,9 +477,6 @@ public class SPController extends Thread {
               }
             }
           }
-          System.out.println(bestHandPlayer.getName());
-          System.out.println(bestHand);
-          System.out.println(bestHandPlayer.getHighCard());
         }
         System.out.println("Player: " + gController.getHandStrength());
         System.out.println("player highcard: " + gController.getGetHighCard());
@@ -626,7 +626,23 @@ public class SPController extends Thread {
       if (currentMaxBet < allin) {
         currentPotSize += allin;
         currentMaxBet = allin;
+        if (!doAllInCheck) {
+          allin += (bigBlind + smallBlind);
+        }
+        doAllInCheck = true;
+        potSplits[psCounter][0] = allin;
+        gController.setAllInViability(psCounter);
+        for (Ai aips : aiPlayers) {
+          if ((aips.getPaidThisTurn() + aips.aiPot()) > allin) {
+            aips.setAllInViability(psCounter);
+          }
+        }
+        psCounter++;
       } else {
+        if (!doAllInCheck) {
+          allin += (bigBlind + smallBlind);
+        }
+        currentPotSize += allin;
         doAllInCheck = true;
         potSplits[psCounter][0] = allin;
         gController.setAllInViability(psCounter);
@@ -721,7 +737,23 @@ public class SPController extends Thread {
       if (currentMaxBet < allin) {
         currentPotSize += allin;
         currentMaxBet = allin;
+        if (!doAllInCheck) {
+          allin += (bigBlind + smallBlind);
+        }
+        doAllInCheck = true;
+        potSplits[psCounter][0] = allin;
+        gController.setAllInViability(psCounter);
+        for (Ai aips : aiPlayers) {
+          if ((aips.getPaidThisTurn() + aips.aiPot()) > allin) {
+            aips.setAllInViability(psCounter);
+          }
+        }
+        psCounter++;
       } else {
+        if (!doAllInCheck) {
+          allin += (bigBlind + smallBlind);
+        }
+        currentPotSize += allin;
         doAllInCheck = true;
         potSplits[psCounter][0] = allin;
         for (Ai aips : aiPlayers) {
