@@ -400,24 +400,30 @@ public class GameController {
     try {
       if (playerPot == 0) { // Checks if the player has gone all in.
         updatePlayerValues("All-In, §" + raisedBet);
-        this.decision = "allin," + (raisedBet + alreadyPaid);
+        this.decision = "allin," + (raisedBet)+","+alreadyPaid;
+        System.out.println("Player all-in: " + (raisedBet + alreadyPaid));
+        this.alreadyPaid += raisedBet;
         slider.setDisable(true);
         showAllIn();
         disableButtons();
+        
+        
       } else {
         updatePlayerValues("Raise, §" + raisedBet);
+        this.alreadyPaid += raisedBet; // Already paid + (raised
+        System.out.println("Player raise: " + (raisedBet));
+        // amount + the amount
+        // the
+        // player has to
+        // match(if the player
+        // has to
+        // match)) = WHAT THE
+        // PLAYER HAS ALREADY
+        // PAID
       }
     } catch (Exception e) {
     }
-    this.alreadyPaid += raisedBet + calcWithdraw; // Already paid + (raised
-    // amount + the amount
-    // the
-    // player has to
-    // match(if the player
-    // has to
-    // match)) = WHAT THE
-    // PLAYER HAS ALREADY
-    // PAID
+    
   }
 
   /**
@@ -925,7 +931,7 @@ public class GameController {
 
     if (alreadyPaid == spController.getCurrentMaxBet()) {
       // show check, hide all other
-      System.out.println("show check, hide all other,         1");
+      //System.out.println("show check, hide all other,         1");
       btCheck.setVisible(true);
       btCall.setVisible(false);
       btRaise.setVisible(true);
@@ -934,14 +940,14 @@ public class GameController {
       if (alreadyPaid < spController.getCurrentMaxBet()
           && (playerPot + alreadyPaid) >= spController.getCurrentMaxBet()) {
         // 10 < max && playerPot + paid >= max
-        System.out.println("hide check, show call,         2");
+       // System.out.println("hide check, show call,         2");
         // hide check, show call
         btCheck.setVisible(false);
         btCall.setVisible(true);
         btFold.setVisible(true);
       } else {
         // System.out.println("how is this a thing?");
-        System.out.println("hide call, hide check,         3");
+        //System.out.println("hide call, hide check,         3");
         // hide call, hide check
         btCheck.setVisible(false);
         btCall.setVisible(false);
@@ -952,15 +958,15 @@ public class GameController {
       if ((spController.getCurrentMaxBet() - alreadyPaid) + spController.getBigBlind() <= playerPot
           && playerPot != 0) {
         // show raise
-        System.out.println("show raise,         4");
+       // System.out.println("show raise,         4");
         btRaise.setVisible(true);
       } else {
         // hide raise
-        System.out.println("hide raise,         5");
+       // System.out.println("hide raise,         5");
         btRaise.setVisible(false);
       }
     }
-    System.out.println(alreadyPaid + "{ " + spController.getCurrentMaxBet());
+    //System.out.println(alreadyPaid + "{ " + spController.getCurrentMaxBet());
     inactivateAllAiCardGlows();
   }
 
@@ -1425,7 +1431,7 @@ public class GameController {
   }
 
   public void setAllInViability(int allInViability) {
-    if (allInViability > AllInViability) {
+    if (allInViability < AllInViability) {
       AllInViability = allInViability;
     } else {
       System.out.println("Player was already viable");

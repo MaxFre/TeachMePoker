@@ -448,10 +448,17 @@ public class SPController extends Thread {
         allInPotSize = potSplits[i][0];
         for (Ai test : aiPlayers) {
           if (test.getAllInViability() <= i && !test.getDecision().contains("fold")) {
-            System.out.println(test.getName() + "is viable for pot" + i);
+            System.out.println(test.getName() + " is viable for pot " + i);
+            System.out.println((test.aiPot() + test.getPaidThisTurn()));
             potSplits[i][0] += potSplits[i][0];
 
           }
+        }
+        potSplits[i][0] -= potSplits[i][0];
+        if (gController.getAllInViability() <= i
+            && !gController.getPlayerDecision().contains("fold")) {
+          System.out.println("Player is viable for pot " + i);
+          System.out.println((gController.getPlayerPot() + gController.getPlayerAlreadyPaid()));
         }
         currentPotSize -= potSplits[i][0];
         System.out.println("CPS: " + currentPotSize);
@@ -462,7 +469,7 @@ public class SPController extends Thread {
         int bestHand = 0;
         Ai bestHandPlayer = new Ai(0, "");
         for (Ai ai : aiPlayers) {
-          if (!ai.getDecision().equals("fold") && ai.getAllInViability() >= i) {
+          if (!ai.getDecision().equals("fold") && ai.getAllInViability() <= i) {
             if (ai.handStrength() > bestHand) {
               bestHandPlayer = ai;
               bestHand = ai.handStrength();
@@ -485,7 +492,7 @@ public class SPController extends Thread {
         System.out.println("bestAI highCard: " + bestHandPlayer.getHighCard());
         System.out.println(gController.getHandStrength() > bestHand);
         if (!gController.getPlayerDecision().contains("fold")
-            && gController.getAllInViability() >= i) {
+            && gController.getAllInViability() <= i) {
           if (gController.getHandStrength() > bestHand) {
             gController.setPlayerPot(allInPotSize);
             winner = gController.getUsername();
@@ -613,7 +620,7 @@ public class SPController extends Thread {
       split = playerDecision.split(",");
       currentMaxBet = Integer.parseInt(split[1]);
       currentPotSize += Integer.parseInt(split[1]);
-      System.out.println("raise" + split[1]);
+      System.out.println("raise " + split[1]);
     } else if (playerDecision.contains("fold")) {
     } else if (playerDecision.contains("call")) {
       split = playerDecision.split(",");
@@ -623,13 +630,21 @@ public class SPController extends Thread {
       split = playerDecision.split(",");
       int allin = Integer.parseInt(split[1]);
       if (currentMaxBet < allin) {
-        currentPotSize += allin;
+        System.out.println("CPS: " + currentPotSize);
+
+
         currentMaxBet = allin;
+        
+        currentPotSize += allin;
+        System.out.println("CPS: " + currentPotSize);
         if (!doAllInCheck) {
-          allin += (bigBlind + smallBlind);
+          allin += currentPotSize;
+
         }
         doAllInCheck = true;
+        System.out.println("PS0: " + potSplits[psCounter][0]);
         potSplits[psCounter][0] = allin;
+        System.out.println("PS0: " + potSplits[psCounter][0]);
         gController.setAllInViability(psCounter);
         for (Ai aips : aiPlayers) {
           if ((aips.getPaidThisTurn() + aips.aiPot()) > allin) {
@@ -638,12 +653,17 @@ public class SPController extends Thread {
         }
         psCounter++;
       } else {
-        if (!doAllInCheck) {
-          allin += (bigBlind + smallBlind);
-        }
+        System.out.println("CPS: " + currentPotSize);
+        
         currentPotSize += allin;
+        System.out.println("CPS: " + currentPotSize);
+        if (!doAllInCheck) {
+          allin += currentPotSize;
+        }
         doAllInCheck = true;
+        System.out.println("PS0: " + potSplits[psCounter][0]);
         potSplits[psCounter][0] = allin;
+        System.out.println("PS0: " + potSplits[psCounter][0]);
         gController.setAllInViability(psCounter);
         for (Ai aips : aiPlayers) {
           if ((aips.getPaidThisTurn() + aips.aiPot()) > allin) {
@@ -736,7 +756,7 @@ public class SPController extends Thread {
         currentPotSize += allin;
         currentMaxBet = allin;
         if (!doAllInCheck) {
-          allin += (bigBlind + smallBlind);
+          allin += currentPotSize;
         }
         doAllInCheck = true;
         potSplits[psCounter][0] = allin;
@@ -749,7 +769,7 @@ public class SPController extends Thread {
         psCounter++;
       } else {
         if (!doAllInCheck) {
-          allin += (bigBlind + smallBlind);
+          allin += currentPotSize;
         }
         currentPotSize += allin;
         doAllInCheck = true;

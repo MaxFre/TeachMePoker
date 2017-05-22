@@ -240,7 +240,7 @@ public class Ai {
 
 
   public void setAllInViability(int allInViability) {
-    if(allInViability > AllInViability) {
+    if(allInViability < AllInViability) {
     AllInViability = allInViability;
     }else {
       System.out.println("AI was already viable");
