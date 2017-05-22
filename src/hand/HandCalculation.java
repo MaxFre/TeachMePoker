@@ -756,7 +756,7 @@ public class HandCalculation {
 		
 		//STRAIGHT FLUSH
 		if(straightChance==5 && colorChance==5){							//"i stegen  " + whatStraight; 
-			helper = "'STRAIGHT FLUSH' i färgen " + theColor + " och i stegen TEMP ";   //ev add what straight it is ex 2-6.
+			helper = "'STRAIGHT FLUSH' i färgen " + theColor + "! ";   //ev add what straight it is ex 2-6.
 			advice = "'STRAIGHT FLUSH' är bästa handen i spelet. Kör på och höj!\n";
 			// Highlightning happens in checkStraight and checkSuit.
 		}
