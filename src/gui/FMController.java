@@ -2,8 +2,6 @@ package gui;
 
 import java.io.IOException;
 
-
-//import filehandler.FileHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -17,7 +15,6 @@ import javafx.scene.image.ImageView;
 
 public class FMController {
 
-	//private FileHandler fileHandler;
 	private ChangeScene changeScene;
 	private Sound sound;
 	@FXML
@@ -52,7 +49,7 @@ public class FMController {
 
 		System.out.println("LoadGame");
 		sound = new Sound();
-		sound.wrongSound();
+		sound.playSound("wrong");
 
 	}
 

@@ -35,17 +35,17 @@
 						<Image url="@images/table.png" />
 					</image>
 				</ImageView>
-				<ImageView id="rulesButton.png" fitHeight="45.0" fitWidth="45.0" layoutX="1120.0" layoutY="40.0" onMouseReleased="#rulesState">
+				<ImageView id="rulesButton.png" fitHeight="45.0" fitWidth="45.0" layoutX="1150.0" layoutY="40.0" onMouseReleased="#rulesState">
 					<image>
 						<Image url="@images/rulesButton.png" />
 					</image>
 				</ImageView>
-				<ImageView id="soundButton.png" fx:id="ivSound" fitHeight="45.0" fitWidth="45.0" layoutX="1175.0" layoutY="40.0" onMouseClicked="#soundSetting" onMousePressed="#soundSetting" onMouseReleased="#soundSetting">
+				<ImageView id="soundButton.png" fx:id="ivSound" fitHeight="45.0" fitWidth="45.0" layoutX="1220.0" layoutY="40.0" onMouseReleased="#soundSetting">
 					<image>
 						<Image url="@images/soundButton.png" />
 					</image>
 				</ImageView>
-				<ImageView id="saveButton.png" fitHeight="45.0" fitWidth="45.0" layoutX="1230.0" layoutY="40.0" onMouseReleased="#saveGame">
+				<ImageView id="saveButton.png" disable="true" fitHeight="45.0" fitWidth="45.0" layoutX="1230.0" layoutY="100.0" onMouseReleased="#saveGame" visible="false">
 					<image>
 						<Image url="@images/saveButton.png" />
 					</image>
@@ -90,7 +90,7 @@
 						</Menu>
 						<Menu mnemonicParsing="false" text="Hjälp">
 							<items>
-								<MenuItem fx:id="miSettings" mnemonicParsing="false" onAction="#goToTutorial" text="Tutorial" />
+								<MenuItem fx:id="miSettings" mnemonicParsing="false" onAction="#goToTutorial" text="Se Tutorial" />
                         <MenuItem fx:id="miRules" mnemonicParsing="false" onAction="#rulesState" text="Regler" />
 							</items>
 						</Menu>
@@ -107,10 +107,10 @@
 							<children>
 								<Label fx:id="helpLabel" layoutX="40.0" layoutY="139.0" prefHeight="37.0" prefWidth="302.0" rotate="90.0" text="">
 																		<font>
-										<Font name="Tw Cen MT" size="22.0" fx:id="x9"/>
+										<Font name="Tw Cen MT" size="22.0" fx:id="x9" />
 									</font>
 																		<font>
-										<Font name="Tw Cen MT" size="28.0" fx:id="x10"/>
+										<Font name="Tw Cen MT" size="28.0" fx:id="x10" />
 									</font>
 									<font>
 										<Font name="Tw Cen MT" size="15.0" fx:id="x1" />
@@ -203,13 +203,13 @@
 						<Insets />
 					</opaqueInsets>
 				</Pane>
-				<Label fx:id="subPotOne" alignment="TOP_CENTER" font="$x9" layoutX="0" layoutY="0" text="pot1" visible="false" textFill="#ffffff" />
-            	<Label fx:id="subPotTwo" alignment="TOP_CENTER" font="$x9" layoutX="0" layoutY="0" text="pot2" visible="false" textFill= "#ffffff"/>
-            	<Label fx:id="subPotThree" alignment="TOP_CENTER" font="$x9" layoutX="0" layoutY="0" text="pot3" visible="false" textFill="#ffffff"/>
-            	<Label fx:id="subPotFour" alignment="TOP_CENTER" font="$x9" layoutX="0" layoutY="0" text="pot4" visible="false" textFill="#ffffff"/>
-            	<Label fx:id="subPotFive" alignment="TOP_CENTER" font="$x9" layoutX="0" layoutY="0" text="pot5" visible="false" textFill="#ffffff"/>
-            	<Label fx:id="subPotSix" alignment="TOP_CENTER" font="$x9" layoutX="0" layoutY="0" text="pot1" visible="false" textFill="#ffffff"/>
-            	<Label fx:id="mainPot" alignment="TOP_CENTER" layoutX="0" layoutY="0" text="potMain" visible="false" textFill="#ffffff" >
+				<Label fx:id="subPotOne" alignment="TOP_CENTER" layoutX="0" layoutY="0" text="pot1" textFill="#ffffff" visible="false" />
+            	<Label fx:id="subPotTwo" alignment="TOP_CENTER" layoutX="0" layoutY="0" text="pot2" textFill="#ffffff" visible="false" />
+            	<Label fx:id="subPotThree" alignment="TOP_CENTER" layoutX="0" layoutY="0" text="pot3" textFill="#ffffff" visible="false" />
+            	<Label fx:id="subPotFour" alignment="TOP_CENTER" layoutX="0" layoutY="0" text="pot4" textFill="#ffffff" visible="false" />
+            	<Label fx:id="subPotFive" alignment="TOP_CENTER" layoutX="0" layoutY="0" text="pot5" textFill="#ffffff" visible="false" />
+            	<Label fx:id="subPotSix" alignment="TOP_CENTER" layoutX="0" layoutY="0" text="pot1" textFill="#ffffff" visible="false" />
+            	<Label fx:id="mainPot" alignment="TOP_CENTER" layoutX="0" layoutY="0" text="potMain" textFill="#ffffff" visible="false">
             	            	               <font>
                   <Font name="System Bold" size="28.0" />
                </font></Label>

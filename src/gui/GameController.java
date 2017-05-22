@@ -1,7 +1,7 @@
 package gui;
 
-import java.awt.Color;
 import java.io.IOException;
+import java.awt.Color;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -158,7 +158,7 @@ public class GameController {
   public Label subPotSix;
   @FXML 
   public Label mainPot;
-
+  
   private WinnerBox winnerBox;
   private ConfirmBox confirmBox;
   private ChangeScene changeScene;
@@ -200,13 +200,13 @@ public class GameController {
             {labelPlayerThreeName, labelPlayerThreePot, labelPlayerThreeAction},
             {labelPlayerFourName, labelPlayerFourPot, labelPlayerFourAction},
             {labelPlayerFiveName, labelPlayerFivePot, labelPlayerFiveAction}};
+            
+
     // Placeholders for the AI (based on their position). Shows their
     // cardbacks/no cards or
     // highlighted cards (AI-frame).
-         
-            
-   this.collectionOfPots = new Label[] { subPotOne, subPotTwo, subPotThree, subPotFour, subPotFive, subPotSix};
-            
+            this.collectionOfPots = new Label[] { subPotOne, subPotTwo, subPotThree, subPotFour, subPotFive, subPotSix};
+
     this.collectionOfCardsAi = new ImageView[] {imgPlayerOneCards, imgPlayerTwoCards,
         imgPlayerThreeCards, imgPlayerFourCards, imgPlayerFiveCards};
 
@@ -312,7 +312,7 @@ public class GameController {
     lbPlayerAction.setText("check");
     playerMadeDecision = true;
     updatePlayerValues("Check");
-    sound.checkSound();
+    sound.playSound("check");
 
   }
 
@@ -327,7 +327,7 @@ public class GameController {
     lbPlayerAction.setText("fold");
     playerMadeDecision = true;
     updatePlayerValues("Fold");
-    sound.cardFold();
+    sound.playSound("fold");
   }
 
   /**
@@ -369,7 +369,7 @@ public class GameController {
                                                                          // PAID
     this.decision = "call," + Integer.toString(alreadyPaid);
     playerMadeDecision = true;
-    sound.chipSingle();
+    sound.playSound("chipSingle");
     updatePlayerValues("Call, §" + Integer.toString(alreadyPaid));
 
   }
@@ -415,7 +415,7 @@ public class GameController {
                                                                               // amount
     
     playerMadeDecision = true;
-    sound.chipMulti();
+    sound.playSound("chipMulti");
 
     updatePlayerValues("Raise, §" + raisedBet);
 
@@ -533,27 +533,38 @@ public class GameController {
 
     });
   }
-
+  
+  /**
+   * Mutes the sound on and off. 
+   */
   public void soundSetting() {
-
-    // TODO Av-mutea, lägg till effektljud. Ny ruta med settings?
-    if (sound.audio.getVolume() == 1.0) {
-      sound.audio.setVolume(0);
-      System.out.println("Volym : 0");
-    } else if (sound.audio.getVolume() == 0.0) {
-      sound.audio.setVolume(1);
-      System.out.println("Volym : 1");
-    }
-    // sound.stopSound();
-
-    System.out.println("Sound Setting");
+	  
+	  if(sound.cardFold.getVolume()>0){
+	  sound.cardFold.setVolume(0);
+	  sound.checkSound.setVolume(0);
+	  sound.chipMulti.setVolume(0);
+	  sound.shuffleSound.setVolume(0);
+	  sound.singleCard.setVolume(0);
+	  sound.chipSingle.setVolume(0);
+	  sound.chipMulti.setVolume(0);
+	  sound.coinSound.setVolume(0);
+	  sound.wrongSound.setVolume(0);
+	  } else if (sound.cardFold.getVolume()==0){
+		  sound.cardFold.setVolume(1);
+		  sound.checkSound.setVolume(1);
+		  sound.chipMulti.setVolume(1);
+		  sound.shuffleSound.setVolume(1);
+		  sound.singleCard.setVolume(1);
+		  sound.chipSingle.setVolume(1);
+		  sound.chipMulti.setVolume(1);
+		  sound.coinSound.setVolume(1);
+		  sound.wrongSound.setVolume(1);
+	  }
   }
 
   public void rulesState() throws IOException {
     RuleController rc = new RuleController();
     rc.rules();
-    // TODO Rules State?
-    System.out.println("Go to Rules section");
   }
 
   public void mainState() {
@@ -1424,7 +1435,7 @@ public class GameController {
       });
     } else if (winnerOfRound.equals(getUsername())) {
       Platform.runLater(() -> {
-        sound.coinSound();
+    	sound.playSound("coinSound");
         winnerBox = new WinnerBox();
         winnerBox.displayWinner("Rundans vinnare", winnerOfRound, 1, winnerHand);
 
@@ -1458,7 +1469,7 @@ public class GameController {
   }
   
   public void updatePots(int[][] potSplits, int tablePot) {
-		Platform.runLater(() -> {
+	  Platform.runLater(() -> {
 			String[] potOrder = {"Sub-Pot One: ", "Sub-Pot Two: ","Sub-Pot Three: ","Sub-Pot Four: ","Sub-Pot Five: ", "Sub-Pot Six: " };
 			for(int i = 0; i<collectionOfPots.length;i++){
 				if(potSplits[i][0] > 0){
@@ -1477,4 +1488,8 @@ public class GameController {
 			mainPot.setVisible(true);
 		});
 	}
+
+  
+    
+
 }

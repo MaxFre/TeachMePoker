@@ -9,7 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.*;
 
 /**
- * Window with text and button containing a message.
+ * Window with text and buttons containing a message.
  * 
  * @author Lykke Levin
  * @version 1.0
@@ -36,8 +36,8 @@ public class ConfirmBox {
     label.setText(message);
     label.setWrapText(true);
 
-    Button buttonOk = new Button("Yes");
-    Button buttonNotOk = new Button("No");
+    Button buttonOk = new Button("Ja");
+    Button buttonNotOk = new Button("Nej");
     buttonOk.setFont(font);
     buttonNotOk.setFont(font);
 
@@ -54,7 +54,7 @@ public class ConfirmBox {
     });
 
     VBox layout = new VBox(10);
-
+    layout.setPadding(new Insets(10, 10, 10, 10));
     layout.getChildren().addAll(label, buttonOk, buttonNotOk);
     layout.setAlignment(Pos.CENTER);
 

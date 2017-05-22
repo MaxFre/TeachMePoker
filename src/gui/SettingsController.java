@@ -151,7 +151,7 @@ public class SettingsController {
 				startGameWindow();
 			}
 		} else if (tfNameInput.getText().isEmpty()) {
-			sound.wrongSound();
+			sound.playSound("wrong");
 			confirmBox = new ConfirmBox();
 			boolean result =
 					confirmBox.display("Varning", "Du måste välja ett användarnamn för att starta spelet");
@@ -192,10 +192,10 @@ public class SettingsController {
 				changeScene.switchScenetoGame();
 				ConfirmBox cfBox = new ConfirmBox();
 
-				if (cfBox.display("Game is about to start", "Are you ready to play poker?")) {
+				if (cfBox.display("Snart börjar spelet", "Är du redo att spela poker?")) {
 					spController.startGame(aiValue, potValue, name);
 					Sound.mp.stop();
-					sound.shuffleSound();
+					sound.playSound("shuffle");
 				} else {
 					changeScene.switchToMainMenu();
 				}
