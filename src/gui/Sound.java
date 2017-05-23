@@ -23,6 +23,7 @@ public class Sound {
 	public AudioClip chipMulti = new AudioClip(Sound.class.getResource("/sounds/chipMe.m4a").toString());
 	public AudioClip coinSound = new AudioClip(Sound.class.getResource("/sounds/chingChingChip.m4a").toString());
 	public AudioClip wrongSound = new AudioClip(Sound.class.getResource("/sounds/buttonSoundWrong.mp3").toString());
+	
 
 	/**
 	 * Plays the AudioClip.
