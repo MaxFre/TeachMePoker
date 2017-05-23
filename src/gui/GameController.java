@@ -1210,7 +1210,10 @@ public class GameController {
     Platform.runLater(() -> {
 
       try {
-
+   
+    	        winnerBox = new WinnerBox();
+    	        winnerBox.displayWinner("Förlust", "Tyvärr, du förlorade och dina pengar är slut. Bättre lycka nästa gång!", 5, winnerHand);
+    	
         changeScene.switchToMainMenu();
 
       } catch (IOException | InstantiationException | IllegalAccessException e) {
@@ -1427,6 +1430,15 @@ public class GameController {
     if (hand == 5) {
       winnerHand = "flush";
     }
+    if (hand == 6) {
+      winnerHand = "full house";
+    }
+    if (hand == 7) {
+        winnerHand = "four of a kind";
+      }
+    if (hand == 8) {
+        winnerHand = "straight flush";
+      }
     if (hand == 99) {
     	winnerHand = "Du vann när resten av spelarna foldade!";
     }
@@ -1501,7 +1513,7 @@ public class GameController {
 					collectionOfPots[i].setLayoutY(30*(i+1) + 70);
 				}else{
 					collectionOfPots[i].setVisible(false);
-					//System.out.println("Less than 0, " + i);
+					System.out.println("Less than 0, " + i);
 				}	
 			}
 			mainPot.setText("Table Pot: §" + tablePot);

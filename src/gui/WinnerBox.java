@@ -33,6 +33,7 @@ public class WinnerBox {
 		String playerWin = new String("Grattis " + message + ", du vann den här rundan! Du vann med " + handStrength);
 		String playerWinAIFold = new String("Grattis " + message + ". " + handStrength);
 		String aiWinOthersFold = new String("Rundan vanns av " + message + " " + handStrength);
+		String playerLose = new String (message);
 		
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle(title);
@@ -59,6 +60,9 @@ public class WinnerBox {
 		} else if(nr == 4){
 		messageText.setText(aiWinOthersFold);
 		System.out.println("*******WINNERBOX AI WIN PLAYER/AI FOLDS********");
+		}
+		else if (nr == 5){
+			messageText.setText(playerLose);
 		}
 		
 		btnOk.setOnMouseReleased(e -> {
