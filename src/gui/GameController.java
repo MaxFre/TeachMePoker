@@ -205,7 +205,14 @@ public class GameController {
     // Placeholders for the AI (based on their position). Shows their
     // cardbacks/no cards or
     // highlighted cards (AI-frame).
-            this.collectionOfPots = new Label[] { subPotOne, subPotTwo, subPotThree, subPotFour, subPotFive, subPotSix};
+            this.collectionOfPots = new Label[6];
+//            if(spController.getFixedNrOfAIs()==5) {
+//            this.collectionOfPots = new Label[] { subPotOne, subPotTwo, subPotThree, subPotFour, subPotFive, subPotSix};
+//            }else if(spController.getFixedNrOfAIs()==3) {
+//            	this.collectionOfPots = new Label[] { subPotOne, subPotTwo, subPotThree, subPotFour};
+//            }else if(spController.getFixedNrOfAIs()==1) {
+//            	this.collectionOfPots = new Label[] { subPotOne, subPotTwo, subPotThree, subPotFour};
+//            }
 
     this.collectionOfCardsAi = new ImageView[] {imgPlayerOneCards, imgPlayerTwoCards,
         imgPlayerThreeCards, imgPlayerFourCards, imgPlayerFiveCards};
@@ -1503,6 +1510,13 @@ public class GameController {
   }
   
   public void updatePots(int[][] potSplits, int tablePot) {
+	  if(spController.getFixedNrOfAIs()==5) {
+        this.collectionOfPots = new Label[] { subPotOne, subPotTwo, subPotThree, subPotFour, subPotFive, subPotSix};
+        }else if(spController.getFixedNrOfAIs()==3) {
+        	this.collectionOfPots = new Label[] { subPotOne, subPotTwo, subPotThree, subPotFour};
+        }else if(spController.getFixedNrOfAIs()==1) {
+        	this.collectionOfPots = new Label[] { subPotOne, subPotTwo};
+        }
 	  Platform.runLater(() -> {
 			String[] potOrder = {"Sub-Pot One: ", "Sub-Pot Two: ","Sub-Pot Three: ","Sub-Pot Four: ","Sub-Pot Five: ", "Sub-Pot Six: " };
 			for(int i = 0; i<collectionOfPots.length;i++){
@@ -1520,6 +1534,7 @@ public class GameController {
 			mainPot.setLayoutX(295.0);
 			mainPot.setLayoutY(290.0);
 			mainPot.setVisible(true);
+			System.out.println("Main pot visible");
 		});
 	}
 
