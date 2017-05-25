@@ -6,9 +6,9 @@ import deck.Card;
 import deck.Deck;
 /**
  * Class that is for testing of the AI.
- * 
- * @author Max Frennessen 17-04-12
- * @version 1.5
+ * And also been used for doing the WhiteBox testing of the ai-player.
+ * @author Max Frennessen 17-05-25
+ * @version 1.0
  */
 public class TestAi {
   Deck deck;
@@ -22,6 +22,11 @@ public class TestAi {
   private ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
   private ArrayList<Card> decken = new ArrayList<Card>();
   
+  /**
+   * Creates a deck and then calls on specifik cards that is then
+   * send to a ai that calculates and makes a decicion based on the cards strenght.
+   * All commented code is used for diffirent parts of testing, and is needed for those parts.
+   */
   public TestAi() {
 	  decken = new ArrayList<Card>();
 

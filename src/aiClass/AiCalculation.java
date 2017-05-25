@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Class that actually figures out what AI should do.
+ * Class that figures out what the ai-players cards are.
  * @author Max Frennessen
- * 17-04-12
- * @version 1.5
+ * 17-05-25
+ * @version 2.0
  *
  */
 public class AiCalculation {
@@ -19,9 +19,10 @@ public class AiCalculation {
 	private int same = 1;
 	private boolean flush = false;
 	private boolean straight = false;
+
 	/**
-	 * 
-	 * @param aiCards The current cards that are important.
+	 * Gets the cards that will be needed to calculate a respons that the ai will do.
+	 * @param aiCards the current cards that are used by the ai.
 	 */
 	public AiCalculation(ArrayList<String> aiCards) {
 		this.aiCards = aiCards;
@@ -55,7 +56,7 @@ public class AiCalculation {
 	}
 	
 /**
- * 
+ * Checks if ai-players has high cards or not.
  * @return returns if the cards have a combined value of 17 or more.
  */
 	public boolean checkHighCards() {
@@ -70,14 +71,11 @@ public class AiCalculation {
 			high = true;
 		}
 
-//		if (card1 >= 10 && card2 >= 10) {		//not implemented
-//			rlyhighCards = true;
-//		}
 		return high;
 	}
 	
 /**
- * 
+ * calculates the number of same suits the ai players has.
  * @return returns if the AI has a chance or has a flush
  */
 	public int checkSuit() {
@@ -128,7 +126,7 @@ public class AiCalculation {
 	}
 
 /**
- * 
+ * calculates the amount of same cards that the ai-player has to use.
  * @return returns how main pairs or more that the ai has.
  */
 	public int checkPairAndMore() {
@@ -194,7 +192,7 @@ public class AiCalculation {
 	}
 
 	/**
-	 * 
+	 * calculates the number of cards that can be in a straight
 	 * @return returns if the Ai has a chance or has a Straight.
 	 */
 	public int checkStraight() {
@@ -240,7 +238,10 @@ public class AiCalculation {
 		return treshold;
 	}
 	
-	
+	/**
+	 * Sets the handStrenght of the ai-player.
+	 * @return returns the ai-players current handStrenght.
+	 */
 	public int calcHandstrenght(){
 		
 		if(same==2){
@@ -270,61 +271,5 @@ public class AiCalculation {
 	
 		return handStrenght;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-//	public int checkSuit() {
-//		int C = 0;
-//		int S = 0;
-//		int H = 0;
-//		int D = 0;
-//		int color = 0;
-//
-//		for (String x : cardClr) {
-//			if (x.equals("S")) {
-//				S++;
-//			}
-//			if (x.equals("C")) {
-//				C++;
-//			}
-//			if (x.equals("D")) {
-//				D++;
-//			}
-//			if (x.equals("H")) {
-//				H++;
-//			}
-//		}
-//
-//		if (S > color) {
-//
-//			color = S;
-//
-//		}
-//
-//		if (H > color) {
-//
-//			color = H;
-//
-//		}
-//		if (D > color) {
-//
-//			color = D;
-//
-//		}
-//		if (C > color) {
-//
-//			color = C;
-//
-//		}
-//
-//		return color;
-//	}
-	
-
 
 }

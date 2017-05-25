@@ -3,7 +3,12 @@ package aiClass;
 import java.util.ArrayList;
 import java.util.Random;
 
-
+/**
+ * Class that actually figures out what Ai-player should do with its cards.
+ * @author Max Frennessen
+ * 17-05-25
+ * @version 1.0
+ */
 public class AiDecide {
 
   private AiCalculation calculation;
@@ -23,21 +28,24 @@ public class AiDecide {
   private int howMuchToTakeAwayFromAiPot = 0;
   private int alreadyPaid;
 
-
-  public AiDecide(ArrayList<String> aiCards, int aiPot, int toBet, int alreadyPaid,
-      boolean sameTurn) {
+/**
+ * Gets all the neccesary stuff to make a decision for the current turn.
+ * @param aiCards the current cards the ai-player has to its disposal.
+ * @param aiPot the current potsize of the ai-players pot.
+ * @param toBet how much the ai-player has to pay to be in this turn.
+ * @param alreadyPaid how much the ai-player has already paid.
+ * @param sameTurn if it is or isnt the same turn.
+ */
+  public AiDecide(ArrayList<String> aiCards, int aiPot, int toBet, int alreadyPaid, boolean sameTurn) {
     this.aiPot = aiPot;
     this.toBet = toBet;
     this.alreadyPaid = alreadyPaid;
     this.sameTurn = sameTurn;
-    System.out.println("toBet: " + toBet);
+
     if (toBet != 0) {
       this.toBet = this.toBet - alreadyPaid;
     }
-     this.raiseBet = toBet;
-    
-    System.out.println("toBet after removing what AI has paid: " + this.toBet);
-
+    this.raiseBet = toBet;
     this.raiseAmount = (int) (1.25 * raiseBet);
 
     calculation = new AiCalculation(aiCards);
@@ -59,7 +67,9 @@ public class AiDecide {
     }
   }
 
-
+/**
+ * Decides a decision for the first turn of a new round.
+ */
   public void turnOne() {
 
     boolean check = false;
@@ -80,7 +90,7 @@ public class AiDecide {
     if (colorChance == 2) {
       likelyhood += 20;
     }
-    System.out.println("LIKELYHOOD  _: - " + likelyhood);
+   
     if (aiPot / 10 >= toBet) {
       likelyhood += 20;
     } else if (aiPot / 5 <= toBet) {
@@ -95,7 +105,6 @@ public class AiDecide {
       likelyhood -= 20;
     }
 
-    System.out.println("LIKELYHOOD EFTER _: - " + likelyhood);
     Random rand = new Random();
     int roll = rand.nextInt(100);
 
@@ -132,7 +141,9 @@ public class AiDecide {
     aiPot -= howMuchToTakeAwayFromAiPot;
   }
 
-
+  /**
+   * Decides a decision for the second turn of a new round.
+   */
   public void turnTwo() {
 
     boolean check = false;
@@ -153,7 +164,7 @@ public class AiDecide {
     if (colorChance >= 3) {
       likelyhood += 20;
     }
-    System.out.println("LIKELYHOOD  _: - " + likelyhood);
+    
     if (aiPot / 10 >= toBet) {
       likelyhood += 20;
     } else if (aiPot / 5 <= toBet) {
@@ -168,7 +179,7 @@ public class AiDecide {
       likelyhood -= 20;
     }
 
-    System.out.println("LIKELYHOOD EFTER _: - " + likelyhood);
+   
     Random rand = new Random();
     int roll = rand.nextInt(100);
 
@@ -200,17 +211,14 @@ public class AiDecide {
         toDo = "all-in," + aiPot;
         howMuchToTakeAwayFromAiPot = aiPot;
       }
-      // else if(raiseAmount < aiPot && (sameTurn)){
-      // if(handStrenght > 3){
-      // toDo = "raise," + raiseAmount/2;
-      // howMuchToTakeAwayFromAiPot = raiseAmount/2;
-      // }
-      // }
+      
     }
     aiPot -= howMuchToTakeAwayFromAiPot;
   }
 
-
+  /**
+   * Decides a decision for the third turn of a new round.
+   */
   public void turnThree() {
 
     boolean check = false;
@@ -231,7 +239,7 @@ public class AiDecide {
     if (colorChance >= 4) {
       likelyhood += 20;
     }
-    System.out.println("LIKELYHOOD  _: - " + likelyhood);
+   
     if (aiPot / 10 >= toBet) {
       likelyhood += 20;
     } else if (aiPot / 5 <= toBet) {
@@ -246,7 +254,7 @@ public class AiDecide {
       likelyhood -= 20;
     }
 
-    System.out.println("LIKELYHOOD EFTER _: - " + likelyhood);
+    
     Random rand = new Random();
     int roll = rand.nextInt(100);
 
@@ -278,25 +286,21 @@ public class AiDecide {
         toDo = "all-in," + aiPot;
         howMuchToTakeAwayFromAiPot = aiPot;
       }
-      // else if(raiseAmount < aiPot && (sameTurn)){
-      // if(handStrenght > 3){
-      // toDo = "raise," + raiseAmount/2;
-      // howMuchToTakeAwayFromAiPot = raiseAmount/2;
-      // }
-      // }
+
     }
     aiPot -= howMuchToTakeAwayFromAiPot;
 
   }
 
-
+  /**
+   * Decides a decision for the last turn of a new round.
+   */
   public void turnFour() {
 
     boolean check = false;
     if (toBet == 0) {
       check = true;
     }
-
 
     if (highCards) {
       likelyhood += 20;
@@ -305,8 +309,6 @@ public class AiDecide {
       }
     }
 
-
-    System.out.println("LIKELYHOOD  _: - " + likelyhood);
     if (aiPot / 10 >= toBet) {
       likelyhood += 20;
     } else if (aiPot / 5 <= toBet) {
@@ -321,7 +323,6 @@ public class AiDecide {
       likelyhood -= 20;
     }
 
-    System.out.println("LIKELYHOOD EFTER _: - " + likelyhood);
     Random rand = new Random();
     int roll = rand.nextInt(100);
 
@@ -354,12 +355,7 @@ public class AiDecide {
         toDo = "all-in," + aiPot;
         howMuchToTakeAwayFromAiPot = aiPot;
       }
-      // else if(raiseAmount < aiPot && (sameTurn)){
-      // if(handStrenght > 3){
-      // toDo = "raise," + raiseAmount/2;
-      // howMuchToTakeAwayFromAiPot = raiseAmount/2;
-      // }
-      // }
+
     }
     aiPot -= howMuchToTakeAwayFromAiPot;
 
@@ -368,18 +364,28 @@ public class AiDecide {
 
   // TO GAME
 
+  /**
+   * Returns the ai-players handStrenght
+   * @return returns the ai-players handStrenght
+   */
   public int gethandStrength() {
 
     return handStrenght;
   }
 
-
+/**
+ * returns a updated version of the ai-players pot after this turn.
+ * @return returns a updated version of the ai-players pot after this turn.
+ */
   public int updateAiPot() {
 
     return aiPot;
   }
 
-
+/**
+ * Returns what the ai-players is going to do this turn.
+ * @return Returns what the ai-players is going to do this turn.
+ */
   public String decision() {
 
     return toDo;
