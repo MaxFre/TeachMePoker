@@ -11,6 +11,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+/**
+ * Class which creates a progress dialog.
+ * @author Rikard Almgren, Internet
+ * @version 1.0
+ *
+ */
 public class ProgressForm {
   private final Stage dialogStage;
   private final ProgressBar pb = new ProgressBar();
@@ -38,13 +44,19 @@ public class ProgressForm {
       Scene scene = new Scene(hb);
       dialogStage.setScene(scene);
   }
-
+/**
+ * Method which binds the progress to a task's completion state
+ * @param task
+ */
   public void activateProgressBar(final Task<?> task)  {
       pb.progressProperty().bind(task.progressProperty());
       pin.progressProperty().bind(task.progressProperty());
       dialogStage.show();
   }
-
+/**
+ * Method which returns the dialog
+ * @return the dialog
+ */
   public Stage getDialogStage() {
       return dialogStage;
   }
