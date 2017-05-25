@@ -5,7 +5,6 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.control.*;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.*;
 
 /**
@@ -22,6 +21,12 @@ public class ConfirmBox {
   public Stage window = new Stage();
   public Font font = new Font("Tw Cen MT", 18);
 
+  /**
+   * Creates a window containing a message. 
+   * @param title String title of the window from the classes that uses ConfirmBox. 
+   * @param message String message to display in the window from the classes that uses ConfirmBox. 
+   * @return answer Boolean that returns an answer. 
+   */
   public boolean display(String title, String message) {
 
     window.initModality(Modality.APPLICATION_MODAL);
@@ -65,6 +70,9 @@ public class ConfirmBox {
     return answer;
   }
 
+  /**
+   * Method that closes the window. 
+   */
   public void closeProgram() {
     window.close();
   }

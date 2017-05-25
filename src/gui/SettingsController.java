@@ -65,6 +65,10 @@ public class SettingsController {
 	private Sound sound = new Sound();
 	private TutorialController tutorialWindow;
 
+	/**
+	 * Method for initializing FXML. 
+	 * @throws Exception
+	 */
 	public void initialize() throws Exception {
 		potSlider.setSnapToTicks(true);
 		potSlider.setValue(5000);
@@ -72,31 +76,44 @@ public class SettingsController {
 
 	}
 
+	/**
+	 * Stores the name from the TextField that the user has inserted. 
+	 */
 	public void tfNameInputChange() {
 		this.name = tfNameInput.getText();
 	}
 
+	/**
+	 * Sets the changeScene for this SettingsController
+	 * @param sceneChanger an instance of the class ChangeScene
+	 */
 	public void setChangeScene(ChangeScene sceneChanger) {
 
 		this.changeScene = sceneChanger;
 	}
 
+	/**
+	 * Stores the value from the Slider that the user has chosen. 
+	 */
 	public void aiSliderChange() {
 		Double val = aiSlider.getValue();
 		aiValue = val.intValue();
 
-		System.out.println("Slider moved to " + aiValue);
-
 	}
 
+	/**
+	 * Stores the value from the Slider that the user has chosen. 
+	 */
 	public void potSliderChange() {
 
 		Double val = potSlider.getValue();
 		potValue = val.intValue();
 
-		System.out.println("Slider moved to " + potValue);
 	}
 
+	/**
+	 * If ComboBox is selected by the user, disable the button true. 
+	 */
 	public void cbOnClicked() {
 
 		if (cbOff.isSelected()) {
@@ -106,10 +123,11 @@ public class SettingsController {
 			cbOn.setDisable(true);
 
 		}
-
-		System.out.println("Tutorial On");
 	}
 
+	/**
+	 * If ComboBox is selected by the user, disable the button true. 
+	 */
 	public void cbOffClicked() {
 
 		if (cbOn.isSelected()) {
@@ -119,9 +137,12 @@ public class SettingsController {
 			cbOff.setDisable(true);
 
 		}
-		System.out.println("Tutorial Off");
 	}
 
+	/**
+	 * Starts the game and checks so the Username it not empty and checks if the Tutorial should be playing at the beginning. 
+	 * @throws IOException
+	 */
 	public void startGame() throws IOException {
 
 
@@ -162,6 +183,9 @@ public class SettingsController {
 
 	}
 	
+	/**
+	 * Creates the progressForm and the loadingbar. 
+	 */
 	public void startGameWindow(){
 		ProgressForm pForm = new ProgressForm();
 		// In real life this task would do something useful and return
@@ -207,6 +231,9 @@ public class SettingsController {
 		System.out.println("Spel startas!");
 	}
 	
+	/**
+	 * Shows a label if question mark is hovered. 
+	 */
 	public void ivQuestionAiHovered() {
 
 		lblAiInfo.setVisible(true);
@@ -214,6 +241,9 @@ public class SettingsController {
 
 	}
 
+	/**
+	 * Shows a label if question mark is hovered. 
+	 */
 	public void ivQuestionPotHovered() {
 
 		lblPotInfo.setVisible(true);
@@ -221,12 +251,20 @@ public class SettingsController {
 
 	}
 
+	/**
+	 * Shows a label if question mark is hovered. 
+	 */
 	public void ivQuestionTutorialHovered() {
 
 		lblTutorialInfo.setVisible(true);
 		ivQuestionTutorial.setOnMouseExited(e -> lblTutorialInfo.setVisible(false));
 	}
 
+	/**
+	 *  Tells class changeScene to perform the swithScene-action. 
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 */
 	public void back() throws InstantiationException, IllegalAccessException {
 		try {
 			changeScene.switchToMainMenu();
@@ -237,6 +275,10 @@ public class SettingsController {
 		// Main.window.setScene(changeScene.sceneMenu);
 	}
 
+	/**
+	 * Name of the user.
+	 * @return String name of the user. 
+	 */
 	public String getName() {
 		return name;
 	}

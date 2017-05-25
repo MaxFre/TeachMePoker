@@ -5,7 +5,6 @@ import controller.SPController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 
 /**
  * Class that handles the switching of scenes in the main window and the gui controll class that

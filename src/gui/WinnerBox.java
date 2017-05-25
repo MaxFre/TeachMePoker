@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 /**
  * Box that shows the winner of round. 
  * @author Lykke Levin 
- * version 0.2
+ * version 1.0
  *
  */
 public class WinnerBox {
@@ -27,6 +27,15 @@ public class WinnerBox {
 	private ImageView back = new ImageView(Paths.get("resources/images/background.png").toUri().toString());
 	private ImageView btnOk = new ImageView(Paths.get("resources/images/okButton.png").toUri().toString());
 	
+	
+	/**
+	 * Creates a window containting messages of who won or lost. 
+	 * @param title String title of the window from the method that uses WinnerBox. 
+	 * @param message String message to display in the window from the method that uses ConfirmBox. 
+	 * @param nr Int to check which message should be displayed. 
+	 * @param handStrength String to print the handstrength the player or AI won with. 
+	 * @return answer Boolean that returns an answer.
+	 */
 	public boolean displayWinner(String title, String message, int nr, String handStrength) {
 		
 		String aiWin = new String("Rundan vanns av " + message + " som hade " + handStrength);
@@ -47,19 +56,15 @@ public class WinnerBox {
 		messageText.setFont(font);
 		messageText.setTextFill(Color.WHITE);
 		messageText.setWrapText(true);
-//		messageText.setTextAlignment(TextAlignment.CENTER);
+		
 		if(nr == 1){
 			messageText.setText(playerWin);
-			System.out.println("*******WINNERBOX PLAYER WIN********");
 		} else if(nr == 2){
 			messageText.setText(aiWin);
-			System.out.println("*******WINNERBOX AI WIN********");
 		} else if(nr == 3){
 			messageText.setText(playerWinAIFold);
-		System.out.println("*******WINNERBOX PLAYER WIN AI FOLDS********");
 		} else if(nr == 4){
 		messageText.setText(aiWinOthersFold);
-		System.out.println("*******WINNERBOX AI WIN PLAYER/AI FOLDS********");
 		}
 		else if (nr == 5){
 			messageText.setText(playerLose);
@@ -75,8 +80,6 @@ public class WinnerBox {
 		messageText.setPrefSize(200, 100);
 		messageText.setLayoutX(100);
 		messageText.setLayoutY(10);
-//		buttonOk.setLayoutX(171);
-//		buttonOk.setLayoutY(123);
 		btnOk.setFitHeight(35);
 		btnOk.setFitWidth(35);
 		btnOk.setLayoutX(175);
@@ -92,6 +95,9 @@ public class WinnerBox {
 		
 	}
 
+	/**
+	 * Closes the window. 
+	 */
 	public void closeProgram() {
 		window.close();
 	}

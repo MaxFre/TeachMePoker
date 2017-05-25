@@ -19,6 +19,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
+/**
+ * 
+ * @author Amin Harirchian, Vedrana Zeba, Lykke Levin, Rikard Almgren
+ * @version 1.0 
+ *
+ */
 
 public class GameController {
 
@@ -1356,7 +1362,7 @@ public class GameController {
    * Creates a winnerWindow that displays the winner of the round.
    * 
    * @param winner Name of the winner from spController.
-   * @param winnerHand
+   * @param hand Int number from spController that represent the value of the winning hand. 
    */
   public void setWinnerLabel(String winner, int hand) {
 
