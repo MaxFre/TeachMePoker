@@ -13,7 +13,7 @@ import gui.GameController;
  *
  * 
  * @author Rikard Almgren
- * @version 0.95
+ * @version 1.0
  *
  */
 public class SPController extends Thread {
@@ -63,13 +63,14 @@ public class SPController extends Thread {
     this.noOfAi = noOfAi;
     setNames();
     noOfPlayers = noOfAi + 1;
-    bigBlind = (int) (potSize / noOfPlayers * 0.02);
+    bigBlind = (int) (potSize / noOfPlayers * 0.02); // Calculates bigBlind
     if (bigBlind < 2) {
       bigBlind = 2;
     }
     currentMaxBet = bigBlind;
     this.smallBlind = bigBlind / 2;
     gController.setPlayerPot((potSize / noOfPlayers));
+    // create aiPlayers
     for (int i = 0; i < noOfAi; i++) {
       aiPlayers.add(new Ai(potSize / (noOfPlayers), name.remove(0)));
     }
@@ -143,7 +144,12 @@ public class SPController extends Thread {
    */
   private void setupPhase() throws InstantiationException, IllegalAccessException {
 
+    // Check if the player lost last turn
     if (gController.getPlayerPot() > bigBlind) {
+      /*
+       * if not, reset the all-in check and potsplit counter Create a new deck, shuffle it and deal
+       * cards
+       */
       doAllInCheck = false;
       psCounter = 0;
       deck = new Deck();
@@ -154,6 +160,9 @@ public class SPController extends Thread {
       this.currentPotSize = 0;
       potSplits = new int[noOfPlayers][1];
       gController.updatePots(potSplits, currentPotSize);
+      /*
+       * Reset the AI players unless they've lost
+       */
       for (Ai ai : aiPlayers) {
         ai.setBigBlind(0, false);
         ai.setSmallBlind(0, false);
@@ -166,17 +175,21 @@ public class SPController extends Thread {
           ai.setStartingHand(card1, card2);
         }
       }
+      // set the blinds
       setBlinds(noOfPlayers);
+      // Generate a flop, turn and river.
       for (int i = 0; i < flop.length; i++) {
         flop[i] = deck.getCard();
       }
       turn = deck.getCard();
       river = deck.getCard();
+      // If thread isn't active, start, else run it again.
       if (!this.isAlive()) {
         start();
       } else {
         run();
       }
+      // If the player did lose, make sure he knows it.
     } else {
       gController.playerLost();
     }
@@ -196,9 +209,8 @@ public class SPController extends Thread {
     Card[] turnCards = {flop[0], flop[1], flop[2], turn};
     Card[] riverCards = {flop[0], flop[1], flop[2], turn, river};
     while (playTurn < 4) {
-      System.out.println("Current turn: " + playTurn);
       gController.roundStatus(playTurn);
-
+      // set dealer, smallblind and bigBlind.
       if (playTurn == 0) {
         int playerNr = noOfPlayers - 1;
         if (playerNr != 1) {
@@ -228,14 +240,11 @@ public class SPController extends Thread {
       }
 
       while (!allCalledorFolded) {
-        System.out.println("VEM FAN SPELAR? " + currentPlayer);
-        System.out.println("current Pot: " + currentPotSize);
-        // NOTES gController.
+        // Check if its the players turn.
         if (currentPlayer == noOfPlayers - 1) {
           if (!gController.getPlayerDecision().equals("fold")
               && !gController.getPlayerDecision().contains("allin")) {
             if (!(checkLivePlayers() > 1)) {
-              System.out.println("Player Wins " + currentPotSize);
               gController.setPlayerPot(currentPotSize);
               winner = gController.getUsername();
               gController.setWinnerLabel(winner, 99);
@@ -243,16 +252,14 @@ public class SPController extends Thread {
               break;
             }
 
-            System.out.println("player turn");
-
             try {
               Thread.sleep(1000);
             } catch (InterruptedException e) {
               e.printStackTrace();
             }
             askForPlayerDecision(currentMaxBet);
-            System.out.println("-----------------------------------------");
           }
+          // if it isn't the players turn, let the AI do their turn
         } else {
           if (!aiPlayers.get(currentPlayer).getDecision().contains("lost")) {
             if (!aiPlayers.get(currentPlayer).getDecision().contains("fold")
@@ -263,49 +270,50 @@ public class SPController extends Thread {
                 e.printStackTrace();
               }
               if (!(checkLivePlayers() > 1)) {
-                System.out
-                    .println(aiPlayers.get(currentPlayer).getName() + " Wins " + currentPotSize);
                 aiPlayers.get(currentPlayer).updateWinner(currentPotSize);
                 winner = aiPlayers.get(currentPlayer).getName();
                 gController.setWinnerLabel(winner, 98);
                 winnerDeclared = true;
                 break;
               }
-              System.out.println(aiPlayers.get(currentPlayer).getName() + "'s turn");
               askForAiDecision();
-              System.out.println("-----------------------------------------");
             }
           }
         }
+        // After each player(AI or real), update the pot(s)
         gController.updatePots(potSplits, currentPotSize);
+        // Prevent AI from thinking it's a new turn.
         if (currentPlayer != noOfPlayers - 1) {
           aiPlayers.get(currentPlayer).setSameTurn(true);
         }
+        // move on to the next player
         currentPlayer = (currentPlayer + 1) % noOfPlayers;
-        System.out.println("current Pot: " + currentPotSize);
+        // check if everyone has checked, called or folded.
         allCallorFold();
       }
-
+      // Next turn
       playTurn++;
       allCalledorFolded = false;
+      // if a player Hasn't folded, gone all in or lost, reset their decision
       for (Ai ai : aiPlayers) {
-        if (!ai.getDecision().contains("fold") && !ai.getDecision().contains("lost") && !ai.getDecision().contains("all-in")) {
+        if (!ai.getDecision().contains("fold") && !ai.getDecision().contains("lost")
+            && !ai.getDecision().contains("all-in")) {
           ai.setDecision("");
           ai.setSameTurn(false);
         }
       }
+      // if winner was declared earlier, break the loop here and start a new round
       if (winnerDeclared) {
         break;
       }
     }
+    // If the game goes to the final round and no one has won yet, check the winner.
     if (playTurn >= 4 && !winnerDeclared) {
-      System.out.println("checkwin");
       checkWinner();
     }
+    // If an AI player has run out of money, they have lost.
     for (Ai ai : aiPlayers) {
       if (ai.aiPot() < bigBlind && !ai.getDecision().contains("lost")) {
-        System.out
-            .println(ai.getName() + "\naiPot: " + ai.aiPot() + "\n" + (ai.aiPot() < bigBlind));
         ai.setDecision("lost");
         ai.updateWinner(-ai.aiPot());
         gController.setUIAiStatus(aiPlayers.indexOf(ai), "inactive");
@@ -313,16 +321,18 @@ public class SPController extends Thread {
 
     }
 
-
+    // Reset values
     winnerDeclared = false;
     playTurn = 0;
     blindCounter++;
+    // update the blinds
     if (blindCounter >= 15) {
       bigBlind += (int) (potSize / noOfPlayers * 0.02);
       currentMaxBet = bigBlind;
       smallBlind = bigBlind / 2;
       blindCounter = 0;
     }
+    // Set new dealer
     dealer = (dealer + 1) % noOfPlayers;
 
     try {
@@ -340,14 +350,22 @@ public class SPController extends Thread {
    * Method which checks who the winner is.
    */
   private void checkWinner() {
+
+    // if someone has gone all in, check winners through the all-in method instead.
     if (doAllInCheck) {
       checkAllInWinners();
     } else {
+      // List of "second winners", on the rare occasion of people having the same handstrength and
+      // highcard.
       ArrayList<Integer> secWin = new ArrayList<Integer>();
 
       String winner = "";
       int bestHand = 0;
       Ai bestHandPlayer = new Ai(0, "");
+      /*
+       * Go through all AI players that have not folded, check which player has the best hand. That
+       * player is now the bestHandPlayer
+       */
       for (Ai ai : aiPlayers) {
         if (!ai.getDecision().equals("fold")) {
           if (ai.handStrength() > bestHand) {
@@ -364,80 +382,64 @@ public class SPController extends Thread {
             }
           }
         }
-        System.out.println(bestHandPlayer.getName());
-        System.out.println(bestHand);
-        System.out.println(bestHandPlayer.getHighCard());
       }
-      System.out.println("Player: " + gController.getHandStrength());
-      System.out.println("player highcard: " + gController.getGetHighCard());
-      System.out.println("supposed besthand: " + bestHand);
-      System.out.println("bestAI hand: " + bestHandPlayer.handStrength());
-      System.out.println("bestAI highCard: " + bestHandPlayer.getHighCard());
-      System.out.println(gController.getHandStrength() > bestHand);
+      // If the player hasn't folded, compare the players hand to that of the best AI player.
       if (!gController.getPlayerDecision().contains("fold")) {
+        // Player wins
         if (gController.getHandStrength() > bestHand) {
           gController.setPlayerPot(currentPotSize);
           winner = gController.getUsername();
           gController.setWinnerLabel(winner, gController.getHandStrength());
-          System.out.println("Player Wins " + currentPotSize);
+          // draw
         } else if (gController.getHandStrength() == bestHand) {
+          // Player wins
           if (gController.getGetHighCard() > bestHandPlayer.getHighCard()) {
             gController.setPlayerPot(currentPotSize);
             winner = gController.getUsername();
             gController.setWinnerLabel(winner, gController.getHandStrength());
-            System.out.println("Player Wins " + currentPotSize);
+            // Draw
           } else if (gController.getGetHighCard() == bestHandPlayer.getHighCard()) {
-            System.out.println("Draw, Pot Split between Player and " + bestHandPlayer.getName());
             bestHandPlayer.updateWinner(currentPotSize / 2);
             gController.setPlayerPot(currentPotSize / 2);
             winner = gController.getUsername() + " och " + bestHandPlayer.getName();
             gController.setWinnerLabel(winner, bestHand);
+            // AI wins and there are second winners.
           } else {
             if (!secWin.isEmpty()) {
               int divBy = currentPotSize = secWin.size();
-              System.out.println("AI " + bestHandPlayer.getName() + " and ");
               for (int i : secWin) {
-                System.out.println(aiPlayers.get(i).getName() + ", ");
                 aiPlayers.get(i).updateWinner(divBy);
               }
-              System.out.println(" Wins");
-
+              // Ai wins and there aren't
             } else {
-              System.out.println(bestHandPlayer.getName() + " Wins " + currentPotSize);
               bestHandPlayer.updateWinner(currentPotSize);
               winner = bestHandPlayer.getName();
               gController.setWinnerLabel(winner, bestHand);
             }
           }
+          // Same thing as above but the player lost and no draw.
         } else {
           if (!secWin.isEmpty()) {
             int divBy = currentPotSize = secWin.size();
-            System.out.println("AI " + bestHandPlayer.getName() + " and ");
             for (int i : secWin) {
-              System.out.println(aiPlayers.get(i).getName() + ", ");
               aiPlayers.get(i).updateWinner(divBy);
             }
-            System.out.println(" Wins");
 
           } else {
-            System.out.println(bestHandPlayer.getName() + " Wins " + currentPotSize);
             bestHandPlayer.updateWinner(currentPotSize);
             winner = bestHandPlayer.getName();
             gController.setWinnerLabel(winner, bestHand);
           }
         }
+        // Same thing as above but the player had folded.
       } else {
         if (!secWin.isEmpty()) {
           int divBy = currentPotSize = secWin.size();
-          System.out.println("AI " + bestHandPlayer.getName() + " and ");
           for (int i : secWin) {
-            System.out.println(aiPlayers.get(i).getName() + ", ");
             aiPlayers.get(i).updateWinner(divBy);
           }
-          System.out.println(" Wins");
 
         } else {
-          System.out.println(bestHandPlayer.getName() + " Wins " + currentPotSize);
           bestHandPlayer.updateWinner(currentPotSize);
           winner = bestHandPlayer.getName();
           gController.setWinnerLabel(winner, bestHand);
@@ -447,30 +449,29 @@ public class SPController extends Thread {
 
   }
 
+
+  /**
+   * Method which checks the winners if there was one or more all-ins
+   */
   private void checkAllInWinners() {
-    System.out.println("Checking All in Winners");
+
+    /*
+     * This method does the same thing as checkWinners except the pot is split over multiple subpots
+     * and one winner is declared for each subpot
+     */
     int allInPotSize;
     for (int i = potSplits.length - 1; i >= 0; i--) {
-      System.out.println("pot " + i + " contains " + potSplits[i][0]);
       if (potSplits[i][0] > 0) {
         allInPotSize = potSplits[i][0];
         for (Ai test : aiPlayers) {
           if (test.getAllInViability() <= i && !test.getDecision().contains("fold")) {
-            System.out.println(test.getName() + " is viable for pot " + i);
-            System.out.println((test.aiPot() + test.getPaidThisTurn()));
             potSplits[i][0] += potSplits[i][0];
 
           }
         }
         potSplits[i][0] -= potSplits[i][0];
-        if (gController.getAllInViability() <= i
-            && !gController.getPlayerDecision().contains("fold")) {
-          System.out.println("Player is viable for pot " + i);
-          System.out.println((gController.getPlayerPot() + gController.getPlayerAlreadyPaid()));
-        }
+
         currentPotSize -= potSplits[i][0];
-        System.out.println("CPS: " + currentPotSize);
-        // TODO check who gets the overflow?
         ArrayList<Integer> secWin = new ArrayList<Integer>();
 
         String winner = "";
@@ -493,27 +494,18 @@ public class SPController extends Thread {
             }
           }
         }
-        System.out.println("Player: " + gController.getHandStrength());
-        System.out.println("player highcard: " + gController.getGetHighCard());
-        System.out.println("supposed besthand: " + bestHand);
-        System.out.println("bestAI hand: " + bestHandPlayer.handStrength());
-        System.out.println("bestAI highCard: " + bestHandPlayer.getHighCard());
-        System.out.println(gController.getHandStrength() > bestHand);
         if (!gController.getPlayerDecision().contains("fold")
             && gController.getAllInViability() <= i) {
           if (gController.getHandStrength() > bestHand) {
             gController.setPlayerPot(allInPotSize);
             winner = gController.getUsername();
             gController.setWinnerLabel(winner, gController.getHandStrength());
-            System.out.println("Player Wins " + allInPotSize);
           } else if (gController.getHandStrength() == bestHand) {
             if (gController.getGetHighCard() > bestHandPlayer.getHighCard()) {
               gController.setPlayerPot(allInPotSize);
               winner = gController.getUsername();
               gController.setWinnerLabel(winner, gController.getHandStrength());
-              System.out.println("Player Wins " + allInPotSize);
             } else if (gController.getGetHighCard() == bestHandPlayer.getHighCard()) {
-              System.out.println("Draw, Pot Split between Player and " + bestHandPlayer.getName());
               bestHandPlayer.updateWinner(allInPotSize / 2);
               gController.setPlayerPot(allInPotSize / 2);
               winner = gController.getUsername() + " och " + bestHandPlayer.getName();
@@ -521,15 +513,11 @@ public class SPController extends Thread {
             } else {
               if (!secWin.isEmpty()) {
                 int divBy = allInPotSize = secWin.size();
-                System.out.println("AI " + bestHandPlayer.getName() + " and ");
                 for (int x : secWin) {
-                  System.out.println(aiPlayers.get(x).getName() + ", ");
                   aiPlayers.get(x).updateWinner(divBy);
                 }
-                System.out.println(" Wins");
 
               } else {
-                System.out.println(bestHandPlayer.getName() + " Wins " + allInPotSize);
                 bestHandPlayer.updateWinner(allInPotSize);
                 winner = bestHandPlayer.getName();
                 gController.setWinnerLabel(winner, bestHand);
@@ -538,15 +526,10 @@ public class SPController extends Thread {
           } else {
             if (!secWin.isEmpty()) {
               int divBy = allInPotSize = secWin.size();
-              System.out.println("AI " + bestHandPlayer.getName() + " and ");
               for (int x : secWin) {
-                System.out.println(aiPlayers.get(x).getName() + ", ");
                 aiPlayers.get(x).updateWinner(divBy);
               }
-              System.out.println(" Wins");
-
             } else {
-              System.out.println(bestHandPlayer.getName() + " Wins " + allInPotSize);
               bestHandPlayer.updateWinner(allInPotSize);
               winner = bestHandPlayer.getName();
               gController.setWinnerLabel(winner, bestHand);
@@ -555,15 +538,11 @@ public class SPController extends Thread {
         } else {
           if (!secWin.isEmpty()) {
             int divBy = allInPotSize = secWin.size();
-            System.out.println("AI " + bestHandPlayer.getName() + " and ");
             for (int x : secWin) {
-              System.out.println(aiPlayers.get(x).getName() + ", ");
               aiPlayers.get(x).updateWinner(divBy);
             }
-            System.out.println(" Wins");
 
           } else {
-            System.out.println(bestHandPlayer.getName() + " Wins " + allInPotSize);
             bestHandPlayer.updateWinner(allInPotSize);
             winner = bestHandPlayer.getName();
             gController.setWinnerLabel(winner, bestHand);
@@ -592,7 +571,6 @@ public class SPController extends Thread {
     if (!gController.getPlayerDecision().equals("fold")) {
       livePlayers++;
     }
-    System.out.println("live Players:" + livePlayers);
     return livePlayers;
   }
 
@@ -605,7 +583,6 @@ public class SPController extends Thread {
    */
   private void askForPlayerDecision(int currentMaxBet2) {
 
-    System.out.println("To pay if call: " + currentMaxBet);
     if (!gController.getPlayerDecision().contains("allin")) {
       gController.askForPlayerDecision();
       playerAction();
@@ -628,34 +605,26 @@ public class SPController extends Thread {
       split = playerDecision.split(",");
       currentMaxBet = Integer.parseInt(split[1]);
       currentPotSize += Integer.parseInt(split[1]);
-      System.out.println("raise " + split[1]);
     } else if (playerDecision.contains("fold")) {
+      // do nothing. Handled elsewhere.
     } else if (playerDecision.contains("call")) {
       split = playerDecision.split(",");
       currentPotSize += currentMaxBet;
     } else if (playerDecision.contains("check")) {
+      // do nothing. Handled elsewhere.
     } else if (playerDecision.contains("allin")) {
       split = playerDecision.split(",");
       int allin = Integer.parseInt(split[1]);
+      // if all-in
       if (currentMaxBet < allin) {
-        System.out.println("CPS1: " + currentPotSize);
-
 
         currentMaxBet = Integer.parseInt(split[1]) + Integer.parseInt(split[2]);
-        System.out.println("CMB: " + currentMaxBet);
-
         currentPotSize += allin;
         allin = currentPotSize;
-        System.out.println("CPS1: " + currentPotSize);
-        // if (!doAllInCheck) {
-        // allin += currentPotSize;
-        //
-        // }
         doAllInCheck = true;
-        System.out.println("PS01-" + psCounter + " : " + potSplits[psCounter][0]);
         potSplits[psCounter][0] = allin;
-        System.out.println("PS01-" + psCounter + " : " + potSplits[psCounter][0]);
         gController.setAllInViability(psCounter);
+        // Check if AiPlayers are viable for the same subpot
         for (Ai aips : aiPlayers) {
           if ((aips.getPaidThisTurn() + aips.aiPot()) > allin) {
             aips.setAllInViability(psCounter);
@@ -664,19 +633,14 @@ public class SPController extends Thread {
         psCounter++;
       } else {
         currentMaxBet = Integer.parseInt(split[1]) + Integer.parseInt(split[2]);
-        System.out.println("CPS2: " + currentPotSize);
 
         currentPotSize += allin;
         allin = currentPotSize;
-        System.out.println("CPS2: " + currentPotSize);
-        // if (!doAllInCheck) {
-        // allin += currentPotSize;
-        // }
         doAllInCheck = true;
-        System.out.println("PS02-" + psCounter + " : " + potSplits[psCounter][0]);
         potSplits[psCounter][0] = allin;
-        System.out.println("PS02-" + psCounter + " : " + potSplits[psCounter][0]);
         gController.setAllInViability(psCounter);
+
+        // Check if AiPlayers are viable for the same subpot
         for (Ai aips : aiPlayers) {
           if ((aips.getPaidThisTurn() + aips.aiPot()) > allin) {
             aips.setAllInViability(psCounter);
@@ -733,13 +697,10 @@ public class SPController extends Thread {
       split = aiDecision.split(",");
       currentMaxBet = Integer.parseInt(split[1]);
       currentPotSize += Integer.parseInt(split[1]);
-      System.out.println("AI Raises");
       gController.aiAction(currentPlayer, aiDecision);
 
     } else if (aiDecision.contains("fold")) {
-      System.out.println("AI folds");
       gController.aiAction(currentPlayer, aiDecision);
-
     } else if (aiDecision.contains("call")) {
 
       split = aiDecision.split(",");
@@ -752,14 +713,11 @@ public class SPController extends Thread {
 
       if (Integer.parseInt(split[1]) <= 0) {
         gController.aiAction(currentPlayer, "check");
-        System.out.println("AI Checks");
       } else {
         gController.aiAction(currentPlayer, split[0]);
-        System.out.println("AI Calls " + split[1]);
       }
 
     } else if (aiDecision.contains("check")) {
-      System.out.println("AI Checks");
       gController.aiAction(currentPlayer, aiDecision);
     } else if (aiDecision.contains("all-in")) {
       split = aiDecision.split(",");
@@ -767,35 +725,27 @@ public class SPController extends Thread {
       if (playTurn > 0) {
         if (!doAllInCheck) {
           allin = Integer.parseInt(split[1]) + currentMaxBet;
-          System.out.println("Claimed all-in1: " + allin);
         } else {
           allin =
               Integer.parseInt(split[1]) + (ai.getPaidThisTurn() - (Integer.parseInt(split[1])));
-          System.out.println("Claimed all-in2: " + allin);
         }
       } else {
         allin = Integer.parseInt(split[1]);
-        System.out.println("Claimed all-in3: " + allin);
       }
       if (currentMaxBet < allin) {
-        System.out.println("CPS1: " + currentPotSize);
 
 
         currentMaxBet = allin;
 
         currentPotSize += allin;
-        System.out.println("CPS1: " + currentPotSize);
-        // if (!doAllInCheck) {
-        // allin += currentPotSize;
-        //
-        // }
+
         doAllInCheck = true;
-        System.out.println("PS01-" + psCounter + " : " + potSplits[psCounter][0]);
         potSplits[psCounter][0] = allin;
-        System.out.println("PS01-" + psCounter + " : " + potSplits[psCounter][0]);
+        // Check if the player is viable for the same subpot
         if (gController.getPlayerPot() + gController.getPlayerAlreadyPaid() > allin) {
           gController.setAllInViability(psCounter);
         }
+        // Check if AiPlayers are viable for the same subpot
         for (Ai aips : aiPlayers) {
           if ((aips.getPaidThisTurn() + aips.aiPot()) > allin) {
             aips.setAllInViability(psCounter);
@@ -804,20 +754,14 @@ public class SPController extends Thread {
         psCounter++;
       } else {
         currentMaxBet = allin;
-        System.out.println("CPS2: " + currentPotSize);
 
         currentPotSize += allin;
-        System.out.println("CPS2: " + currentPotSize);
-        // if (!doAllInCheck) {
-        // allin += currentPotSize;
-        // }
         doAllInCheck = true;
-        System.out.println("PS02-" + psCounter + " : " + potSplits[psCounter][0]);
         potSplits[psCounter][0] = allin;
-        System.out.println("PS02-" + psCounter + " : " + potSplits[psCounter][0]);
         if (gController.getPlayerPot() + gController.getPlayerAlreadyPaid() > allin) {
           gController.setAllInViability(psCounter);
         }
+        // Check if AiPlayers are viable for the same subpot
         for (Ai aips : aiPlayers) {
           if ((aips.getPaidThisTurn() + aips.aiPot()) > allin) {
             aips.setAllInViability(psCounter);
@@ -825,42 +769,7 @@ public class SPController extends Thread {
         }
         psCounter++;
       }
-
-      // if (currentMaxBet < allin) {
-      // currentPotSize += allin;
-      // currentMaxBet = allin;
-      // if (!doAllInCheck) {
-      // allin += currentPotSize;
-      // }
-      // doAllInCheck = true;
-      // potSplits[psCounter][0] = allin;
-      // gController.setAllInViability(psCounter);
-      // for (Ai aips : aiPlayers) {
-      // if ((aips.getPaidThisTurn() + aips.aiPot()) > allin) {
-      // aips.setAllInViability(psCounter);
-      // }
-      // }
-      // psCounter++;
-      // } else {
-      // if (!doAllInCheck) {
-      // allin += currentPotSize;
-      // }
-      // currentPotSize += allin;
-      // doAllInCheck = true;
-      // potSplits[psCounter][0] = allin;
-      // for (Ai aips : aiPlayers) {
-      // if ((aips.getPaidThisTurn() + aips.aiPot()) > allin) {
-      // aips.setAllInViability(psCounter);
-      // }
-      // }
-      // if ((gController.getPlayerAlreadyPaid() + gController.getPlayerPot()) > allin) {
-      // gController.setAllInViability(psCounter);
-      // }
-      // psCounter++;
-      // }
       gController.aiAction(currentPlayer, aiDecision);
-    } else {
-      System.out.println("fan");
     }
   }
 
@@ -875,30 +784,38 @@ public class SPController extends Thread {
 
     currentMaxBet = bigBlind;
     smallBlind = bigBlind / 2;
+    // In heads-up play
     if (noOfPlayers == 2) {
       currentPlayer = dealer;
       smallBlindPlayer = dealer;
       bigBlindPlayer = (dealer + 1) % noOfPlayers;
+      // in "not" heads up play.
     } else if (noOfPlayers >= 3) {
       currentPlayer = (dealer + 3) % noOfPlayers;
       smallBlindPlayer = (dealer + 1) % noOfPlayers;
       bigBlindPlayer = (dealer + 2) % noOfPlayers;
     }
+    // If the intended dealer has lost, shift one step over until a player(AI or otherwise) has not
+    // lost.
     while (dealer != noOfPlayers - 1 && aiPlayers.get(dealer).getDecision().contains("lost")) {
       dealer = (dealer + 1) % noOfPlayers;
       smallBlindPlayer = (smallBlindPlayer + 1) % noOfPlayers;
       bigBlindPlayer = (bigBlindPlayer + 1) % noOfPlayers;
     }
-
+    // if the intended smallblind has lost, shift one step over until a player(AI or otherwise) has
+    // not lost.
     while (smallBlindPlayer != (noOfPlayers - 1)
         && aiPlayers.get(smallBlindPlayer).getDecision().contains("lost")) {
       smallBlindPlayer = (smallBlindPlayer + 1) % noOfPlayers;
       bigBlindPlayer = (bigBlindPlayer + 1) % noOfPlayers;
     }
+    // if the intended bigblind has lost, shift one step over until a player(AI or otherwise) has
+    // not lost.
     while (bigBlindPlayer != (noOfPlayers - 1)
         && aiPlayers.get(bigBlindPlayer).getDecision().contains("lost")) {
       bigBlindPlayer = (bigBlindPlayer + 1) % noOfPlayers;
     }
+    // set small and bigBlind
     if (smallBlindPlayer == noOfPlayers - 1) {
       gController.playerSmallBlind(smallBlind);
       aiPlayers.get(bigBlindPlayer).setBigBlind(bigBlind, true);
@@ -918,6 +835,7 @@ public class SPController extends Thread {
     } else {
       gController.playerIsDealer(dealer);
     }
+    // update GUI.
     gController.setBlindsMarker(dealer, smallBlindPlayer, bigBlindPlayer);
     this.currentPotSize = smallBlind + bigBlind;
     gController.updatePots(potSplits, currentPotSize);
@@ -962,7 +880,6 @@ public class SPController extends Thread {
         allCalledorFolded = false;
       }
     }
-    System.out.println(allCalledorFolded);
   }
 
 
