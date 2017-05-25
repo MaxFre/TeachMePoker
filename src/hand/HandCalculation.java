@@ -9,9 +9,7 @@ import java.util.Arrays;
  * @version 1.5
  * 17-04-12
  */
-public class HandCalculation {
-	private String secondInTwoPair = "1,c";
-	
+public class HandCalculation {	
 	private ArrayList<String> finalHihglight = new ArrayList<String>();
 	private ArrayList<String> nbrForStraight = new ArrayList<String>();
 	private ArrayList<String> nbrForStraight1 = new ArrayList<String>();
@@ -540,15 +538,8 @@ public class HandCalculation {
 		String advice = "Denna hand kanske inte är den bästa att spela på...";
 		
 		String[] splitter = yourCard.split(",");
-		String straightText = "";
 		int intCardNbr = Integer.parseInt(splitter[0]);
-		String straighHelper = "";
-		String pairsNmoreHelper = "";
-		String colorChanceHelper ="";
-		
 		String yourCardInt="";
-		String yourOtherCardInt="";
-		String[] splitter2 = otherCard.split(",");
 		yourCardInt = String.valueOf(intCardNbr);
 		String cardOne = String.valueOf(cardNbr.get(0))+":or";
 		String cardTwo = String.valueOf(cardNbr.get(1))+":or";
@@ -659,7 +650,7 @@ public class HandCalculation {
 		
 		//TWO PAIRS	
 		if(pairsNmore==22){				
-				helper = "'TWO PAIRS'  i " + cardOne + " och " + cardTwo ; //FIXED!!!!
+				helper = "'TWO PAIRS'  i " + cardOne + " och " + cardTwo ; 
 				advice = "'TWO PAIRS' är en bra hand, kör på.\n";	
 				// writes the active cards to hihglight
 				if(straightChance<5 && colorChance<5){
@@ -679,7 +670,7 @@ public class HandCalculation {
 		}
 		
 		//THREE OF A KIND	
-		if(pairsNmore==3){			//triss
+		if(pairsNmore==3){			
 			helper = "'THREE OF A KIND' i " + yourCardInt;			
 			advice = "'THREE OF A KIND' är en väldigt stark hand. Kör på! Fundera även på att höja!\n";
 			// writes the active cards to hihglight
@@ -719,7 +710,7 @@ public class HandCalculation {
 		
 		//FULL HOUSE			
 		if(pairsNmore == 23 || pairsNmore==32){		
-			helper = "'FULL HOUSE' med " + cardOne + " och " + cardTwo +"!!";   //FIXED!!!!
+			helper = "'FULL HOUSE' med " + cardOne + " och " + cardTwo +"!!";   
 			advice = "Det är inte mycket som slår denna hand! Höja är rekomenderat!\n";
 			// writes the active cards to hihglight
 			toHighlight.clear();
@@ -761,10 +752,6 @@ public class HandCalculation {
 			// Highlightning happens in checkStraight and checkSuit.
 		}
 		
-		//ROYAL STRAIGHT FLUSH??
-		//ADD MORE HERE??
-		
-		
 		//STRAIGHTCHANCE TEXT AND COLORCHANCE TEXT
 		if (aiCards.size() < 3) {
 			if (straightChance == 2) {
@@ -797,19 +784,25 @@ public class HandCalculation {
 		
 	}
 	
+	/**
+	 * returns what advice to give the user
+	 * @return what advice to give the user
+	 */
 	public String advice(){
 		return advicee;
 	}
 	
 	/**
-	 * 
 	 * @return what to be highlighed.
 	 */
 	public ArrayList<String> toHiglight(){
 		return toHighlight;
 		
 	}
-	
+	/**
+	 * sets and returns the current handStrength of the users cards.
+	 * @return sets and returns the current handStrength of the users cards.
+	 */
 	public int calcHandstrenght(){
 		
 		if(pairsNmore==2){     //Pair

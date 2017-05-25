@@ -2,7 +2,11 @@ package aiClass;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
+/**
+ * Class used for testing and developing method for calculating the ai-players card strength.
+ * @author Max Frennessen
+ *
+ */
 public class test {
 
 	private String[] fromCards = new String[10];

@@ -6,10 +6,9 @@ import deck.Card;
 import deck.Deck;
 
 /**
- * Class for testing the hand-class.
- * 
- * @author Max Frennessen 17-04-12
- * @version 1.5
+ * Class for testing the hand-class and has also been used for the WHitebox Testing of the hand-class.
+ * @author Max Frennessen 17-05-25
+ * @version 1.0
  */
 public class TestHand {
   Deck deck;
@@ -23,6 +22,11 @@ public class TestHand {
   private ArrayList<Card> cards = new ArrayList<Card>();
   private int[] turn = {2, 5, 6, 7};
 
+  /**
+   * Creates a deck and then calls on specifik cards that is then
+   * send to a ai that calculates and makes a decicion based on the cards strenght.
+   * All commented code is used for diffirent parts of testing, and is needed for those parts.
+   */
   public TestHand() {
 
 //		 1=2h   14 = 2s   27 = 2c   40=2d 
