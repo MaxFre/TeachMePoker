@@ -160,14 +160,16 @@ public class SPController extends Thread {
       this.currentPotSize = 0;
       potSplits = new int[noOfPlayers][1];
       gController.updatePots(potSplits, currentPotSize);
+      gController.playerReset("");
       /*
        * Reset the AI players unless they've lost
        */
       for (Ai ai : aiPlayers) {
+        System.out.println(ai.getName() + " : " + ai.getDecision() + (ai.aiPot() < bigBlind));
         ai.setBigBlind(0, false);
         ai.setSmallBlind(0, false);
         ai.setPaidThisTurn(0);
-        gController.playerReset("");
+        ai.setAllInViability(99);
         if (!ai.getDecision().contains("lost")) {
           ai.setDecision("");
           card1 = deck.getCard();
@@ -251,7 +253,6 @@ public class SPController extends Thread {
               winnerDeclared = true;
               break;
             }
-
             try {
               Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -264,11 +265,6 @@ public class SPController extends Thread {
           if (!aiPlayers.get(currentPlayer).getDecision().contains("lost")) {
             if (!aiPlayers.get(currentPlayer).getDecision().contains("fold")
                 && !aiPlayers.get(currentPlayer).getDecision().contains("all-in")) {
-              try {
-                Thread.sleep(1000);
-              } catch (InterruptedException e) {
-                e.printStackTrace();
-              }
               if (!(checkLivePlayers() > 1)) {
                 aiPlayers.get(currentPlayer).updateWinner(currentPotSize);
                 winner = aiPlayers.get(currentPlayer).getName();
@@ -276,10 +272,18 @@ public class SPController extends Thread {
                 winnerDeclared = true;
                 break;
               }
+
               askForAiDecision();
+              try {
+                Thread.sleep(1000);
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              }
             }
           }
         }
+
+
         // After each player(AI or real), update the pot(s)
         gController.updatePots(potSplits, currentPotSize);
         // Prevent AI from thinking it's a new turn.
@@ -318,6 +322,7 @@ public class SPController extends Thread {
         ai.updateWinner(-ai.aiPot());
         gController.setUIAiStatus(aiPlayers.indexOf(ai), "inactive");
       }
+      System.out.println(ai.getName() + " : " + ai.getDecision() + (ai.aiPot() < bigBlind));
 
     }
 
@@ -464,7 +469,8 @@ public class SPController extends Thread {
       if (potSplits[i][0] > 0) {
         allInPotSize = potSplits[i][0];
         for (Ai test : aiPlayers) {
-          if (test.getAllInViability() <= i && !test.getDecision().contains("fold")) {
+          if (test.getAllInViability() <= i && !test.getDecision().contains("fold")
+              && !test.getDecision().contains("lost")) {
             potSplits[i][0] += potSplits[i][0];
 
           }
@@ -478,7 +484,8 @@ public class SPController extends Thread {
         int bestHand = 0;
         Ai bestHandPlayer = new Ai(0, "");
         for (Ai ai : aiPlayers) {
-          if (!ai.getDecision().equals("fold") && ai.getAllInViability() <= i) {
+          if ((!ai.getDecision().equals("fold") && !ai.getDecision().contains("lost"))
+              && ai.getAllInViability() <= i) {
             if (ai.handStrength() > bestHand) {
               bestHandPlayer = ai;
               bestHand = ai.handStrength();
@@ -618,7 +625,9 @@ public class SPController extends Thread {
       // if all-in
       if (currentMaxBet < allin) {
 
-        currentMaxBet = Integer.parseInt(split[1]) + Integer.parseInt(split[2]);
+        if ((Integer.parseInt(split[1]) + Integer.parseInt(split[2])) > currentMaxBet) {
+          currentMaxBet = Integer.parseInt(split[1]) + Integer.parseInt(split[2]);
+        }
         currentPotSize += allin;
         allin = currentPotSize;
         doAllInCheck = true;
@@ -632,7 +641,9 @@ public class SPController extends Thread {
         }
         psCounter++;
       } else {
-        currentMaxBet = Integer.parseInt(split[1]) + Integer.parseInt(split[2]);
+        if ((Integer.parseInt(split[1]) + Integer.parseInt(split[2])) > currentMaxBet) {
+          currentMaxBet = Integer.parseInt(split[1]) + Integer.parseInt(split[2]);
+        }
 
         currentPotSize += allin;
         allin = currentPotSize;
@@ -753,7 +764,7 @@ public class SPController extends Thread {
         }
         psCounter++;
       } else {
-        currentMaxBet = allin;
+
 
         currentPotSize += allin;
         doAllInCheck = true;
